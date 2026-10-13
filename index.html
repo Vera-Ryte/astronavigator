@@ -110,13 +110,36 @@ img.prev{width:100%;border:1px solid var(--line);border-radius:6px;margin-top:8p
 .wheel .wz{position:absolute;transform:translate(-50%,-50%);font-size:clamp(12px,2.8vw,17px)}
 .wheel .wh{position:absolute;transform:translate(-50%,-50%);font-size:clamp(8px,1.8vw,11px);color:var(--muted)}
 .wheel .wa{position:absolute;transform:translate(-50%,-50%);font-size:clamp(9px,2vw,12px);font-weight:700;color:var(--plum)}
+.printbar{display:flex;justify-content:flex-end;margin:-4px 0 6px}
+.printbtn{font:inherit;font-size:13px;background:transparent;color:var(--plum);border:1px solid var(--plum);border-radius:999px;padding:5px 12px;cursor:pointer}
+.printhead{display:none}
+@media print{
+ *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+ body{background:#fff!important;color:#000}
+ .wheel{max-width:150mm!important}
+ tr{break-inside:avoid}
+ header,form,.tabs,.badge,.printbar,.saverow,.mobhint,.chips,.cta,.lock{display:none!important}
+ .grid{display:block!important}
+ .panel{border:0!important;padding:0!important}
+ .panel[hidden]{display:none!important}
+ .printhead{display:block;font-size:12px;margin-bottom:8px;color:#555}
+ .scroll{overflow:visible!important}
+ .heat td{min-width:0!important}
+ @page{size:A4 landscape;margin:10mm}
+}
+.kingbox{border:1.5px solid var(--plum);border-radius:10px;padding:10px 14px;margin:14px 0;background:var(--plum-soft);font-size:14.5px}
+.zoombar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 10px}
+.zb{font:inherit;font-size:14px;min-width:34px;background:transparent;color:var(--plum);border:1px solid var(--plum);border-radius:8px;padding:4px 10px;cursor:pointer}
+.mbar td{white-space:nowrap}
+.bar{display:inline-block;height:12px;border-radius:3px;vertical-align:-1px;max-width:70%}
+.bt{background:var(--eclipse)} .bh{background:#2E7DBA}
 .brand{font-size:13px;color:var(--gold);letter-spacing:.04em;text-transform:uppercase;width:100%}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
 body{margin:0}
 </style></head><body>
 <div class="wrap">
-<header><div class="brand">Вера Райт · транзиты по домам</div><h1>Астронавигатор</h1><div class="intro"><p class="lead">Введите данные рождения - и за минуту увидите свой год целиком:</p><ul class="gain"><li>где сосредоточатся энергия и внимание - фокус года по домам гороскопа;</li><li>когда планеты входят в ваши дома и где петляют ретроградные;</li><li>в какие дома попадают затмения;</li><li>точные даты аспектов транзитов к вашим планетам.</li></ul><p class="priv">Расчёт идёт прямо в вашем браузере. Данные рождения никуда не отправляются и не сохраняются на сервере - конфиденциальность под вашим контролем.</p></div></header>
+<header><div class="brand">Вера Райт · транзиты года</div><h1>Астронавигатор</h1><div class="intro"><p class="lead">Введите данные рождения - и за минуту увидите акценты своего года:</p><ul class="gain"><li>где сосредоточатся энергия и внимание - фокус года по сферам жизни;</li><li>когда планеты входят в ваши дома и где петляют ретроградные планеты;</li><li>в какие дома попадают затмения;</li><li>точные даты аспектов транзитных планет к планетам вашей натальной карты.</li></ul><p class="priv">Расчёт идёт прямо в вашем браузере.<br>Данные рождения никуда не отправляются и не сохраняются на сервере - конфиденциальность под вашим контролем.</p></div></header>
 <div class="grid">
 <form id="f" autocomplete="off">
  <label for="nm">Имя<input id="nm" value="" placeholder="Введите имя"></label>
@@ -132,15 +155,17 @@ body{margin:0}
  <label class="chk" for="topo"><input id="topo" type="checkbox" checked> Топоцентрические координаты</label>
  <button class="go" type="submit">Рассчитать</button>
  <button type="button" id="demo" style="font:inherit;font-size:14px;background:none;border:0;color:var(--plum);text-decoration:underline;cursor:pointer;padding:0;justify-self:start">Посмотреть на примере (Стив Джобс)</button>
- <p class="note">Лилит средняя. Орбисы - по вашей таблице, в аспектах НК - сумма половин орбисов двух планет. К Лилит, Asc и MC - только соединение.</p>
+ 
 </form>
 <section class="res" aria-live="polite">
  <div id="who" class="badge"></div>
  <div class="tabs" role="tablist">
   <button role="tab" id="tb-heat" aria-selected="true" data-p="heat">Фокус года</button>
   <button role="tab" id="tb-loops" aria-selected="false" data-p="loops">Петли планет</button>
-  <button role="tab" id="tb-houses" aria-selected="false" data-p="houses">Планеты по домам</button>
+  <button role="tab" id="tb-houses" aria-selected="false" data-p="houses">Дома и куспиды</button>
   <button role="tab" id="tb-asp" aria-selected="false" data-p="asp">Аспекты транзитов</button>
+  <button role="tab" id="tb-per" aria-selected="false" data-p="per">Благоприятные и напряжённые</button>
+  <button role="tab" id="tb-mun" aria-selected="false" data-p="mun">Общие транзиты</button>
   <button role="tab" id="tb-lun" aria-selected="false" data-p="lun">Новолуния и Полнолуния</button>
   <button role="tab" id="tb-nat" aria-selected="false" data-p="nat">Натальная карта</button>
   <button role="tab" id="tb-natasp" aria-selected="false" data-p="natasp">Аспекты НК</button>
@@ -149,6 +174,8 @@ body{margin:0}
  <div class="panel" id="p-loops" hidden></div>
  <div class="panel" id="p-houses" hidden></div>
  <div class="panel" id="p-asp" hidden></div>
+ <div class="panel" id="p-per" hidden></div>
+ <div class="panel" id="p-mun" hidden></div>
  <div class="panel" id="p-lun" hidden></div>
  <div class="panel" id="p-nat" hidden></div>
  <div class="panel" id="p-natasp" hidden></div>
@@ -470,7 +497,7 @@ function natal(y,mo,d,hh,mm,tz,lat,lon,topo){
 // orbs
 const ASPECTS=[['a0',0],['a60',60],['a90',90],['a120',120],['a180',180]];
 const ASP_NAME={a0:'соединение',a60:'секстиль',a90:'квадрат',a120:'трин',a180:'оппозиция'};
-const CONJ_ONLY=new Set(['Лилит','Asc','MC']);
+const CONJ_ONLY=new Set(['Лилит','Asc','MC','Сев. Узел','Юж. Узел','I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII']);
 const ORB_TR={'Солнце':[7,5,6,6,7],'Луна':[7,5,6,6,7],'Меркурий':[5,3,4,4,5],'Венера':[5,3,4,4,5],'Марс':[5,3,4,4,5],'Юпитер':[3,2,3,3,3],'Сатурн':[3,2,3,3,3],'Уран':[2,1,2,2,2],'Нептун':[2,1,2,2,2],'Плутон':[2,1,2,2,2],'Сев. Узел':[3,2,3,3,3],'Лилит':[4,2,3,3,4]};
 const ORB_NAT={'Солнце':[10,8,8,10,10],'Луна':[10,8,8,10,10],'Меркурий':[9,8,8,9,9],'Венера':[9,8,8,9,9],'Марс':[9,8,8,9,9],'Юпитер':[9,8,8,9,9],'Сатурн':[9,8,8,8,9],'Уран':[9,8,8,8,9],'Нептун':[9,8,8,7,9],'Плутон':[9,8,8,7,9],'Сев. Узел':[7,5,5,6,7],'Лилит':[7,5,5,6,7]};
 function natalAspects(P){ const names=Object.keys(ORB_NAT); const out=[];
@@ -497,10 +524,10 @@ function houseIngresses(ser,c){ const res={};
       ev.push({ms,h,retro:!fwd}); prev=h; } }
     res[n]={first:houseOf(arr[0],c),ev}; });
   return res; }
-function transitAspects(ser,targets){ const res=[];
+function transitAspects(ser,targets,orbFn){ const res=[];
   ser.names.forEach(n=>{ if(n==='Юж. Узел') return; const arr=ser.S[n];
     Object.entries(targets).forEach(([tn,tl])=>{
-      ASPECTS.forEach(([s,ang],k)=>{ if(k>0&&(CONJ_ONLY.has(n)||CONJ_ONLY.has(tn))) return; const orb=ORB_TR[n][k];
+      ASPECTS.forEach(([s,ang],k)=>{ if(k>0&&(CONJ_ONLY.has(n)||CONJ_ONLY.has(tn))) return; const orb=orbFn?orbFn(n,k):ORB_TR[n][k];
         const dev=i=>{ const sep=Math.abs(((arr[i]-tl+540)%360)-180); return sep-ang; };
         let inside=false, cur=null;
         for(let i=0;i<arr.length;i++){ const d=dev(i); const inn=Math.abs(d)<=orb;
@@ -530,6 +557,22 @@ function loopsOf(ser,names){ const out=[]; const H=3600000;
         out.push({pl:n,inMs,rMs,dMs,outMs,rLon,dLon}); i=j; } } });
   return out.sort((x,y)=>x.rMs-y.rMs); }
 function inArc(l,a,b){ return norm(l-a)<=norm(b-a); } // дуга от a вперёд до b
+// взаимные аспекты транзитных планет (общие транзиты)
+function mutualAspects(ser,names,y0,y1){ const out=[]; const T=ser.T;
+  for(let i=0;i<names.length;i++)for(let j=i+1;j<names.length;j++){ const a=names[i],b=names[j]; const A1=ser.S[a],B1=ser.S[b];
+    ASPECTS.forEach(([s,ang])=>{ const dv=k=>Math.abs(Math.abs(((A1[k]-B1[k]+540)%360)-180)-ang);
+      for(let k=1;k<T.length-1;k++){ const d0=dv(k-1),d1=dv(k),d2=dv(k+1); if(d1<=d0&&d1<d2&&d1<2){
+        const g=m=>Math.abs(Math.abs(((lonAt(a,m)-lonAt(b,m)+540)%360)-180)-ang); let lo=T[k-1],hi=T[k+1];
+        for(let q=0;q<40;q++){const m1=lo+(hi-lo)/3,m2=hi-(hi-lo)/3; if(g(m1)<g(m2)) hi=m2; else lo=m1;} const mm=(lo+hi)/2;
+        if(g(mm)<0.1&&mm>=y0&&mm<y1) out.push({a,b,s,ms:mm,lon:lonAt(a,mm)}); } } }); }
+  return out.sort((x,y)=>x.ms-y.ms); }
+// тау-квадраты: оппозиция двух планет и квадрат третьей к обеим (орбис 5°)
+function tSquares(ser,names,y0,y1){ const res=[]; const T=ser.T; const sep=(x,y)=>Math.abs(((x-y+540)%360)-180); const open={};
+  for(let k=0;k<T.length;k++){ if(T[k]<y0||T[k]>=y1) continue; const now=new Set();
+    for(let i=0;i<names.length;i++)for(let j=i+1;j<names.length;j++){ const a=names[i],b=names[j]; if(Math.abs(sep(ser.S[a][k],ser.S[b][k])-180)>5) continue;
+      for(const c of names){ if(c===a||c===b) continue; if(Math.abs(sep(ser.S[c][k],ser.S[a][k])-90)<=5&&Math.abs(sep(ser.S[c][k],ser.S[b][k])-90)<=5){ const key=a+'|'+b+'|'+c; now.add(key); if(!open[key]) open[key]={a,b,c,from:T[k],to:T[k]}; else open[key].to=T[k]; } } }
+    Object.keys(open).forEach(key=>{ if(!now.has(key)){ res.push(open[key]); delete open[key]; } }); }
+  Object.values(open).forEach(v=>res.push(v)); return res.sort((x,y)=>x.from-y.from); }
 
 /* QRCode for JavaScript - Kazuhiko Arase (MIT), via qrcode-terminal (Apache-2.0) */
 const QRLib=(function(){const M={},C={};function R(n){n=n.replace(/^\.\//,"").replace(/\.js$/,"");if(C[n])return C[n].exports;const m={exports:{}};C[n]=m;M[n](m,m.exports,R);return m.exports;}
@@ -1835,6 +1878,12 @@ async function saveFocus(btn){ const st=btn.parentElement.querySelector('.savest
 function showFallback(btn,cv){ let im=btn.parentElement.querySelector('img.prev'); if(!im){ im=document.createElement('img'); im.className='prev'; im.alt='Фокус года'; btn.parentElement.appendChild(im); } im.src=cv.toDataURL('image/png'); }
 document.addEventListener('click',e=>{ const b=e.target.closest('.savebtn'); if(b&&LAST) saveFocus(b); });
 
+document.addEventListener('click',e=>{ if(e.target.closest('.printbtn')){ try{ window.print(); }catch(_){} } });
+
+let HZ=1; document.addEventListener('click',e=>{ const b=e.target.closest('.zb'); if(!b) return; const tb=document.querySelector('#p-heat table.heat'); if(!tb) return;
+  const box=tb.parentElement; if(b.dataset.z==='+') HZ=Math.min(2,HZ+0.15); else if(b.dataset.z==='-') HZ=Math.max(0.3,HZ-0.15); else { tb.style.zoom=1; HZ=Math.min(1,box.clientWidth/tb.scrollWidth); }
+  tb.style.zoom=HZ; });
+
 const CITIES=[["Москва", 55.7558, 37.6173, "Europe/Moscow"], ["Санкт-Петербург", 59.9343, 30.3351, "Europe/Moscow"], ["Новосибирск", 55.0084, 82.9357, "Asia/Novosibirsk"], ["Екатеринбург", 56.8389, 60.6057, "Asia/Yekaterinburg"], ["Казань", 55.7963, 49.1088, "Europe/Moscow"], ["Нижний Новгород", 56.3269, 44.0059, "Europe/Moscow"], ["Челябинск", 55.1644, 61.4368, "Asia/Yekaterinburg"], ["Самара", 53.1959, 50.1002, "Europe/Samara"], ["Омск", 54.9885, 73.3242, "Asia/Omsk"], ["Ростов-на-Дону", 47.2357, 39.7015, "Europe/Moscow"], ["Уфа", 54.7388, 55.9721, "Asia/Yekaterinburg"], ["Красноярск", 56.0153, 92.8932, "Asia/Krasnoyarsk"], ["Воронеж", 51.672, 39.1843, "Europe/Moscow"], ["Пермь", 58.0105, 56.2502, "Asia/Yekaterinburg"], ["Волгоград", 48.708, 44.5133, "Europe/Volgograd"], ["Краснодар", 45.0355, 38.9753, "Europe/Moscow"], ["Саратов", 51.5331, 46.0342, "Europe/Saratov"], ["Ульяновск", 54.3142, 48.4031, "Europe/Ulyanovsk"], ["Астрахань", 46.3479, 48.0336, "Europe/Astrakhan"], ["Киров", 58.6036, 49.668, "Europe/Kirov"], ["Тюмень", 57.153, 65.5343, "Asia/Yekaterinburg"], ["Барнаул", 53.3474, 83.7784, "Asia/Barnaul"], ["Томск", 56.4846, 84.9476, "Asia/Tomsk"], ["Иркутск", 52.287, 104.305, "Asia/Irkutsk"], ["Якутск", 62.0355, 129.6755, "Asia/Yakutsk"], ["Владивосток", 43.1155, 131.8855, "Asia/Vladivostok"], ["Хабаровск", 48.4802, 135.0719, "Asia/Vladivostok"], ["Магадан", 59.5682, 150.8085, "Asia/Magadan"], ["Петропавловск-Камчатский", 53.0452, 158.6511, "Asia/Kamchatka"], ["Мурманск", 68.9585, 33.0827, "Europe/Moscow"], ["Архангельск", 64.5401, 40.5433, "Europe/Moscow"], ["Норильск", 69.3558, 88.1893, "Asia/Krasnoyarsk"], ["Брянск", 53.2434, 34.364, "Europe/Moscow"], ["Кемерово", 55.3547, 86.0873, "Asia/Novokuznetsk"], ["Тула", 54.1931, 37.6177, "Europe/Moscow"], ["Калининград", 54.7104, 20.4522, "Europe/Kaliningrad"], ["Симферополь", 44.9521, 34.1024, "Europe/Simferopol"], ["Минск", 53.9006, 27.559, "Europe/Minsk"], ["Киев", 50.4501, 30.5234, "Europe/Kiev"], ["Алматы", 43.222, 76.8512, "Asia/Almaty"], ["Ташкент", 41.2995, 69.2401, "Asia/Tashkent"], ["Баку", 40.4093, 49.8671, "Asia/Baku"], ["Ереван", 40.1792, 44.4991, "Asia/Yerevan"], ["Тбилиси", 41.7151, 44.8271, "Asia/Tbilisi"], ["Кишинёв", 47.0105, 28.8638, "Europe/Chisinau"], ["Рига", 56.9496, 24.1052, "Europe/Riga"], ["Сан-Франциско", 37.7749, -122.4194, "America/Los_Angeles"]];
 const $=id=>document.getElementById(id);
 const cs=$('city'); cs.innerHTML='<option value="">Другой - введите координаты и зону</option>'+CITIES.map((c,i)=>`<option value="${i}">${c[0]}</option>`).join(''); cs.value='';
@@ -1861,6 +1910,7 @@ const hs=h=>`${ROM[h]} (${h})`;
 const deg=(l,sec)=>{ const d=dms(l,sec); return `${d.txt} ${gz(d.s)} ${SIGN_GEN[d.s]}`; };
 const PLAN=['Солнце','Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон'];
 const PTS=['Сев. Узел','Юж. Узел','Лилит'];
+const MONF=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'];
 const MON=['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'];
 const p2=n=>String(n).padStart(2,'0');
 function fdt(ms,vtz,withTime=true){ const d=new Date(ms+vtz*3600000); return `${p2(d.getUTCDate())}.${p2(d.getUTCMonth()+1)}.${d.getUTCFullYear()}`+(withTime?` ${p2(d.getUTCHours())}:${p2(d.getUTCMinutes())}`:''); }
@@ -1911,7 +1961,7 @@ function run(){ window.__ran=true;
  const EC=eclipses(Y);
  EC.forEach(e=>{ const k=per.findIndex(([a,b])=>e.ms>=a&&e.ms<b); if(k>=0) cell[houseOf(e.lon,c)][k].e.push(e); });
  const eg=e=>`<span class="g ge" title="${e.solar?'Солнечное':'Лунное'} затмение ${fdt(e.ms,vtz,false)}" style="--m:url(${SYM[e.solar?'eS':'eL']})"></span>`;
- let h=`<h2>Фокус года ${Y}: сферы жизни, где соберутся планеты</h2><p class="sub">Где собираются планеты. Считаются все девять планет от Солнца до Плутона: если в доме за ${split===2?'половину месяца':'декаду'} побывали две планеты, клетка подсвечена, три и больше - выделена сильнее. Медленные планеты стоят в доме месяцами и задают фон, быстрые дают вспышки. Узлы и Лилит показаны, но в подсветку не входят.</p><div class="saverow"><button type="button" class="savebtn">Сохранить «Фокус года» картинкой</button><span class="savest note"></span></div><p class="note mobhint">На телефоне таблицу удобнее смотреть, повернув экран. Или сохраните картинку и увеличивайте пальцами.</p><div class="scroll"><table class="heat${split===3?' dec':''}"><thead><tr><th></th>`+MON.map(m=>`<th class="m" colspan="${split}">${m}</th>`).join('')+'</tr><tr><th></th>'+per.map(p=>`<th>${p[2]}</th>`).join('')+'</tr></thead><tbody>';
+ let h=`<h2>Фокус года ${Y} по сферам жизни</h2><div class="sub loopintro"><p>Показывает месяцы, когда в одном доме собирается несколько транзитных планет: темы этого дома в это время на первом плане.</p><p>Две планеты за ${split===2?'половину месяца':'декаду'} - клетка подсвечена, три и больше - цвет темнее.</p><p>Медленные планеты стоят в доме месяцами и задают фон. Быстрые, проходя по ним, активируют и усиливают их действие.</p><p>Лунные Узлы и Лилит показаны, но в подсветке не учитываются.</p></div><div class="saverow"><button type="button" class="savebtn">Сохранить «Фокус года» картинкой</button><span class="savest note"></span></div><div class="zoombar"><span class="note">Масштаб таблицы:</span><button type="button" class="zb" data-z="-">−</button><button type="button" class="zb" data-z="+">+</button><button type="button" class="zb" data-z="fit">Вся таблица на экран</button></div><div class="scroll"><table class="heat${split===3?' dec':''}"><thead><tr><th></th>`+MON.map(m=>`<th class="m" colspan="${split}">${m}</th>`).join('')+'</tr><tr><th></th>'+per.map(p=>`<th>${p[2]}</th>`).join('')+'</tr></thead><tbody>';
  for(let r=1;r<=12;r++){ h+=`<tr><td class="h">${ROM[r]} <small>(${r})</small></td>`; cell[r].forEach((q,k)=>{ const n=q.p.size; h+=`<td class="${n>=3?'c3':n===2?'c2':''} ${k%split===0?'mstart':''}"><div class="cl">${[...q.p].map(x=>q.r[x]>0?`<span class="gw">${g(x)}<span class="rr">R</span></span>`:g(x)).join('')}${[...q.x].map(x=>g(x)).join('')}${q.e.map(eg).join('')}</div></td>`; }); h+='</tr>'; }
  h+='</tbody></table></div><div class="legend">'
   +'<div class="row"><b>Планеты</b><div class="items">'+PLAN.map(n=>`<span>${g(n)} ${n}</span>`).join('')+'</div></div>'
@@ -1926,23 +1976,62 @@ function run(){ window.__ran=true;
  { const ci=cs.value===''?'':', '+CITIES[+cs.value][0]; LAST={Y,cell,per,split,EC,c,vtz,name:$('nm').value.trim(),birth:`${$('dt').value.split('-').reverse().join('.')} ${$('tm').value}${ci}`}; }
  // ---- houses
  const ING=houseIngresses(ser,c);
- let H='<h2>Планеты по домам '+Y+'</h2><p class="sub">Дом на 1 января и даты перехода через куспиды. R - планета возвращается в предыдущий дом ретроградно.</p>';
- ser.names.forEach(n=>{ const it=ING[n]; let cur=houseOf(ser.S[n][ser.T.findIndex(ms=>ms>=y0)],c); const ev=it.ev.filter(e=>e.ms>=y0&&e.ms<y1);
-   H+=`<div class="hrow"><div class="pl">${g(n)} ${n}</div><div class="steps"><span class="step">1 янв: <b>${hs(cur)}</b></span>${ev.map(e=>`<span class="step">${fdt(e.ms,vtz)} → <b>${hs(e.h)}</b>${e.retro?' <span class="r">R</span>':''}</span>`).join('')}${ev.length?'':'<span class="step">весь год в этом доме</span>'}</div></div>`; });
+  let H='<h2>Транзитные планеты по домам '+Y+'</h2><div class="sub loopintro"><p>Периоды, когда каждая транзитная планета идёт по дому вашей натальной карты.</p><p>R - планета вернулась в дом ретроградно. Если планета петляет по куспиду, она проходит его до трёх раз, и периоды в одном доме повторяются.</p></div>';
+ ser.names.forEach(n=>{ const it=ING[n]; let cur=houseOf(ser.S[n][ser.T.findIndex(ms=>ms>=y0)],c); const ev=it.ev.filter(e=>e.ms>=y0&&e.ms<y1); const prevEv=it.ev.filter(e=>e.ms<y0).pop(); const nextEv=it.ev.find(e=>e.ms>=y1);
+   const pr=[]; let st=prevEv?prevEv.ms:null, h0=cur, rr=prevEv?prevEv.retro:false; ev.forEach(e=>{ pr.push({a:st,b:e.ms,h:h0,r:rr}); st=e.ms; h0=e.h; rr=e.retro; }); pr.push({a:st,b:nextEv?nextEv.ms:null,h:h0,r:rr});
+   const fp=(m,first)=>m===null?(first?'ранее':'позже'):fdt(m,vtz);
+   H+=`<div class="hrow"><div class="pl">${g(n)} ${n}</div><div class="steps">${pr.map((p,k)=>`<span class="step"><b>${hs(p.h)}</b>${p.r?' <span class="r">R</span>':''}: ${p.a===null?'до':'с '+fdt(p.a,vtz)} ${p.a===null?fp(p.b,false):'по '+fp(p.b,false)}</span>`).join('')}</div></div>`; });
+ const ctg={}; for(let h=1;h<=12;h++) ctg[ROM[h]]=c[h];
+ const CA=transitAspects(ser,ctg,()=>3).filter(a=>a.s==='a0'&&a.end>=y0&&a.start<y1&&(a.exact.length===0||a.exact.some(m=>m>=y0-30*864e5&&m<y1))).sort((a,b)=>(a.exact[0]||a.start)-(b.exact[0]||b.start));
+ const ctr=ser.names.filter(n=>n!=='Юж. Узел'); const cshown=new Set(ctr);
+ H+=`<h2 style="margin-top:22px">Транзиты по куспидам домов ${Y}</h2><div class="sub loopintro"><p>Соединение транзитной планеты, Лунного Узла или Лилит с куспидом дома. У куспида своего орбиса нет, поэтому берём 3° до куспида и 3° после: вхождение в орбис, точное соединение и выход из орбиса.</p><p>Если планета петляет, в колонке «Точное соединение» до трёх дат.</p><p>Выбирайте кнопки с планетами, по которым нужны расчёты.</p></div><div class="chips" id="cuspchips">${ctr.map(n=>`<button type="button" aria-pressed="true" data-n="${n}">${g(n)} ${n}</button>`).join('')}</div><div class="scroll"><table class="t"><thead><tr><th>Транзит</th><th>Куспид</th><th>Вхождение в орбис</th><th>Точное соединение</th><th>Выход из орбиса</th></tr></thead><tbody id="cuspbody"></tbody></table></div>`;
  $('p-houses').innerHTML=H;
+ const drawCusp=()=>{ const rows=CA.filter(a=>cshown.has(a.tr)); $('cuspbody').innerHTML=rows.map(a=>`<tr><td>${g(a.tr)} ${a.tr}</td><td>${a.to} (${ROM.indexOf(a.to)}-й дом)${a.to==='I'?' Asc':a.to==='IV'?' IC':a.to==='VII'?' Dsc':a.to==='X'?' MC':''}</td><td class="num">${a.start<=ser.T[0]?'ранее':fdt(a.start,vtz,false)}</td><td class="num">${a.exact.length?a.exact.map(m=>fdt(m,vtz)).join('<br>'):'без точного соединения'}</td><td class="num">${a.end>=ser.T[ser.T.length-1]?'позже':fdt(a.end,vtz,false)}</td></tr>`).join('')||'<tr><td colspan="5">Нет транзитов для выбранных планет.</td></tr>'; };
+ $('cuspchips').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ const on=b.getAttribute('aria-pressed')!=='true'; b.setAttribute('aria-pressed',on); on?cshown.add(b.dataset.n):cshown.delete(b.dataset.n); drawCusp(); }));
+ drawCusp();
  // ---- transit aspects
  const tg={}; ['Солнце','Луна','Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон','Сев. Узел','Лилит','Asc','MC'].forEach(x=>tg[x]=N.P[x]);
  const AS=transitAspects(ser,tg).filter(a=>a.end>=y0&&a.start<y1&&(a.exact.length===0||a.exact.some(m=>m>=y0-30*864e5&&m<y1))).sort((a,b)=>(a.exact[0]||a.start)-(b.exact[0]||b.start));
  const trn=ser.names.filter(n=>n!=='Юж. Узел'); const shown=new Set(trn);
  const drawAsp=()=>{ const rows=AS.filter(a=>shown.has(a.tr));
    $('aspbody').innerHTML=rows.map(a=>`<tr><td>${g(a.tr)} ${a.tr}</td><td>${ga(a.s)}</td><td>${g(a.to)} ${a.to}</td><td class="num">${a.start<=ser.T[0]?'ранее':fdt(a.start,vtz,false)}</td><td class="num">${a.exact.length?a.exact.map(m=>fdt(m,vtz)).join('<br>'):'без точного аспекта'}</td><td class="num">${a.end>=ser.T[ser.T.length-1]?'позже':fdt(a.end,vtz,false)}</td></tr>`).join('')||'<tr><td colspan="6">Нет аспектов для выбранных планет.</td></tr>'; };
- $('p-asp').innerHTML='<h2>Аспекты транзитов к натальной карте '+Y+'</h2><p class="sub">Вход в орбис, точный аспект и выход. До точной даты аспект сходящийся, после - расходящийся. Несколько точных дат - касания в петле. К Лилит, Asc и MC считается только соединение, транзитная Лилит тоже даёт только соединения.</p><div class="chips" id="aspchips">'+trn.map(n=>`<button type="button" aria-pressed="true" data-n="${n}">${g(n)} ${n}</button>`).join('')+'</div><div class="scroll"><table class="t"><thead><tr><th>Транзит</th><th>Аспект</th><th>К натальной</th><th>Вход в орбис</th><th>Точно</th><th>Выход</th></tr></thead><tbody id="aspbody"></tbody></table></div>';
+ $('p-asp').innerHTML='<h2>Аспекты транзитов к натальной карте '+Y+'</h2><div class="sub loopintro"><p>Вхождение в орбис, точный аспект и выход из орбиса.</p><p>До точного аспекта аспект сходящийся, после - расходящийся.</p><p>Если планета в петле, она касается точки натальной карты до трёх раз: тогда в колонке «Точный аспект» несколько дат.</p><p>Транзиты Лунных Узлов и Лилит учитываются только в соединении с планетами и куспидами домов.</p><p>Орбисы транзитов: Солнце 7°, Меркурий, Венера, Марс 5°, Юпитер и Сатурн 3°, Уран, Нептун, Плутон 2°, Лунные Узлы 3°, Лилит 4° (для соединения; для секстиля меньше).</p><p>Выбирайте кнопки с планетами, по которым нужны расчёты.</p></div><div class="chips" id="aspchips">'+trn.map(n=>`<button type="button" aria-pressed="true" data-n="${n}">${g(n)} ${n}</button>`).join('')+'</div><div class="scroll"><table class="t"><thead><tr><th>Транзит</th><th>Аспект</th><th>К натальной</th><th>Вхождение в орбис</th><th>Точный аспект</th><th>Выход из орбиса</th></tr></thead><tbody id="aspbody"></tbody></table></div>';
  $('aspchips').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ const on=b.getAttribute('aria-pressed')!=='true'; b.setAttribute('aria-pressed',on); on?shown.add(b.dataset.n):shown.delete(b.dataset.n); drawAsp(); }));
  drawAsp();
+ // ---- благоприятные и напряжённые периоды (личные)
+ { const MAL=new Set(['Марс','Сатурн','Уран','Плутон']), LUM=new Set(['Солнце','Луна','Asc','MC']), BEN=new Set(['Юпитер','Венера']), GOODT=new Set(['Солнце','Луна','Венера','Юпитер','Asc','MC']);
+   const kind=(tr,to,sx)=>{ if(tr==='Лилит'||tr==='Сев. Узел') return '';
+     if((sx==='a90'||sx==='a180')&&MAL.has(tr)&&(MAL.has(to)||LUM.has(to))) return 't';
+     if((sx==='a90'||sx==='a180')&&MAL.has(to)&&MAL.has(tr)) return 't';
+     if(sx==='a0'&&MAL.has(tr)&&(MAL.has(to)||to==='Солнце'||to==='Луна')) return 't';
+     if((sx==='a60'||sx==='a120')&&(BEN.has(tr)||BEN.has(to))) return 'h';
+     if(sx==='a0'&&BEN.has(tr)&&GOODT.has(to)) return 'h'; return ''; };
+   const EV=[]; AS.forEach(a=>{ const k=kind(a.tr,a.to,a.s); if(!k) return; a.exact.filter(m=>m>=y0&&m<y1).forEach(m=>EV.push({m,a,k})); }); EV.sort((x,y)=>x.m-y.m);
+   const mt=Array(12).fill(0), mh=Array(12).fill(0); EV.forEach(e=>{ const mo=new Date(e.m+vtz*3600000).getUTCMonth(); (e.k==='t'?mt:mh)[mo]++; });
+   const top=(arr)=>{ const mx=Math.max(...arr); return mx>0?MONF.filter((_,i)=>arr[i]===mx).join(', '):'нет'; };
+   const mxv=Math.max(1,...mt,...mh);
+   let P=`<h2>Благоприятные и напряжённые периоды ${Y}</h2><div class="sub loopintro"><p><b>Напряжённые</b> - квадраты, оппозиции и соединения транзитных Марса, Сатурна, Урана, Плутона между собой и к натальным Солнцу, Луне, Asc и MC. Например, транзитный Марс к натальному Сатурну или Сатурн к натальному Марсу. В такие даты лучше не планировать операции, в том числе стоматологические, и рискованные начинания.</p><p><b>Благоприятные</b> - трины и секстили с участием Юпитера и Венеры, соединения транзитных Юпитера и Венеры с натальными Солнцем, Луной, Венерой, Юпитером, Asc и MC.</p></div>`;
+   P+=`<div class="kingbox"><p style="margin:0">Больше всего напряжённых аспектов: <b>${top(mt)}</b></p><p style="margin:4px 0 0">Больше всего благоприятных: <b>${top(mh)}</b></p></div>`;
+   P+='<div class="scroll"><table class="t mbar"><thead><tr><th>Месяц</th><th>Напряжённые</th><th>Благоприятные</th></tr></thead><tbody>'+MONF.map((m,i)=>`<tr><td>${m}</td><td><span class="bar bt" style="width:${mt[i]/mxv*100}%"></span> ${mt[i]||''}</td><td><span class="bar bh" style="width:${mh[i]/mxv*100}%"></span> ${mh[i]||''}</td></tr>`).join('')+'</tbody></table></div>';
+   P+='<h2 style="margin-top:18px">Даты по порядку</h2><div class="scroll"><table class="t"><thead><tr><th>Точный аспект</th><th>Транзит</th><th></th><th>К натальной</th><th>Характер</th><th>Орбис: с - по</th></tr></thead><tbody>'+(EV.map(e=>`<tr><td class="num">${fdt(e.m,vtz)}</td><td>${g(e.a.tr)} ${e.a.tr}</td><td>${ga(e.a.s)}</td><td>${g(e.a.to)} ${e.a.to}</td><td>${e.k==='t'?'<span style="color:var(--eclipse);font-weight:700">напряжённый</span>':'<span style="color:#2E7DBA;font-weight:700">благоприятный</span>'}</td><td class="num">${e.a.start<=ser.T[0]?'ранее':fdt(e.a.start,vtz,false)} - ${e.a.end>=ser.T[ser.T.length-1]?'позже':fdt(e.a.end,vtz,false)}</td></tr>`).join('')||'<tr><td colspan="6">Нет таких аспектов в этом году.</td></tr>')+'</tbody></table></div>';
+   $('p-per').innerHTML=P; }
+ // ---- общие транзиты
+ { const PLM=['Солнце','Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон']; const MAL=new Set(['Марс','Сатурн','Уран','Плутон']); const BEN=new Set(['Юпитер','Венера']);
+   const MA=mutualAspects(ser,PLM,y0,y1);
+   const tk=m=>((m.s==='a90'||m.s==='a180'||m.s==='a0')&&((MAL.has(m.a)&&MAL.has(m.b))||((m.a==='Солнце'||m.b==='Солнце')&&(MAL.has(m.a)||MAL.has(m.b)))))?'t':(((m.s==='a60'||m.s==='a120')&&(BEN.has(m.a)||BEN.has(m.b)))||(m.s==='a0'&&BEN.has(m.a)&&BEN.has(m.b)))?'h':'';
+   const L2=MA.map(m=>({...m,k:tk(m)})).filter(m=>m.k);
+   const TS=tSquares(ser,PLM,y0,y1);
+   let M=`<h2>Общие транзиты ${Y}</h2><div class="sub loopintro"><p>Аспекты транзитных планет между собой - фон года для всех, без привязки к натальной карте.</p><p><b>Напряжённые:</b> квадраты, оппозиции и соединения Марса, Сатурна, Урана и Плутона между собой и с Солнцем. <b>Благоприятные:</b> трины и секстили с участием Юпитера и Венеры, соединение Венеры и Юпитера.</p></div>`;
+   M+='<div class="scroll"><table class="t"><thead><tr><th>Точный аспект</th><th>Аспект</th><th>Характер</th></tr></thead><tbody>'+(L2.map(m=>`<tr><td class="num">${fdt(m.ms,vtz)}</td><td>${g(m.a)} ${m.a} ${ga(m.s)} ${g(m.b)} ${m.b}</td><td>${m.k==='t'?'<span style="color:var(--eclipse);font-weight:700">напряжённый</span>':'<span style="color:#2E7DBA;font-weight:700">благоприятный</span>'}</td></tr>`).join('')||'<tr><td colspan="3">Нет.</td></tr>')+'</tbody></table></div>';
+   M+=`<h2 style="margin-top:18px">Тау-квадраты ${Y}</h2><p class="sub">Две планеты в оппозиции и третья в квадрате к обеим, орбис 5°. Напряжённая конфигурация: вершина - планета в квадрате.</p>`;
+   M+=TS.length?'<div class="scroll"><table class="t"><thead><tr><th>Период</th><th>Оппозиция</th><th>Вершина</th></tr></thead><tbody>'+TS.map(t=>`<tr><td class="num">${fdt(t.from,vtz,false)} - ${fdt(t.to,vtz,false)}</td><td>${g(t.a)} ${t.a} ${ga('a180')} ${g(t.b)} ${t.b}</td><td>${g(t.c)} ${t.c}</td></tr>`).join('')+'</tbody></table></div>':'<p class="sub">В этом году тау-квадратов нет.</p>';
+   $('p-mun').innerHTML=M; }
  // ---- natal for verification
  const DIGN={'Солнце':[[4],[10],[0],[6]],'Луна':[[3],[9],[1],[7]],'Меркурий':[[2,5],[8,11],[10],[4]],'Венера':[[1,6],[7,0],[11],[5]],'Марс':[[0,7],[6,1],[9],[3]],'Юпитер':[[8,11],[2,5],[3],[9]],'Сатурн':[[9,10],[3,4],[6],[0]],'Уран':[[10],[4],[7],[1]],'Нептун':[[11],[5],[8],[2]],'Плутон':[[7],[1],[4],[10]]};
  const DLAB=['обитель','изгнание','экзальтация','падение'];
- const dign=n=>{ const d=DIGN[n]; if(!d) return ''; const sg=Math.floor(norm(N.P[n])/30); const k=d.findIndex(a=>a.includes(sg)); return k<0?'':DLAB[k]; };
+ const NAall=natalAspects(N.P); const cntA={}; NAall.forEach(a=>{ cntA[a.a]=(cntA[a.a]||0)+1; cntA[a.b]=(cntA[a.b]||0)+1; });
+ const cuspSigns=new Set(); for(let h=1;h<=12;h++) cuspSigns.add(Math.floor(norm(c[h])/30));
+ const dign=n=>{ const d=DIGN[n]; if(!d) return ''; const sg=Math.floor(norm(N.P[n])/30); const k=d.findIndex(a=>a.includes(sg)); let t=k<0?'нейтральное':DLAB[k]; if(!cuspSigns.has(sg)&&!(cntA[n]>0)) t+=', в шахте (феральная)'; return t; };
  const SENIOR={7:'Плутон',10:'Уран',11:'Нептун'}, JUNIOR={7:'Марс',10:'Сатурн',11:'Юпитер'};
  const rank=(n,sg)=>SENIOR[sg]===n?'старший':JUNIOR[sg]===n?'младший':'';
  const rules=n=>{ const d=DIGN[n]; if(!d) return []; const out=[];
@@ -1950,12 +2039,13 @@ function run(){ window.__ran=true;
      if(d[0].includes(s0)){ const r=rank(n,s0); out.push(ROM[h]+(r?` (${r})`:'')); }
      if(s0!==s1) for(let k=(s0+1)%12;k!==s1;k=(k+1)%12) if(d[0].includes(k)){ const r=rank(n,k); out.push(ROM[h]+` (включённый знак${r?', '+r:''})`); } }
    return out; };
- const NAall=natalAspects(N.P); const cntA={}; NAall.forEach(a=>{ cntA[a.a]=(cntA[a.a]||0)+1; cntA[a.b]=(cntA[a.b]||0)+1; });
  const PLAN10=['Солнце','Луна','Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон'];
  const mx=Math.max(0,...PLAN10.map(n=>cntA[n]||0)); const kings=PLAN10.filter(n=>(cntA[n]||0)===mx&&mx>0);
- const kingHTML=kings.length?`<p class="sub" style="margin-top:12px"><b>Король аспектов</b> (принимает больше всего аспектов): ${kings.map(n=>`${g(n)} ${n}`).join(', ')} - ${mx} ${mx%10===1&&mx%100!==11?'аспект':(mx%10>=2&&mx%10<=4&&(mx%100<10||mx%100>=20))?'аспекта':'аспектов'}.</p>`:'';
+ const HARMS=new Set(['a60','a120']), TENS=new Set(['a90','a180']);
+ const kingHTML=kings.length?'<div class="kingbox"><b>Король аспектов</b> - принимает больше всего аспектов в натальной карте:'+kings.map(k=>{ const as=NAall.filter(a=>a.a===k||a.b===k).map(a=>({o:a.a===k?a.b:a.a,s:a.s})); const grp=(f,t)=>{ const x=as.filter(f); return x.length?`<li>${t} (${x.length}): ${x.map(y=>`${ga(y.s)} ${g(y.o)} ${y.o}`).join(', ')}</li>`:''; };
+   return `<p style="margin:6px 0 2px">${g(k)} <b>${k}</b> - ${as.length} ${as.length%10===1&&as.length%100!==11?'аспект':(as.length%10>=2&&as.length%10<=4&&(as.length%100<10||as.length%100>=20))?'аспекта':'аспектов'}</p><ul style="margin:0;padding-left:18px">${grp(y=>y.s==='a0','соединения')}${grp(y=>HARMS.has(y.s),'гармоничные')}${grp(y=>TENS.has(y.s),'напряжённые')}</ul>`; }).join('')+'</div>':'';
  const PL=['Солнце','Луна','Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон','Сев. Узел','Юж. Узел','Лилит'];
- let T=(c.equal?'<p class="sub"><b>Широта выше 66°:</b> дома Плацидус здесь не строятся, использована равнодомная сетка от асцендента.</p>':'')+`<h2>Натальная карта</h2><p class="sub">Сравните градусы и куспиды со своей программой. Здесь же - сила и слабость планет по знаку и дома, которыми управляет каждая планета, включая включённые знаки. Где у знака два управителя, высшая планета - старший управитель, классическая - младший. Расхождение в несколько секунд нормально. Если отличается асцендент, проверьте часовой пояс и координаты. Узлы сейчас ${NODE_MODE==='mean'?'средние':'истинные'}, Лилит средняя с проекцией на эклиптику, как в Сотисе.</p><div class="scroll"><table class="t"><thead><tr><th>Планета</th><th>Положение</th><th>Дом</th><th>Сила и слабость</th><th>Управляет домами</th></tr></thead><tbody>`+PL.map(n=>`<tr><td>${pn(n)}</td><td class="num">${deg(N.P[n],true)}</td><td>${hs(houseOf(N.P[n],c))}</td><td>${dign(n)}</td><td>${rules(n).join(', ')}</td></tr>`).join('')+'</tbody></table></div>'+kingHTML+'<h2 style="margin-top:18px">Куспиды ('+(c.equal?'равнодомная':'Плацидус')+')</h2><div class="scroll"><table class="t"><thead><tr><th>Дом</th><th>Куспид</th><th>Дом</th><th>Куспид</th></tr></thead><tbody>';
+ let T=(c.equal?'<p class="sub"><b>Широта выше 66°:</b> дома Плацидус здесь не строятся, использована равнодомная сетка от асцендента.</p>':'')+`<h2>Натальная карта</h2><div class="sub loopintro"><p>Чтобы избежать ошибок, сравните градусы и куспиды домов с любым астропроцессором. Расхождение в несколько секунд нормально. Если отличается асцендент, проверьте часовой пояс и координаты. Лунные Узлы и Лилит по умолчанию средние.</p><p>Здесь же - сила и слабость планет по знаку зодиака и дома, которыми управляет каждая планета.</p></div><div class="scroll"><table class="t"><thead><tr><th>Планета</th><th>Положение</th><th>Дом</th><th>Сила и слабость</th><th>Управляет домами</th></tr></thead><tbody>`+PL.map(n=>`<tr><td>${pn(n)}</td><td class="num">${deg(N.P[n],true)}</td><td>${hs(houseOf(N.P[n],c))}</td><td>${dign(n)}</td><td>${rules(n).join(', ')}</td></tr>`).join('')+'</tbody></table></div>'+kingHTML+'<h2 style="margin-top:18px">Куспиды ('+(c.equal?'равнодомная':'Плацидус')+')</h2><div class="scroll"><table class="t"><thead><tr><th>Дом</th><th>Куспид</th><th>Дом</th><th>Куспид</th></tr></thead><tbody>';
  for(let i=1;i<=6;i++) T+=`<tr><td>${hs(i)}${i===1?' Asc':i===4?' IC':''}</td><td class="num">${deg(c[i],true)}</td><td>${hs(i+6)}${i+6===7?' Dsc':i+6===10?' MC':''}</td><td class="num">${deg(c[i+6],true)}</td></tr>`;
  // ---- колесо натальной карты
  const W0=c[1]; const ang=l=>(180+norm(l-W0))*d2r; const pt=(l,r)=>[50+r*Math.cos(ang(l)), 50-r*Math.sin(ang(l))];
@@ -1984,13 +2074,13 @@ function run(){ window.__ran=true;
  { const L=[]; let t=A.MakeTime(new Date(Date.UTC(Y,0,1))); const end=Date.UTC(Y+1,0,1);
    for(const ph of [0,180]){ let tt=A.MakeTime(new Date(Date.UTC(Y,0,1))); for(;;){ const m=A.SearchMoonPhase(ph,tt,40); if(!m||m.date.getTime()>=end) break; L.push({ms:m.date.getTime(),nm:ph===0,lon:eclLon(ph===0?'Солнце':'Луна',m)}); tt=m.AddDays(1); } }
    L.sort((a,b)=>a.ms-b.ms); const ecl=EC.map(e=>e.ms);
-   let LU=`<h2>Новолуния и Полнолуния ${Y}</h2><p class="sub">Новолуние - время начинать в сфере дома, куда оно попало. Полнолуние - время завершать и подводить итоги: смотрим дом, где стоит Луна, и противоположный, где Солнце. Затмения отмечены отдельно.</p><div class="scroll"><table class="t"><thead><tr><th>Дата и время</th><th></th><th>Градус</th><th>Дом</th></tr></thead><tbody>`;
+   let LU=`<h2>Новолуния и Полнолуния ${Y}</h2><div class="sub loopintro"><p><b>Новолуние</b> - соединение Солнца и Луны. После Новолуния Луна растёт, поэтому это время начинать новое в сфере дома, куда попало Новолуние. Первые 1-2 дня, пока Луна в сожжении рядом с Солнцем, лучше не спешить.</p><p><b>Полнолуние</b> - оппозиция Солнца и Луны: между ними Земля. После Полнолуния Луна убывает - время завершать начатое, подводить итоги, избавляться от лишнего, наводить порядок, брать аскезы, садиться на диету.</p><p>Полнолуние затрагивает сразу два противоположных дома: в доме, где стоит Луна, ситуация достигает пика и выходит наружу, в доме, где стоит Солнце, приходит понимание, что с этим делать.</p><p>Затмения отмечены отдельно.</p></div><div class="scroll"><table class="t"><thead><tr><th>Дата и время</th><th></th><th>Градус</th><th>Дом</th></tr></thead><tbody>`;
    L.forEach(x=>{ const isE=ecl.some(e=>Math.abs(e-x.ms)<864e5); const hh=houseOf(x.lon,c); LU+=`<tr><td class="num">${fdt(x.ms,vtz)}</td><td>${g(x.nm?'Солнце':'Луна')} ${x.nm?'Новолуние':'Полнолуние'}${isE?` <span style="color:var(--eclipse);font-weight:700">· ${x.nm?'Солнечное':'Лунное'} затмение</span>`:''}</td><td class="num">${deg(x.lon,false)}</td><td>${hs(hh)}${x.nm?'':` <span class="note">(Солнце - ${ROM[houseOf(norm(x.lon+180),c)]})</span>`}</td></tr>`; });
    $('p-lun').innerHTML=LU+'</tbody></table></div>'; }
  // ---- natal aspects
  const NA=natalAspects(N.P).sort((a,b)=>a.dv-b.dv);
  const dvf=x=>{ const t=Math.round(x*60); return Math.floor(t/60)+'°'+p2(t%60)+"'"; };
- $('p-natasp').innerHTML='<h2>Аспекты натальной карты</h2><p class="sub">Отсортированы от самых точных. Орбис аспекта - сумма половин орбисов двух планет по вашей таблице: Солнце 10 и Сатурн 8 дают 5 + 4 = 9°. С Лилит - только соединение.</p><div class="scroll"><table class="t"><thead><tr><th>Планета</th><th>Аспект</th><th>Планета</th><th>Отклонение</th></tr></thead><tbody>'+NA.map(a=>`<tr><td>${pn(a.a)}</td><td>${ga(a.s)}</td><td>${pn(a.b)}</td><td class="num">${dvf(a.dv)}</td></tr>`).join('')+'</tbody></table></div>';
+ $('p-natasp').innerHTML='<h2>Аспекты натальной карты</h2><div class="scroll"><table class="t"><thead><tr><th>Планета</th><th>Градус</th><th>Аспект</th><th>Планета</th><th>Градус</th><th>Отклонение</th></tr></thead><tbody>'+NA.map(a=>`<tr><td>${pn(a.a)}</td><td class="num">${deg(N.P[a.a],false)}</td><td>${ga(a.s)}</td><td>${pn(a.b)}</td><td class="num">${deg(N.P[a.b],false)}</td><td class="num">${dvf(a.dv)}</td></tr>`).join('')+'</tbody></table></div>';
  // ---- loops
  const LP=loopsOf(ser,['Меркурий','Венера','Марс','Юпитер','Сатурн']).filter(l=>l.dMs&&(l.inMs||l.rMs)<y1&&(l.outMs||l.dMs)>=y0);
  const NPTS=['Солнце','Луна','Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон','Сев. Узел','Юж. Узел','Лилит','Asc','MC'];
@@ -2006,14 +2096,16 @@ function run(){ window.__ran=true;
  $('p-loops').innerHTML=LH;
  let lockMsg='';
  if(UNLOCKED&&TRIAL){ const key=[y,mo,d,hh,mm,lat.toFixed(2),lon.toFixed(2)].join('|'); const demo=key.startsWith('1955|2|24|19|15|'); if(!demo&&!trialAllows(key)){ UNLOCKED=false; lockMsg=`Пробный доступ: использованы все ${TRIAL.limit} карты на этом устройстве.`; } }
- if(!UNLOCKED){ ['p-houses','p-asp','p-lun','p-natasp'].forEach(id=>$(id).innerHTML=lockHTML(lockMsg)); if(lockMsg){ UNLOCKED=true; } }
+ if(UNLOCKED&&!(lockMsg)){ const who=$('who').textContent;
+   ['p-heat','p-loops','p-houses','p-asp','p-per','p-mun','p-lun','p-nat','p-natasp'].forEach(id=>$(id).insertAdjacentHTML('afterbegin',`<div class="printbar"><button type="button" class="printbtn">Распечатать или сохранить в PDF</button></div><div class="printhead">Астронавигатор · Вера Райт · ${who}</div>`)); }
+ if(!UNLOCKED){ ['p-houses','p-asp','p-per','p-lun','p-natasp'].forEach(id=>$(id).innerHTML=lockHTML(lockMsg)); if(lockMsg){ UNLOCKED=true; } }
  else if(TRIAL){ $('p-houses').insertAdjacentHTML('afterbegin',`<p class="note" style="margin-bottom:10px">Пробный доступ: карт осталось ${Math.max(0,TRIAL.limit-trialCharts().length)} из ${TRIAL.limit}.</p>`); }
  $('p-heat').insertAdjacentHTML('beforeend',ctaHTML());
  }catch(e){ $('p-heat').innerHTML=`<p class="err">${e.message}</p>`; document.querySelector('[data-p="heat"]').click(); console.error(e); }
 }
 $('f').addEventListener('submit',e=>{e.preventDefault(); $('p-heat').innerHTML='<p class="sub">Считаю…</p>'; setTimeout(run,30);});
 const INTRO='<h2>Ваш фокус года</h2><p class="sub">Введите дату, время и город рождения и нажмите «Рассчитать». За минуту вы увидите, в каких сферах жизни соберутся планеты в выбранном году, где пройдут затмения и петли планет. Данные никуда не отправляются: расчёт идёт прямо в вашем браузере.</p>';
-['p-heat','p-loops','p-houses','p-asp','p-lun','p-nat','p-natasp'].forEach(id=>$(id).innerHTML=INTRO);
+['p-heat','p-loops','p-houses','p-asp','p-per','p-mun','p-lun','p-nat','p-natasp'].forEach(id=>$(id).innerHTML=INTRO);
 $('demo').addEventListener('click',()=>{ $('nm').value='Стив Джобс (пример)'; $('dt').value='1955-02-24'; $('tm').value='19:15'; cs.value=String(CITIES.length-1); $('lat').value='37.7749'; $('lon').value='-122.4194'; $('zone').value='America/Los_Angeles'; tzManual=false; autoTz(); $('p-heat').innerHTML='<p class="sub">Считаю…</p>'; setTimeout(run,30); });
 </script>
 </body></html>
