@@ -101,6 +101,8 @@ table.t{width:100%;font-size:14px}
 .savebtn{font:inherit;font-weight:700;background:var(--plum);color:var(--surface);border:0;border-radius:8px;padding:9px 14px;cursor:pointer}
 .savebtn:disabled{opacity:.6}
 img.prev{width:100%;border:1px solid var(--line);border-radius:6px;margin-top:8px}
+.mobhint{display:none;margin:-6px 0 10px}
+@media (max-width:700px){.mobhint{display:block}}
 .brand{font-size:13px;color:var(--gold);letter-spacing:.04em;text-transform:uppercase;width:100%}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
@@ -132,7 +134,7 @@ body{margin:0}
   <button role="tab" id="tb-loops" aria-selected="false" data-p="loops">Петли планет</button>
   <button role="tab" id="tb-houses" aria-selected="false" data-p="houses">Планеты по домам</button>
   <button role="tab" id="tb-asp" aria-selected="false" data-p="asp">Аспекты транзитов</button>
-  <button role="tab" id="tb-nat" aria-selected="false" data-p="nat">Карта для сверки</button>
+  <button role="tab" id="tb-nat" aria-selected="false" data-p="nat">Натальная карта</button>
   <button role="tab" id="tb-natasp" aria-selected="false" data-p="natasp">Аспекты НК</button>
  </div>
  <div class="panel" id="p-heat"></div>
@@ -1818,7 +1820,8 @@ async function saveFocus(btn){ const st=btn.parentElement.querySelector('.savest
   try{ const cv=await renderFocusPNG(); const blob=await new Promise(r=>cv.toBlob(r,'image/png')); const fname=`Фокус года ${LAST.Y}${LAST.name?' - '+LAST.name.replace(/[\\/:*?"<>|]/g,''):''}.png`;
     let dl=null; try{ dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null; }catch(e){}
     if(dl){ try{ await dl.save({filename:fname,data:blob}); st.textContent='Сохранено.'; }catch(e){ st.textContent=e&&e.code==='declined'?'Сохранение отменено.':'Не получилось сохранить файлом - ниже картинка, её можно сохранить вручную.'; if(!(e&&e.code==='declined')) showFallback(btn,cv); } }
-    else { st.textContent='Нажмите на картинку правой кнопкой (на телефоне - удерживайте) и сохраните.'; showFallback(btn,cv); }
+    else { let ok=false; try{ const u=URL.createObjectURL(blob); const an=document.createElement('a'); an.href=u; an.download=fname; document.body.appendChild(an); an.click(); an.remove(); setTimeout(()=>URL.revokeObjectURL(u),60000); ok=true; }catch(_){}
+      st.textContent=(ok?'Файл сохраняется в «Загрузки». ':'')+'Картинка - ниже: её можно увеличить пальцами, а на телефоне сохранить долгим нажатием.'; showFallback(btn,cv); }
   }catch(e){ st.textContent='Не удалось подготовить картинку.'; console.error(e); } btn.disabled=false; }
 function showFallback(btn,cv){ let im=btn.parentElement.querySelector('img.prev'); if(!im){ im=document.createElement('img'); im.className='prev'; im.alt='Фокус года'; btn.parentElement.appendChild(im); } im.src=cv.toDataURL('image/png'); }
 document.addEventListener('click',e=>{ const b=e.target.closest('.savebtn'); if(b&&LAST) saveFocus(b); });
@@ -1899,7 +1902,7 @@ function run(){ window.__ran=true;
  const EC=eclipses(Y);
  EC.forEach(e=>{ const k=per.findIndex(([a,b])=>e.ms>=a&&e.ms<b); if(k>=0) cell[houseOf(e.lon,c)][k].e.push(e); });
  const eg=e=>`<span class="g ge" title="${e.solar?'Солнечное':'Лунное'} затмение ${fdt(e.ms,vtz,false)}" style="--m:url(${SYM[e.solar?'eS':'eL']})"></span>`;
- let h=`<h2>Фокус года ${Y}: сферы жизни, где соберутся планеты</h2><p class="sub">Где собираются планеты. Считаются все девять планет от Солнца до Плутона: если в доме за ${split===2?'половину месяца':'декаду'} побывали две планеты, клетка подсвечена, три и больше - выделена сильнее. Медленные планеты стоят в доме месяцами и задают фон, быстрые дают вспышки. Узлы и Лилит показаны, но в подсветку не входят.</p><div class="saverow"><button type="button" class="savebtn">Сохранить «Фокус года» картинкой</button><span class="savest note"></span></div><div class="scroll"><table class="heat${split===3?' dec':''}"><thead><tr><th></th>`+MON.map(m=>`<th class="m" colspan="${split}">${m}</th>`).join('')+'</tr><tr><th></th>'+per.map(p=>`<th>${p[2]}</th>`).join('')+'</tr></thead><tbody>';
+ let h=`<h2>Фокус года ${Y}: сферы жизни, где соберутся планеты</h2><p class="sub">Где собираются планеты. Считаются все девять планет от Солнца до Плутона: если в доме за ${split===2?'половину месяца':'декаду'} побывали две планеты, клетка подсвечена, три и больше - выделена сильнее. Медленные планеты стоят в доме месяцами и задают фон, быстрые дают вспышки. Узлы и Лилит показаны, но в подсветку не входят.</p><div class="saverow"><button type="button" class="savebtn">Сохранить «Фокус года» картинкой</button><span class="savest note"></span></div><p class="note mobhint">На телефоне таблицу удобнее смотреть, повернув экран. Или сохраните картинку и увеличивайте пальцами.</p><div class="scroll"><table class="heat${split===3?' dec':''}"><thead><tr><th></th>`+MON.map(m=>`<th class="m" colspan="${split}">${m}</th>`).join('')+'</tr><tr><th></th>'+per.map(p=>`<th>${p[2]}</th>`).join('')+'</tr></thead><tbody>';
  for(let r=1;r<=12;r++){ h+=`<tr><td class="h">${ROM[r]} <small>(${r})</small></td>`; cell[r].forEach((q,k)=>{ const n=q.p.size; h+=`<td class="${n>=3?'c3':n===2?'c2':''} ${k%split===0?'mstart':''}"><div class="cl">${[...q.p].map(x=>q.r[x]>0?`<span class="gw">${g(x)}<span class="rr">R</span></span>`:g(x)).join('')}${[...q.x].map(x=>g(x)).join('')}${q.e.map(eg).join('')}</div></td>`; }); h+='</tr>'; }
  h+='</tbody></table></div><div class="legend">'
   +'<div class="row"><b>Планеты</b><div class="items">'+PLAN.map(n=>`<span>${g(n)} ${n}</span>`).join('')+'</div></div>'
@@ -1928,8 +1931,16 @@ function run(){ window.__ran=true;
  $('aspchips').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ const on=b.getAttribute('aria-pressed')!=='true'; b.setAttribute('aria-pressed',on); on?shown.add(b.dataset.n):shown.delete(b.dataset.n); drawAsp(); }));
  drawAsp();
  // ---- natal for verification
+ const DIGN={'Солнце':[[4],[10],[0],[6]],'Луна':[[3],[9],[1],[7]],'Меркурий':[[2,5],[8,11],[10],[4]],'Венера':[[1,6],[7,0],[11],[5]],'Марс':[[0,7],[6,1],[9],[3]],'Юпитер':[[8,11],[2,5],[3],[9]],'Сатурн':[[9,10],[3,4],[6],[0]],'Уран':[[10],[4],[7],[1]],'Нептун':[[11],[5],[8],[2]],'Плутон':[[7],[1],[4],[10]]};
+ const DLAB=['обитель','изгнание','экзальтация','падение'];
+ const dign=n=>{ const d=DIGN[n]; if(!d) return ''; const sg=Math.floor(norm(N.P[n])/30); const k=d.findIndex(a=>a.includes(sg)); return k<0?'':DLAB[k]; };
+ const rules=n=>{ const d=DIGN[n]; if(!d) return []; const hh=[]; for(let h=1;h<=12;h++) if(d[0].includes(Math.floor(norm(c[h])/30))) hh.push(h); return hh; };
+ const NAall=natalAspects(N.P); const cntA={}; NAall.forEach(a=>{ cntA[a.a]=(cntA[a.a]||0)+1; cntA[a.b]=(cntA[a.b]||0)+1; });
+ const PLAN10=['Солнце','Луна','Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон'];
+ const mx=Math.max(0,...PLAN10.map(n=>cntA[n]||0)); const kings=PLAN10.filter(n=>(cntA[n]||0)===mx&&mx>0);
+ const kingHTML=kings.length?`<p class="sub" style="margin-top:12px"><b>Король аспектов</b> (принимает больше всего аспектов): ${kings.map(n=>`${g(n)} ${n}`).join(', ')} - ${mx} ${mx%10===1&&mx%100!==11?'аспект':(mx%10>=2&&mx%10<=4&&(mx%100<10||mx%100>=20))?'аспекта':'аспектов'}.</p>`:'';
  const PL=['Солнце','Луна','Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон','Сев. Узел','Юж. Узел','Лилит'];
- let T=(c.equal?'<p class="sub"><b>Широта выше 66°:</b> дома Плацидус здесь не строятся, использована равнодомная сетка от асцендента.</p>':'')+`<h2>Карта для сверки с Сотисом</h2><p class="sub">Сравните градусы и куспиды со своей программой. Расхождение в несколько секунд нормально. Если отличается асцендент, проверьте часовой пояс и координаты. Узлы сейчас ${NODE_MODE==='mean'?'средние':'истинные'}, Лилит средняя с проекцией на эклиптику, как в Сотисе.</p><div class="scroll"><table class="t"><thead><tr><th>Планета</th><th>Положение</th><th>Дом</th></tr></thead><tbody>`+PL.map(n=>`<tr><td>${pn(n)}</td><td class="num">${deg(N.P[n],true)}</td><td>${hs(houseOf(N.P[n],c))}</td></tr>`).join('')+'</tbody></table></div><h2 style="margin-top:18px">Куспиды ('+(c.equal?'равнодомная':'Плацидус')+')</h2><div class="scroll"><table class="t"><thead><tr><th>Дом</th><th>Куспид</th><th>Дом</th><th>Куспид</th></tr></thead><tbody>';
+ let T=(c.equal?'<p class="sub"><b>Широта выше 66°:</b> дома Плацидус здесь не строятся, использована равнодомная сетка от асцендента.</p>':'')+`<h2>Натальная карта</h2><p class="sub">Сравните градусы и куспиды со своей программой. Здесь же - сила и слабость планет по знаку и дома, которыми управляет каждая планета. Расхождение в несколько секунд нормально. Если отличается асцендент, проверьте часовой пояс и координаты. Узлы сейчас ${NODE_MODE==='mean'?'средние':'истинные'}, Лилит средняя с проекцией на эклиптику, как в Сотисе.</p><div class="scroll"><table class="t"><thead><tr><th>Планета</th><th>Положение</th><th>Дом</th><th>Сила и слабость</th><th>Управляет домами</th></tr></thead><tbody>`+PL.map(n=>`<tr><td>${pn(n)}</td><td class="num">${deg(N.P[n],true)}</td><td>${hs(houseOf(N.P[n],c))}</td><td>${dign(n)}</td><td>${rules(n).map(h=>ROM[h]).join(', ')}</td></tr>`).join('')+'</tbody></table></div>'+kingHTML+'<h2 style="margin-top:18px">Куспиды ('+(c.equal?'равнодомная':'Плацидус')+')</h2><div class="scroll"><table class="t"><thead><tr><th>Дом</th><th>Куспид</th><th>Дом</th><th>Куспид</th></tr></thead><tbody>';
  for(let i=1;i<=6;i++) T+=`<tr><td>${hs(i)}${i===1?' Asc':i===4?' IC':''}</td><td class="num">${deg(c[i],true)}</td><td>${hs(i+6)}${i+6===7?' Dsc':i+6===10?' MC':''}</td><td class="num">${deg(c[i+6],true)}</td></tr>`;
  $('p-nat').innerHTML=T+'</tbody></table></div>';
  // ---- natal aspects
