@@ -126,7 +126,7 @@ img.prev{width:100%;border:1px solid var(--line);border-radius:6px;margin-top:8p
 .pick{font-weight:700;margin:10px 0 6px;font-size:15px}
 .h2s{font-family:var(--body);font-size:14px;color:var(--muted)}
 .ecl-lines p{margin:0 0 4px;font-size:14.5px}
-.qh{font-size:16px;margin:14px 0 6px}
+.qh{font-size:16px;margin:24px 0 8px}
 .qbars{display:grid;gap:6px;max-width:640px}
 .qrow{display:grid;grid-template-columns:118px 1fr 44px minmax(0,190px);align-items:center;gap:8px;font-size:14px}
 .qt{background:var(--plum-soft);border-radius:4px;height:14px;overflow:hidden}
@@ -138,7 +138,13 @@ img.prev{width:100%;border:1px solid var(--line);border-radius:6px;margin-top:8p
 .snap .printbar,.snap .chips,.snap .zoombar,.snap .saverow,.snap .cta,.snap .pick{display:none!important}
 .snap .printhead{display:block!important;font-size:12px;color:var(--muted);margin-bottom:8px}
 .snap{width:max-content!important;min-width:760px;max-width:none!important}
-.printbtn{font:inherit;font-size:13px;background:transparent;color:var(--plum);border:1px solid var(--plum);border-radius:999px;padding:5px 12px;cursor:pointer}
+.printbtn{font:inherit;font-size:14px;font-weight:700;background:var(--plum);color:var(--surface);border:0;border-radius:8px;padding:8px 13px;cursor:pointer}
+.printbtn:disabled{opacity:.6}
+.pblock .printbar{margin-top:14px}
+.qexp{margin-top:14px!important}
+.checknote{margin-top:22px;padding-top:12px;border-top:1px solid var(--line);font-style:italic}
+.loopnav{display:flex;flex-wrap:wrap;gap:6px 14px;margin:0 0 12px;font-size:14.5px}
+.loopnav a{color:var(--plum);font-weight:700}
 .printhead{display:none}
 @media print{
  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
@@ -215,7 +221,7 @@ body{margin:0}
   <button role="tab" id="tb-loops" aria-selected="false" data-p="loops">Петли планет</button>
   <button role="tab" id="tb-mun" aria-selected="false" data-p="mun">Общие транзиты</button>
   <button role="tab" id="tb-asp" aria-selected="false" data-p="asp">Аспекты транзитов к НК</button>
-  <button role="tab" id="tb-per" aria-selected="false" data-p="per">Благоприятные и напряжённые</button>
+  <button role="tab" id="tb-per" aria-selected="false" data-p="per">Благоприятные и напряжённые транзиты к НК</button>
   <button role="tab" id="tb-lun" aria-selected="false" data-p="lun">Новолуния и Полнолуния</button>
   <button role="tab" id="tb-prog" aria-selected="false" data-p="prog">Прогрессии</button>
  </div>
@@ -1942,7 +1948,7 @@ function doPrint(html,btn){ let pa=document.getElementById('printarea'); if(!pa)
   document.body.classList.add('pa'); const done=()=>{ document.body.classList.remove('pa'); window.removeEventListener('afterprint',done); };
   window.addEventListener('afterprint',done); try{ window.print(); }catch(_){} setTimeout(done,1500);
   if(btn&&!btn.parentElement.querySelector('.printnote')) btn.insertAdjacentHTML('afterend','<span class="printnote">Если окно печати не открылось, откройте сайт в Chrome или Safari: во встроенном браузере Telegram и MAX печать не работает.</span>'); }
-document.addEventListener('click',e=>{ const b=e.target.closest('.printbtn'); if(b){ const pn=b.closest('.panel'); doPrint(pn.innerHTML,b); return; }
+document.addEventListener('click',e=>{ const b=e.target.closest('.printbtn:not(.pngbtn):not(.printblk):not(.pngblk):not(.rcsave)'); if(b){ const pn=b.closest('.panel'); doPrint(pn.innerHTML,b); return; }
   const k=e.target.closest('.printblk'); if(k){ doPrint(k.closest('.pblock').innerHTML,k); } });
 // ---- затмение в «Фокусе года»: по нажатию показываем дату, градус и знак
 document.addEventListener('click',e=>{ const old=document.querySelector('.egpop'); const b=e.target.closest('.egb');
@@ -1968,11 +1974,13 @@ async function savePNG(btn,node,fname){ let st=btn.parentElement.querySelector('
 document.addEventListener('click',e=>{ const b=e.target.closest('.pngbtn'); if(b){ const pn=b.closest('.panel'); const k=pn.id.slice(2); const nm=(document.getElementById('nm').value||'').trim().replace(/[\\/:*?"<>|]/g,'');
     savePNG(b,pn,`${TABNAME[k]||'Астронавигатор'}${nm?' - '+nm:''}.png`); return; }
   const r=e.target.closest('.rcsave'); if(r){ savePNG(r,document.getElementById('rchartbox'),'Ретроградность планет.png'); } });
+document.addEventListener('click',e=>{ const b=e.target.closest('.pngblk'); if(!b) return; const bl=b.closest('.pblock'); const nm=(document.getElementById('nm').value||'').trim().replace(/[\\/:*?"<>|]/g,'');
+  savePNG(b,bl,`${bl.dataset.nm||'Астронавигатор'}${nm?' - '+nm:''}.png`); });
 
 const CITIES=[["Москва", 55.7558, 37.6173, "Europe/Moscow"], ["Санкт-Петербург", 59.9343, 30.3351, "Europe/Moscow"], ["Новосибирск", 55.0084, 82.9357, "Asia/Novosibirsk"], ["Екатеринбург", 56.8389, 60.6057, "Asia/Yekaterinburg"], ["Казань", 55.7963, 49.1088, "Europe/Moscow"], ["Нижний Новгород", 56.3269, 44.0059, "Europe/Moscow"], ["Челябинск", 55.1644, 61.4368, "Asia/Yekaterinburg"], ["Самара", 53.1959, 50.1002, "Europe/Samara"], ["Омск", 54.9885, 73.3242, "Asia/Omsk"], ["Ростов-на-Дону", 47.2357, 39.7015, "Europe/Moscow"], ["Уфа", 54.7388, 55.9721, "Asia/Yekaterinburg"], ["Красноярск", 56.0153, 92.8932, "Asia/Krasnoyarsk"], ["Воронеж", 51.672, 39.1843, "Europe/Moscow"], ["Пермь", 58.0105, 56.2502, "Asia/Yekaterinburg"], ["Волгоград", 48.708, 44.5133, "Europe/Volgograd"], ["Краснодар", 45.0355, 38.9753, "Europe/Moscow"], ["Саратов", 51.5331, 46.0342, "Europe/Saratov"], ["Ульяновск", 54.3142, 48.4031, "Europe/Ulyanovsk"], ["Астрахань", 46.3479, 48.0336, "Europe/Astrakhan"], ["Киров", 58.6036, 49.668, "Europe/Kirov"], ["Тюмень", 57.153, 65.5343, "Asia/Yekaterinburg"], ["Барнаул", 53.3474, 83.7784, "Asia/Barnaul"], ["Томск", 56.4846, 84.9476, "Asia/Tomsk"], ["Иркутск", 52.287, 104.305, "Asia/Irkutsk"], ["Якутск", 62.0355, 129.6755, "Asia/Yakutsk"], ["Владивосток", 43.1155, 131.8855, "Asia/Vladivostok"], ["Хабаровск", 48.4802, 135.0719, "Asia/Vladivostok"], ["Магадан", 59.5682, 150.8085, "Asia/Magadan"], ["Петропавловск-Камчатский", 53.0452, 158.6511, "Asia/Kamchatka"], ["Мурманск", 68.9585, 33.0827, "Europe/Moscow"], ["Архангельск", 64.5401, 40.5433, "Europe/Moscow"], ["Норильск", 69.3558, 88.1893, "Asia/Krasnoyarsk"], ["Брянск", 53.2434, 34.364, "Europe/Moscow"], ["Кемерово", 55.3547, 86.0873, "Asia/Novokuznetsk"], ["Тула", 54.1931, 37.6177, "Europe/Moscow"], ["Калининград", 54.7104, 20.4522, "Europe/Kaliningrad"], ["Симферополь", 44.9521, 34.1024, "Europe/Simferopol"], ["Минск", 53.9006, 27.559, "Europe/Minsk"], ["Киев", 50.4501, 30.5234, "Europe/Kiev"], ["Алматы", 43.222, 76.8512, "Asia/Almaty"], ["Ташкент", 41.2995, 69.2401, "Asia/Tashkent"], ["Баку", 40.4093, 49.8671, "Asia/Baku"], ["Ереван", 40.1792, 44.4991, "Asia/Yerevan"], ["Тбилиси", 41.7151, 44.8271, "Asia/Tbilisi"], ["Кишинёв", 47.0105, 28.8638, "Europe/Chisinau"], ["Рига", 56.9496, 24.1052, "Europe/Riga"], ["Сан-Франциско", 37.7749, -122.4194, "America/Los_Angeles"]];
 const $=id=>document.getElementById(id);
 const PANELS=["p-nat", "p-natasp", "p-houses", "p-heat", "p-loops", "p-mun", "p-asp", "p-per", "p-lun", "p-prog"];
-const TABNAME={"nat": "Натальная карта", "natasp": "Аспекты НК", "houses": "Транзиты по домам НК", "heat": "Фокус года", "loops": "Петли планет", "mun": "Общие транзиты", "asp": "Аспекты транзитов к НК", "per": "Благоприятные и напряжённые", "lun": "Новолуния и Полнолуния", "prog": "Прогрессии"};
+const TABNAME={"nat": "Натальная карта", "natasp": "Аспекты НК", "houses": "Транзиты по домам НК", "heat": "Фокус года", "loops": "Петли планет", "mun": "Общие транзиты", "asp": "Аспекты транзитов к НК", "per": "Благоприятные и напряжённые транзиты к НК", "lun": "Новолуния и Полнолуния", "prog": "Прогрессии"};
 const cs=$('city'); cs.innerHTML='<option value="">Другой - введите координаты и зону</option>'+CITIES.map((c,i)=>`<option value="${i}">${c[0]}</option>`).join(''); cs.value='';
 const ZONES=[...new Set(CITIES.map(c=>c[3]))]; $('zone').innerHTML=ZONES.map(z=>`<option>${z}</option>`).join(''); $('zone').value='Europe/Moscow';
 function zoneOffset(zone,y,mo,d,hh,mm){ const want=Date.UTC(y,mo-1,d,hh,mm); let u=want; const f=new Intl.DateTimeFormat('en-US',{timeZone:zone,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
@@ -2039,6 +2047,7 @@ function run(){ window.__ran=true;
  const dsg=l=>{ const d=dms(l,false); return `${d.txt} ${gz(d.s)}`; };
  const isR=(n,ms)=>{ if(n==='Солнце'||n==='Луна') return false; return ((lonAt(n,ms+432e5)-lonAt(n,ms-432e5)+540)%360-180)<0; };
  const pblock=(html)=>`<section class="pblock">${html}</section>`;
+ const pblock2=(html,nm)=>`<section class="pblock" data-nm="${nm}"><div class="printbar"><button type="button" class="printbtn printblk">Распечатать или сохранить в PDF</button><button type="button" class="printbtn pngblk">Сохранить картинкой</button></div>${html}</section>`;
  const STN={}; loopsOf(ser,['Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон']).forEach(l=>{ (STN[l.pl]=STN[l.pl]||[]).push({ms:l.rMs,t:'R'}); if(l.dMs) STN[l.pl].push({ms:l.dMs,t:'D'}); });
  const moveTxt=(a)=>{ if(a.exact.length>1) return `R, петля: ${a.exact.length} касания`; if(!a.exact.length) return 'R, разворот в орбисе'; return isR(a.tr,a.exact[0])?'R':''; };
  // ---- heat
@@ -2072,11 +2081,11 @@ function run(){ window.__ran=true;
    const pr=[]; let st=prevEv?prevEv.ms:null, h0=cur, rr=prevEv?prevEv.retro:false; ev.forEach(e=>{ pr.push({a:st,b:e.ms,h:h0,r:rr}); st=e.ms; h0=e.h; rr=e.retro; }); pr.push({a:st,b:nextEv?nextEv.ms:null,h:h0,r:rr});
    const fp=(m,first)=>m===null?(first?'ранее':'позже'):fdt(m,vtz);
    H+=`<div class="hrow"><div class="pl">${g(n)} ${n}</div><div class="steps">${pr.map((p,k)=>{ const st2=(STN[n]||[]).filter(x=>(p.a===null||x.ms>p.a)&&(p.b===null||x.ms<p.b)&&x.ms>=y0-200*864e5&&x.ms<y1+60*864e5); return `<span class="step"><b>${hs(p.h)}</b>: ${p.a===null?'до':'с '+fdt(p.a,vtz)} ${p.a===null?fp(p.b,false):'по '+fp(p.b,false)}${st2.map(x=>` · <span class="r">${x.t==='R'?'R с '+fdt(x.ms,vtz,false):'</span><span>директно с '+fdt(x.ms,vtz,false)}</span>`).join('')}</span>`; }).join('')}</div></div>`; });
- H=pblock(H);
+ H=pblock2(H,'Транзитные планеты по домам');
  const ctg={}; for(let h=1;h<=12;h++) ctg[ROM[h]]=c[h];
  const CA=transitAspects(ser,ctg,()=>3).filter(a=>a.s==='a0'&&a.end>=y0&&a.start<y1&&(a.exact.length===0||a.exact.some(m=>m>=y0-30*864e5&&m<y1))).sort((a,b)=>(a.exact[0]||a.start)-(b.exact[0]||b.start));
  const ctr=ser.names.filter(n=>n!=='Юж. Узел'); const cshown=new Set(ctr);
- H+=pblock(`<h2 style="margin-top:22px">Транзиты по куспидам домов ${Y}</h2><div class="sub loopintro"><p>Соединение транзитной планеты, Лунного Узла или Лилит с куспидом дома. У куспида своего орбиса нет, поэтому берём 3° до куспида и 3° после: вхождение в орбис, точное соединение и выход из орбиса.</p><p>Если планета петляет, в колонке «Точное соединение» до трёх дат.</p></div><p class="pick">Выбирайте кнопки с планетами, по которым нужны расчёты.</p><div class="chips" id="cuspchips">${ctr.map(n=>`<button type="button" aria-pressed="true" data-n="${n}">${g(n)} ${n}</button>`).join('')}</div><div class="scroll"><table class="t"><thead><tr><th>Транзит</th><th>Куспид</th><th>Вхождение в орбис</th><th>Точное соединение</th><th>Выход из орбиса</th></tr></thead><tbody id="cuspbody"></tbody></table></div>`);
+ H+=pblock2(`<h2 style="margin-top:22px">Транзиты по куспидам домов ${Y}</h2><div class="sub loopintro"><p>Соединение транзитной планеты, Лунного Узла или Лилит с куспидом дома.</p><p>Орбис берётся 3° до куспида и 3° после: вхождение в орбис, точное соединение, выход из орбиса.</p><p>Дата точного соединения - это момент, когда планета входит в дом: она совпадает с датой начала периода в таблице выше. Вхождение в орбис и выход из орбиса показывают, за сколько дней до этого тема дома начинает звучать и когда стихает.</p><p>Если планета петляет, в колонке «Точное соединение» до трёх дат.</p></div><p class="pick">Выбирайте кнопки с планетами, по которым нужны расчёты.</p><div class="chips" id="cuspchips">${ctr.map(n=>`<button type="button" aria-pressed="true" data-n="${n}">${g(n)} ${n}</button>`).join('')}</div><div class="scroll"><table class="t"><thead><tr><th>Транзит</th><th>Куспид</th><th>Вхождение в орбис</th><th>Точное соединение</th><th>Выход из орбиса</th></tr></thead><tbody id="cuspbody"></tbody></table></div>`,'Транзиты по куспидам домов');
  $('p-houses').innerHTML=H;
  const drawCusp=()=>{ const rows=CA.filter(a=>cshown.has(a.tr)); $('cuspbody').innerHTML=rows.map(a=>`<tr><td>${g(a.tr)} ${a.tr}</td><td>${a.to} (${ROM.indexOf(a.to)}-й дом)${a.to==='I'?' Asc':a.to==='IV'?' IC':a.to==='VII'?' Dsc':a.to==='X'?' MC':''}</td><td class="num">${a.start<=ser.T[0]?'ранее':fdt(a.start,vtz,false)}</td><td class="num">${a.exact.length?a.exact.map(m=>fdt(m,vtz)).join('<br>'):'без точного соединения'}</td><td class="num">${a.end>=ser.T[ser.T.length-1]?'позже':fdt(a.end,vtz,false)}</td></tr>`).join('')||'<tr><td colspan="5">Нет транзитов для выбранных планет.</td></tr>'; };
  $('cuspchips').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ const on=b.getAttribute('aria-pressed')!=='true'; b.setAttribute('aria-pressed',on); on?cshown.add(b.dataset.n):cshown.delete(b.dataset.n); drawCusp(); }));
@@ -2189,12 +2198,16 @@ function run(){ window.__ran=true;
      if(s!==pS) ch.push(`${fdt(ms,vtz,false)} прогрессивная Луна переходит в знак ${SIGNS[s]}.`);
      if(hh!==pH) ch.push(`${fdt(ms,vtz,false)} прогрессивная Луна переходит в ${ROM[hh]} дом.`);
      pS=s; pH=hh; }
+   const nextCh=(kind)=>{ let p0=kind==='s'?Math.floor(pmL(y1)/30):houseOf(pmL(y1),c); for(let ms=y1;ms<y1+40*365*864e5;ms+=3*864e5){ const l=pmL(ms), v=kind==='s'?Math.floor(l/30):houseOf(l,c); if(v!==p0){ let a=ms-3*864e5,b=ms; while(b-a>864e5){ const m=(a+b)/2, lm=pmL(m), vm=kind==='s'?Math.floor(lm/30):houseOf(lm,c); if(vm===p0) a=m; else b=m; } return {ms:b,v}; } } return null; };
+   const ns=nextCh('s'), nh=nextCh('h');
    const lun=[]; let tt=A.MakeTime(new Date(bms-40*864e5)); for(let i=0;i<5;i++){ const m=A.SearchMoonPhase(0,tt,40); if(!m) break; lun.push({r:real(m.date.getTime()),lon:eclLon('Солнце',m)}); tt=m.AddDays(1); }
    const prev=lun.filter(x=>x.r<=y0).pop(), next=lun.find(x=>x.r>y0);
    const nl=x=>`${x.r<bms?'до рождения':fdt(x.r,vtz,false)}, ${dms(x.lon,false).txt} ${SIGN_GEN[dms(x.lon,false).s]}, ${ROM[houseOf(x.lon,c)]} дом`;
    PG=`<h2>Прогрессии ${Y} <span class="h2s">(вторичные, день = год)</span></h2><div class="sub loopintro">`
      +`<p>На 1 января ${Y} года прогрессивная Луна в <b>${dN.txt} ${gz(dN.s)} ${SIGN_GEN[dN.s]}</b>, в ${ROM[houseOf(nowL,c)]} доме.</p>`
      +(ch.length?ch.map(x=>`<p>${x}</p>`).join(''):`<p>В течение ${Y} года прогрессивная Луна не меняет ни знак, ни дом.</p>`)
+     +(ns?`<p>Следующий переход в новый знак: ${fdt(ns.ms,vtz,false)} - в знак ${SIGNS[ns.v]}.</p>`:'')+(nh?`<p>Следующий переход в новый дом: ${fdt(nh.ms,vtz,false)} - в ${ROM[nh.v]} дом.</p>`:'')
+     +`<p class="note">Прогрессивная Луна в среднем проходит один знак зодиака примерно за два с половиной года.</p>`
      +`<p style="margin-top:12px"><b>Прогрессивное Новолуние</b></p>`
      +(prev?`<p>Последнее: ${nl(prev)}.</p>`:'')+(next?`<p>Следующее: ${nl(next)}.</p>`:'')+'</div>'; }
  // кресты и стихии
@@ -2206,7 +2219,7 @@ function run(){ window.__ran=true;
    Object.entries(WQ).forEach(([n,w])=>{ const s=Math.floor(norm(N.P[n])/30); es[s%4]+=w; cr[s%3]+=w; ep[s%4].push(n); cp[s%3].push(n); });
    const tot=es.reduce((a,b)=>a+b,0);
    const ED=[
- {gen:['Огонь: Овен, Лев, Стрелец. Ключевые слова: энергия, активность, энтузиазм, идея; соответствует холерику. Основные качества: тепло и сухость.',
+ {gen:['Ключевые слова: энергия, активность, энтузиазм, идея; соответствует холерику. Основные качества: тепло и сухость.',
   'Огненный человек энергичен, деятелен, инициативен, от него буквально исходит энергия. Он стремится (ведь все огненные знаки мужские) к свободе действия и к власти. Он испытывает постоянную жажду деятельности, и только очень серьёзные препятствия и длительные периоды неудач способны на время лишить его врождённого оптимизма.',
   'Человек Огня всегда готов поделиться с окружающими своей энергией и идеями. Может любить горячую, острую пищу, болеть острыми, воспалительными заболеваниями с высокой температурой.',
   'На эмоциональном уровне для огненного человека характерны страстность, пылкость: он может согреть ближнего, но может и обжечь.',
@@ -2214,14 +2227,14 @@ function run(){ window.__ran=true;
   'Там, где находится огненный человек, обязательно что-нибудь происходит: его энергия не позволяет оставаться пассивными ни ему самому, ни окружающим.'],
   over:['Избыток огня не ощущается человеком как проблема, пока он не столкнётся со сложностями. Также человеку может быть сложно услышать окружающих.'],
   lack:['Недостаток огня может давать нехватку жизненных сил, уверенности в собственных силах, проблемы с пищеварением.','Желательно следить за питанием и заниматься спортом, но без фанатизма.']},
- {gen:['Земля: Телец, Дева, Козерог. Ключевые слова: реальность, практичность, хозяйственность, материальность; твёрдый, прочный, устойчивый, статичный, косный элемент, имеет жёсткую структуру; соответствует флегматику. Основные качества: холод и сухость.',
+ {gen:['Ключевые слова: реальность, практичность, хозяйственность, материальность; твёрдый, прочный, устойчивый, статичный, косный элемент, имеет жёсткую структуру; соответствует флегматику. Основные качества: холод и сухость.',
   'Земные знаки нуждаются в физическом комфорте и материальной обеспеченности.'],
   over:[],
   lack:['При недостатке земли люди могут витать в облаках, поскольку они не «заземлены» непосредственным осознанием своей зависимости от материальных вещей, таких как еда, деньги, жилище.',
   'Это может привести к тому, что человек будет чувствовать себя не на месте в этом мире, без надёжной опоры или корней: он не чувствует почвы под ногами, ощущает, что не вписывается ни в одну нишу в структуре общества, у него могут возникать проблемы с поиском работы, которая приносила бы удовлетворение. Из-за этого состояние физического тела может уходить на второй план.',
   'Если в гороскопе сильный Сатурн, он может компенсировать нехватку земли.',
   'Важно: сознательно внедрять в свою жизнь регулярное расписание - приём пищи, умеренная физическая нагрузка и отдых.']},
- {gen:['Воздух: Близнецы, Весы, Водолей. Ключевые слова: циркуляция, связь, общение, информация, взаимодействие, проводимость, контакты; соответствует сангвинику. Основные качества: тепло и влажность.',
+ {gen:['Ключевые слова: циркуляция, связь, общение, информация, взаимодействие, проводимость, контакты; соответствует сангвинику. Основные качества: тепло и влажность.',
   'Воздух всё связывает, соединяет, объединяет, передаёт информацию и энергию. Девиз воздушной стихии: свобода (Водолей), равенство (Весы) и братство (Близнецы). Воздушные знаки стремятся к свободе движения и самовыражения (мужские знаки).',
   'Люди с ярко выраженной стихией Воздуха общительны, открыты, любознательны, сообразительны, хорошо понимают ценность информации и знают, как ею распорядиться. Самое ценное для них в мире - знания.',
   'Чем больше в гороскопе Воздуха, тем интенсивнее «информационный голод», который утоляется с помощью любых источников информации (книги, газеты, ТВ, интернет). Воздушные люди не только накапливают знания, но и очень любят делиться ими.',
@@ -2231,7 +2244,7 @@ function run(){ window.__ran=true;
   lack:['Люди с недостатком воздушной стихии редко воспринимают это как проблему, так как они слишком вовлечены в действия, чувства и материальную сторону жизни.',
   'Им сложно приспособиться к новым идеям и людям, контактировать, быть объективными. Может быть ослаблена нервная система.',
   'Люди такого типа часто не доверяют тем, кто, по их мнению, слишком много думает. Сильный акцент Меркурия может до некоторой степени компенсировать эту несбалансированность.']},
- {gen:['Вода: Рак, Скорпион, Рыбы. Ключевые слова: эмоции, символы, тайна, объединение, синтез, зыбкость, неустойчивость, неуловимость; сознание, направленное внутрь; соответствует меланхолику. Основные качества: холод и влажность.',
+ {gen:['Ключевые слова: эмоции, символы, тайна, объединение, синтез, зыбкость, неустойчивость, неуловимость; сознание, направленное внутрь; соответствует меланхолику. Основные качества: холод и влажность.',
   'Самая загадочная из стихий: присутствует повсюду, но часто в скрытом виде. Знаки Воды нуждаются в эмоциональном комфорте и защищённости (все они женские).',
   'Люди с сильно выраженной стихией Воды отличаются богатой, насыщенной внутренней жизнью, скрытой от взгляда окружающих. Они обычно задумчивы, романтичны, эмоциональны, обладают богатым воображением, интуицией.',
   'Интересуются всем таинственным и загадочным, во всех жизненных явлениях видят или хотя бы интуитивно чувствуют скрытую подоплёку. У них образное мышление, которое не всегда можно выразить словами.'],
@@ -2244,20 +2257,20 @@ function run(){ window.__ran=true;
   'Таким людям следует внимательно подходить к питанию, им пойдут на пользу периодические очищающие диеты или умеренный пост.']}];
    const CD=[
  ['Люди кардинального креста ориентированы в будущее: предвосхищают ситуацию и находят к будущему самую короткую дорогу. Быстрый темп перемен.',
-  'Кардинальные знаки - Овен, Рак, Весы и Козерог. Характерны импульс, порыв, резкий выброс, вслед за которым следует спад.',
+  'Характерны импульс, порыв, резкий выброс, вслед за которым следует спад.',
   'Кардинальный крест - круг воли и целевых установок. Он символизирует активное начало, Ян, ощущение цели, программы. Овен - движение вперёд, Рак - вглубь, Весы - назад, Козерог - вверх.',
   'Эти знаки бесцельного развития не терпят, они всегда что-то намечают впереди. Движение к цели идёт по прямой и в строго заданном направлении.',
   'При доминирующем кардинальном кресте целей лучше достигать спринтами: 3-4 недели максимум на цель. Быстрый темп перемен будет постоянно вносить корректировки, а то и вовсе менять актуальность цели.',
   'Некоторое исключение - Козерог с медленным управителем Сатурном: для земли важны основательность и результат в конце каждого дня, поэтому над целью он может работать дольше.',
   'Кардинальным знакам важно вводить дедлайны и жёстко отслеживать их выполнение. Рак и Весы (антимарсианские знаки) дедлайны очень не любят, но по-другому значимых результатов не добиться.'],
  ['Фиксированный крест - люди прошлого: у них должно быть отработанное прошлое, им есть что вспомнить. Прошлое для них - стимул к развитию. Медленный темп перемен.',
-  'Фиксированные знаки - Телец, Лев, Скорпион и Водолей. Характерны постоянство, устойчивость, стабильность (часто проявляется как упрямство), упорство.',
+  'Характерны постоянство, устойчивость, стабильность (часто проявляется как упрямство), упорство.',
   'Крест символизирует пассивное начало, Инь, выжидание. Фиксированные люди воплощают в жизнь идеи и инициативы кардинальных: «впрягаются» в дело и тащат его постоянно и неуклонно.',
   'Благодаря фиксированным знакам осуществляются серьёзные, масштабные замыслы, требующие длительного приложения сил. Для этого нужен высокий уровень жизненной энергии, поэтому фиксированные знаки называют также витальными.',
   'Им сложнее раскачаться и войти в новый проект, зато когда они набирают скорость и выстраивают привычный ритм, то способны выполнять очень большой объём работы.',
   'Слабая сторона: фокусируются на цели и своём деле, главное, чтобы никто не мешал, и забывают смотреть по сторонам, чтобы вовремя сориентироваться и быть готовыми к переменам.'],
  ['Мутабельный крест - люди настоящего, поэтому с ними происходят постоянные изменения, каждое мгновение они уникальны. В худшем случае человек подвижного креста живёт одним днём. Человек мутабельного креста может объективно познать настоящее время. Средний темп перемен.',
-  'Мутабельные знаки - Близнецы, Дева, Стрелец и Рыбы. Характерны переменчивость, ориентация на внешние условия, маневрирование, лавирование и выбор оптимального пути или способа действия. Помогают фиксированным людям идти в ногу со временем.',
+  'Характерны переменчивость, ориентация на внешние условия, маневрирование, лавирование и выбор оптимального пути или способа действия. Помогают фиксированным людям идти в ногу со временем.',
   'Сильная сторона: способность оценивать и учитывать окружающую реальность.',
   'Слабая сторона: склонность увлекаться бесконечным перебором возможностей, терять цель и в результате так и не добиваться ничего конкретного.',
   'Как правило, хотят достигать сразу нескольких целей, что сказывается на результативности. Поэтому в идеале стоит группировать дела: либо из одной группы (например, создание дизайна, но для разных проектов), либо проекты, которые как-то пересекаются.']];
@@ -2267,10 +2280,10 @@ function run(){ window.__ran=true;
    const te=top(es), tc=top(cr), le=low(es), lc=low(cr);
    QUAL=`<h2 style="margin-top:18px">Кресты и стихии</h2><p class="note">Солнце - 3 балла; Луна, асцендент и Марс - 2; Венера и Меркурий - 1,5; Юпитер и Сатурн - 1; Уран, Нептун и Плутон - 0,5.</p><div class="sub loopintro"><p>Кресты - динамика психологии: изначально заложенная жизненная стратегия, форма развития и поведения. Каждый крест объединяет все четыре стихии.</p><p>Стихии - статика: устойчивые качества, темперамент.</p></div>`
     +`<h3 class="qh">Кресты качеств</h3>`+bars(CR,cr,['#5B3F8C','#8E79B8','#B9A3D9'],cp)
-    +`<div class="sub loopintro">`+tc.map(i=>`<p>Выражен <b>${CR[i].toLowerCase()} крест</b>.</p>`+CD[i].map(x=>`<p>${x}</p>`).join('')).join('')+lc.map(i=>`<p>Слабо выражен ${CR[i].toLowerCase()} крест.</p>`).join('')+'</div>'
+    +`<div class="sub loopintro">`+tc.map(i=>`<p class="qexp"><b>Выражен ${CR[i].toLowerCase()} крест</b></p>`+CD[i].map(x=>`<p>${x}</p>`).join('')).join('')+lc.map(i=>`<p>Слабо выражен ${CR[i].toLowerCase()} крест.</p>`).join('')+'</div>'
     +`<h3 class="qh">Стихии</h3>`+bars(EL,es,ELC,ep)
-    +`<div class="sub loopintro">`+te.map(i=>`<p>Выражена стихия <b>${ELG[i]}</b>.</p>`+ED[i].gen.map(x=>`<p>${x}</p>`).join('')+(es[i]/tot>=0.35&&ED[i].over.length?`<p><b>Избыток стихии ${ELG[i]}</b></p>`+ED[i].over.map(x=>`<p>${x}</p>`).join(''):'')).join('')+le.map(i=>`<p style="margin-top:10px"><b>Недостаток стихии ${ELG[i]}</b></p>`+ED[i].lack.map(x=>`<p>${x}</p>`).join('')).join('')+'</div>'+'<div class="note" style="margin-top:10px"><p style="margin:0 0 4px">Огонь и Земля - постоянные стихии: цельные, сильные, устойчивые. В сферах планет этих стихий преобладает стремление к постоянству и целенаправленному приложению усилий.</p><p style="margin:0 0 4px">Вода и Воздух - переменчивые, зыбкие стихии: в сферах их планет - стремление к переменам или компромиссам.</p><p style="margin:0">Планеты тоже связаны со стихиями. Огонь - Солнце, Марс, Юпитер. Земля - Венера, Сатурн. Воздух - Меркурий, Уран. Вода - Луна, Нептун, Плутон.</p></div>'; }
- const BOTTOM='<div class="sub loopintro" style="margin-top:16px"><p>Во избежание неточностей проверьте правильность построения натальной карты по градусу вашего асцендента либо постройте натальную карту в любом астропроцессоре.</p><p>Если градус и знак асцендента совпадают, всё в порядке.</p><p>Если нет, проверьте часовой пояс и координаты.</p><p>Лунные Узлы и Лилит по умолчанию средние.</p></div>';
+    +`<div class="sub loopintro">`+te.map(i=>`<p class="qexp"><b>Выражена стихия ${ELG[i]}</b></p>`+ED[i].gen.map(x=>`<p>${x}</p>`).join('')+(es[i]/tot>=0.35&&ED[i].over.length?`<p><b>Избыток стихии ${ELG[i]}</b></p>`+ED[i].over.map(x=>`<p>${x}</p>`).join(''):'')).join('')+le.map(i=>`<p style="margin-top:10px"><b>Недостаток стихии ${ELG[i]}</b></p>`+ED[i].lack.map(x=>`<p>${x}</p>`).join('')).join('')+'</div>'; }
+ const BOTTOM='<div class="sub loopintro checknote"><p>Во избежание неточностей проверьте правильность построения натальной карты по градусу вашего асцендента либо постройте натальную карту в любом астропроцессоре.</p><p>Если градус и знак асцендента совпадают, всё в порядке.</p><p>Если нет, проверьте часовой пояс и координаты.</p><p>Лунные Узлы и Лилит по умолчанию средние.</p></div>';
  $('p-nat').innerHTML=T.replace('<div class="scroll"><table class="t"><thead><tr><th>Планета</th><th>Положение в знаке и доме</th>',WHEEL+'<div class="scroll"><table class="t"><thead><tr><th>Планета</th><th>Положение в знаке и доме</th>')+'</tbody></table></div>'+QUAL+BOTTOM; $('p-prog').innerHTML=PG; $('p-nat').innerHTML=$('p-nat').innerHTML.replace('__RT__',RT);
  // ---- Новолуния и Полнолуния
  { const L=[]; let t=A.MakeTime(new Date(Date.UTC(Y,0,1))); const end=Date.UTC(Y+1,0,1);
@@ -2288,7 +2301,7 @@ function run(){ window.__ran=true;
  const NPTS=['Солнце','Луна','Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон','Сев. Узел','Юж. Узел','Лилит','Asc','MC'];
  const arcHouses=(a,b)=>{ const hs0=[houseOf(a,c)]; for(let k=1;k<=12;k++){ const h=(hs0[hs0.length-1])%12+1; if(inArc(c[h],a,b)&&!hs0.includes(h)) hs0.push(h); else break; } return hs0; };
  const pd=(m,early)=>m?fdt(m,vtz,false):(early?'до 01.07.'+(Y-1):'после 01.03.'+(Y+1));
- let LH=`<h2>Петли планет ${Y}</h2><div class="sub loopintro"><p><b>Петля</b> - участок, который планета проходит трижды: вперёд, назад (ретро) и снова вперёд.</p><p><b>Вход в петлю</b> - день, когда планета впервые доходит до градуса, в который потом вернётся в ретроградном движении и развернётся в прямое (точка разворота).</p><p><b>Выход из петли</b> - день, когда планета повторно проходит градус, в котором стала ретроградной, и дальше идёт в прямом движении.</p><p>Всё, что находится на отрезке петли, планета касается трижды. Как правило, первое касание - завязка: событие начинает формироваться. Ретро - пересмотр, возврат к теме. Третье касание, после разворота вперёд, - развязка: решение или завершение ситуации.</p></div>`;
+ let LH=`<h2>Петли планет ${Y}</h2><nav class="loopnav"><a href="#loopsnat">Петли по натальной карте: дома и планеты</a><a href="#rchartbox">График ретроградности</a></nav><div class="sub loopintro"><p><b>Петля</b> - участок, который планета проходит трижды: вперёд, назад (ретро) и снова вперёд.</p><p><b>Вход в петлю</b> - день, когда планета впервые доходит до градуса, в который потом вернётся в ретроградном движении и развернётся в прямое (точка разворота).</p><p><b>Выход из петли</b> - день, когда планета повторно проходит градус, в котором стала ретроградной, и дальше идёт в прямом движении.</p><p>Всё, что находится на отрезке петли, планета касается трижды. Как правило, первое касание - завязка: событие начинает формироваться. Ретро - пересмотр, возврат к теме. Третье касание, после разворота вперёд, - развязка: решение или завершение ситуации.</p><p>Для каждой петли указаны дома вашей натальной карты, по которым петляет планета, и натальные планеты и точки на отрезке петли. График ретроградности ниже - общий для всех, без привязки к натальной карте.</p></div><div id="loopsnat"></div>`;
  LP.forEach(l=>{ const hsx=arcHouses(l.dLon,l.rLon); const tp=NPTS.filter(n=>N.P[n]!==undefined&&inArc(N.P[n],l.dLon,l.rLon));
    LH+=`<div class="loop"><div class="hd">${g(l.pl)} <span class="r">R</span> ${l.pl}: вход в петлю ${pd(l.inMs,true)}, выход ${pd(l.outMs,false)}</div>
    <div class="ln"><span class="k">Ретро:</span> с ${fdt(l.rMs,vtz)} по ${fdt(l.dMs,vtz)}, ${deg(l.rLon,false)} - ${deg(l.dLon,false)}</div>
@@ -2318,7 +2331,7 @@ function run(){ window.__ran=true;
  let lockMsg='';
  if(UNLOCKED&&TRIAL){ const key=[y,mo,d,hh,mm,lat.toFixed(2),lon.toFixed(2)].join('|'); const demo=key.startsWith('1955|2|24|19|15|'); if(!demo&&!trialAllows(key)){ UNLOCKED=false; lockMsg=`Пробный доступ: использованы все ${TRIAL.limit} карты на этом устройстве.`; } }
  if(UNLOCKED&&!(lockMsg)){ const who=$('who').textContent;
-   PANELS.forEach(id=>$(id).insertAdjacentHTML('afterbegin',`<div class="printbar"><button type="button" class="printbtn">Распечатать или сохранить в PDF</button>${id==='p-heat'?'':'<button type="button" class="printbtn pngbtn">Сохранить картинкой</button>'}</div><div class="printhead">Астронавигатор · Вера Райт · ${who}</div>`)); }
+   PANELS.forEach(id=>$(id).insertAdjacentHTML('afterbegin',(id==='p-houses'?'':`<div class="printbar"><button type="button" class="printbtn">Распечатать или сохранить в PDF</button>${id==='p-heat'?'':'<button type="button" class="printbtn pngbtn">Сохранить картинкой</button>'}</div>`)+`<div class="printhead">Астронавигатор · Вера Райт · ${who}</div>`)); }
  if(!UNLOCKED){ ['p-houses','p-asp','p-per','p-lun','p-natasp'].forEach(id=>$(id).innerHTML=lockHTML(lockMsg)); if(lockMsg){ UNLOCKED=true; } }
  else if(TRIAL){ $('p-houses').insertAdjacentHTML('afterbegin',`<p class="note" style="margin-bottom:10px">Пробный доступ: карт осталось ${Math.max(0,TRIAL.limit-trialCharts().length)} из ${TRIAL.limit}.</p>`); }
  $('p-heat').insertAdjacentHTML('beforeend',ctaHTML());
