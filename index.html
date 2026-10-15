@@ -2,7 +2,7 @@
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Астронавигатор</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Montserrat:wght@600;700&family=Prata&family=PT+Sans:wght@400;700&family=PT+Mono&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Montserrat:wght@500;600;700&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@1,300&family=Prata&family=PT+Sans:wght@400;700&family=PT+Mono&display=swap">
 <style>
 /* Layout: рабочий инструмент астролога - форма слева, результаты вкладками справа; на телефоне в одну колонку */
 :root{
@@ -31,9 +31,9 @@ input::-webkit-calendar-picker-indicator{opacity:0;cursor:pointer;width:22px;hei
 .hdr{display:flex;align-items:center;gap:16px}
 .zanim{width:clamp(96px,12vw,132px);aspect-ratio:1;flex:none}
 .zanim svg{width:100%;height:100%;overflow:visible}
-.brand2{margin-top:8px}
+.brand2{margin-top:6px;white-space:nowrap}.ttl{position:relative;display:inline-block;padding-bottom:.1em}.sign{font-family:'Great Vibes',cursive;font-style:normal;font-size:clamp(24px,2.9vw,32px);line-height:1;color:#FFFFFF;text-shadow:none;opacity:.95;position:relative;margin:0 -.3em 0 auto;width:max-content;padding-right:0;text-transform:none;letter-spacing:.01em;font-weight:400;-webkit-font-smoothing:antialiased}
 .brand3{margin-top:3px;font-size:11px;opacity:.85;letter-spacing:.22em}
-@media (max-width:560px){.hdr{gap:12px}.zanim{width:96px;margin-top:0}header h1{font-size:7.6vw}.brand{font-size:10.5px;letter-spacing:.08em}}
+@media (max-width:560px){.hdr{gap:12px}.zanim{width:96px;margin-top:0}header h1{font-size:7.6vw}.brand{font-size:min(10.5px,2.75vw);letter-spacing:.06em}.sign{font-size:6.4vw;margin-right:-.05em}.lead{font-size:14.5px}}
 .zr{animation:zrot 120s linear infinite;transform-origin:60px 60px}
 .zp1{animation:zrot 26s linear infinite;transform-origin:60px 60px}.zp2{animation:zrot 41s linear infinite;transform-origin:60px 60px}.zp3{animation:zrot 63s linear infinite;transform-origin:60px 60px}.zp4{animation:zrot 90s linear infinite;transform-origin:60px 60px}
 @keyframes zrot{to{transform:rotate(-360deg)}}
@@ -44,12 +44,12 @@ input::-webkit-calendar-picker-indicator{opacity:0;cursor:pointer;width:22px;hei
 .lightzone{color:var(--ink)}
 .lightcard{background:#FBF8F2;border-radius:12px;padding:4px 10px;margin-bottom:6px}
 
-.lead{margin:0;color:var(--ink)!important;font-size:17px;line-height:1.3}
+.lead{margin:0;color:#F3F5F8!important;font-size:15.5px;line-height:1.45;letter-spacing:.02em}.lgold{color:#E8CDAE;font-weight:600}
 .gain{margin:2px 0 0;padding-left:18px;color:var(--muted);display:grid;gap:0;max-width:66ch;line-height:1.3}
 header p{margin:0;color:var(--muted);max-width:62ch}
 .intro{display:grid;gap:6px}
 .priv{font-style:italic;color:var(--plum)!important;line-height:1.3;font-size:13px}
-.lcol{display:grid;gap:10px;align-content:start}.people{border:1px solid #DFC09F;border-radius:10px;padding:10px 14px;background:var(--surface)}.people summary{display:flex;align-items:center;gap:8px;list-style:none}.people summary::-webkit-details-marker,.manual summary::-webkit-details-marker{display:none}.pico{width:22px;height:22px;color:#E8CDAE;flex:none}.chev{width:24px;height:24px;color:#DFC09F;stroke-width:2.6;margin-left:auto;transition:transform .2s;flex:none}details[open]>summary .chev{transform:rotate(180deg)}.manual{border:1px solid rgba(223,192,159,.55);border-radius:8px;padding:8px 10px;display:grid;gap:8px}.manual[hidden]{display:none}.nfrow{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14.5px;color:#F3F5F8}.nfrow b{color:#E8CDAE}.findb{font:inherit;font-weight:700;font-size:15px;color:#08182F;background:var(--gold-grad);border:0;border-radius:8px;padding:8px 18px;cursor:pointer;flex:none}.findb:hover{filter:brightness(1.08)}.people .tri{font-size:11px;color:#E8CDAE;transition:transform .2s;display:inline-block}.people[open] .tri{transform:rotate(90deg)}.manual summary{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;color:#E8CDAE;font-weight:700;font-size:14px}.manual[open]{display:grid;gap:8px}.ferr{color:#F4D9BC!important;font-weight:700}.ferr:empty{display:none}.pickrow{margin:8px 0 12px!important}
+.lcol{display:grid;gap:10px;align-content:start}.people{border:1px solid #DFC09F;border-radius:10px;padding:10px 14px;background:var(--surface)}.people summary{display:flex;align-items:center;gap:8px;list-style:none}.people summary::-webkit-details-marker,.manual summary::-webkit-details-marker{display:none}.pico{width:22px;height:22px;color:#E8CDAE;flex:none}.chev{width:24px;height:24px;color:#DFC09F;stroke-width:2.6;margin-left:auto;transition:transform .2s;flex:none}details[open]>summary .chev{transform:rotate(180deg)}.manual{border:1px solid rgba(223,192,159,.55);border-radius:8px;padding:8px 10px;display:grid;gap:8px}.manual[hidden]{display:none}.nfrow{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14.5px;color:#F3F5F8}.nfrow b{color:#E8CDAE}.findb{font:inherit;font-weight:700;font-size:15px;color:#08182F;background:var(--gold-grad);border:0;border-radius:8px;padding:8px 18px;cursor:pointer;flex:none}.findb:hover{filter:brightness(1.08)}.people .tri{font-size:13px;color:#DFC09F;transition:transform .2s;display:inline-block}.people[open] .tri{transform:rotate(90deg)}.manual summary{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;color:#E8CDAE;font-weight:700;font-size:14px}.manual[open]{display:grid;gap:8px}.ferr{color:#F4D9BC!important;font-weight:700}.ferr:empty{display:none}.pickrow{margin:8px 0 12px!important}
 .people summary{cursor:pointer;font-weight:700;color:#E8CDAE}
 .people[open]{display:grid;gap:6px}
 .people[open] summary{margin-bottom:4px}
@@ -324,9 +324,9 @@ html{scroll-behavior:smooth}
 body{margin:0}
 </style></head><body>
 <div class="wrap" id="top">
-<header><div class="hdr"><div class="zanim" id="zanim" aria-hidden="true"></div><div><h1>Астронавигатор</h1><div class="brand brand2">Важные показатели года</div><div class="brand brand3">Вера Райт</div></div></div><div class="intro"><p class="lead">Введите дату, время и место рождения и нажмите «Рассчитать» - получите важные показатели вашего года.</p><p class="priv">Данные рождения никуда не отправляются. Расчёт идёт прямо в вашем браузере, последние введённые данные запоминаются только на этом устройстве.</p></div></header>
+<header><div class="hdr"><div class="zanim" id="zanim" aria-hidden="true"></div><div><div class="ttl"><h1>Астронавигатор</h1><div class="sign">Веры Райт</div></div><div class="brand brand2">Важные показатели года</div></div></div><div class="intro"><p class="lead">Введите дату, время и место рождения.<br>Нажмите «Рассчитать», чтобы получить важные показатели вашего года.</p><p class="priv">Данные рождения никуда не отправляются. Расчёт идёт прямо в вашем браузере, последние введённые данные запоминаются только на этом устройстве.</p></div></header>
 <div class="grid">
-<div class="lcol"><details class="people" id="pplbox"><summary><span>Мои карты</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></summary><select id="ppl" aria-label="Сохранённые карты"></select><div class="pbtns"><button type="button" id="psave" class="minib">Сохранить текущую</button><button type="button" id="pdel" class="minib">Удалить</button></div><p class="note" id="pst" aria-live="polite"></p><p class="note">Карты хранятся только в этом браузере на этом устройстве и никуда не отправляются.</p></details>
+<div class="lcol"><details class="people" id="pplbox"><summary><span class="tri" aria-hidden="true">▶</span><span>Мои карты</span></summary><select id="ppl" aria-label="Сохранённые карты"></select><div class="pbtns"><button type="button" id="psave" class="minib">Сохранить текущую</button><button type="button" id="pdel" class="minib">Удалить</button></div><p class="note" id="pst" aria-live="polite"></p><p class="note">Карты хранятся только в этом браузере на этом устройстве и никуда не отправляются.</p></details>
 <form id="f" autocomplete="off" novalidate>
  <label for="nm">Имя<input id="nm" value="" placeholder="Введите имя"></label>
  <div class="row2"><label for="dtv">Дата рождения<input id="dtv" class="dtin" type="text" inputmode="numeric" placeholder="ДД.ММ.ГГГГ" autocomplete="off" required></label><label for="tmv">Время рождения<input id="tmv" class="tmin" type="text" inputmode="numeric" placeholder="ЧЧ:ММ" autocomplete="off" required></label></div><input id="dt" type="hidden"><input id="tm" type="hidden">
