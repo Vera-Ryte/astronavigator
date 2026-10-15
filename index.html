@@ -49,7 +49,7 @@ input::-webkit-calendar-picker-indicator{opacity:0;cursor:pointer;width:22px;hei
 header p{margin:0;color:var(--muted);max-width:62ch}
 .intro{display:grid;gap:6px}
 .priv{font-style:italic;color:var(--plum)!important;line-height:1.3;font-size:13px}
-.lcol{display:grid;gap:10px;align-content:start}.people{border:1px solid #DFC09F;border-radius:10px;padding:10px 14px;background:var(--surface)}.people summary{display:flex;align-items:center;gap:8px;list-style:none}.people summary::-webkit-details-marker,.manual summary::-webkit-details-marker{display:none}.pico{width:22px;height:22px;color:#E8CDAE;flex:none}.chev{width:24px;height:24px;color:#DFC09F;stroke-width:2.6;margin-left:auto;transition:transform .2s;flex:none}details[open]>summary .chev{transform:rotate(180deg)}.manual{border:1px solid rgba(223,192,159,.55);border-radius:8px;padding:8px 10px;display:grid;gap:8px}.manual[hidden]{display:none}.nfrow{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14.5px;color:#F3F5F8}.nfrow b{color:#E8CDAE}.findb{font:inherit;font-weight:700;font-size:15px;color:#08182F;background:var(--gold-grad);border:0;border-radius:8px;padding:8px 18px;cursor:pointer;flex:none}.findb:hover{filter:brightness(1.08)}.people .tri{width:13px;height:13px;flex:none;color:#DFC09F;transition:transform .2s;display:inline-block}.people[open] .tri{transform:rotate(90deg)}.manual summary{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;color:#E8CDAE;font-weight:700;font-size:14px}.manual[open]{display:grid;gap:8px}.ferr{color:#F4D9BC!important;font-weight:700}.ferr:empty{display:none}.pickrow{margin:8px 0 12px!important}
+.lcol{display:grid;gap:10px;align-content:start}.people{border:1px solid #DFC09F;border-radius:10px;padding:10px 14px;background:var(--surface)}.people summary{display:flex;align-items:center;gap:8px;list-style:none}.people summary::-webkit-details-marker,.manual summary::-webkit-details-marker{display:none}.pico{width:22px;height:22px;color:#E8CDAE;flex:none}.chev{width:24px;height:24px;color:#DFC09F;stroke-width:2.6;margin-left:auto;transition:transform .2s;flex:none}details[open]>summary .chev{transform:rotate(180deg)}.manual{border:1px solid rgba(223,192,159,.55);border-radius:8px;padding:8px 10px;display:grid;gap:8px}.manual[hidden]{display:none}.crow2{display:flex;gap:8px;align-items:stretch}.crow2 .cbox{flex:1 1 auto;min-width:0}.crow2 .findb{padding:0 16px}.chint{margin:2px 0 0}.chint b{color:#E8CDAE}.nf{color:#F4D9BC;font-weight:700}.linkb{all:unset;cursor:pointer;color:#E8CDAE;text-decoration:underline;text-underline-offset:3px;font-weight:700}.nfrow{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14.5px;color:#F3F5F8}.nfrow b{color:#E8CDAE}.findb{font:inherit;font-weight:700;font-size:15px;color:#08182F;background:var(--gold-grad);border:0;border-radius:8px;padding:8px 18px;cursor:pointer;flex:none}.findb:hover{filter:brightness(1.08)}.people .tri{width:13px;height:13px;flex:none;color:#DFC09F;transition:transform .2s;display:inline-block}.people[open] .tri{transform:rotate(90deg)}.manual summary{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;color:#E8CDAE;font-weight:700;font-size:14px}.manual[open]{display:grid;gap:8px}.ferr{color:#F4D9BC!important;font-weight:700}.ferr:empty{display:none}.pickrow{margin:8px 0 12px!important}
 .people summary{cursor:pointer;font-weight:700;color:#E8CDAE}
 .people[open]{display:grid;gap:6px}
 .people[open] summary{margin-bottom:4px}
@@ -237,7 +237,7 @@ img.prev{width:100%;border:1px solid var(--line);border-radius:6px;margin-top:8p
 .corh3.sep{border-top:1px solid rgba(223,192,159,.45);padding-top:12px;margin-top:16px}
 .corh3{font-family:'Oswald',sans-serif;font-weight:500;font-size:18px;text-transform:uppercase;letter-spacing:.03em;color:#E8CDAE;margin:14px 0 6px}
 html{scroll-behavior:smooth}
-.wlab{position:absolute;left:10px;top:8px;font-size:max(9px,1.9cqw);line-height:1.3;color:#11284A;max-width:42%;z-index:2}
+.wbox{max-width:600px;margin:6px auto 18px;background:#FBF8F2;border-radius:14px}.wbox .wheel{margin:0 auto}.wlab{padding:12px 16px 0;font-size:14px;line-height:1.35;color:#11284A}
 .wlab b{font-size:1.1em}
 .qh{font-size:16px;margin:24px 0 8px}
 .qbars{display:grid;gap:6px;max-width:640px}
@@ -268,7 +268,7 @@ html{scroll-behavior:smooth}
  h1{-webkit-text-fill-color:#1A1A22;background:none}
  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
  body{background:#fff!important;color:#000}
- .wheel{max-width:150mm!important}
+ .wheel,.wbox{max-width:150mm!important}
  tr{break-inside:avoid}
  header,form,.people,.tabs,.badge,.pickrow,dialog,.printbar,.printnote,.saverow,.mobhint,.chips,.cta,.lock{display:none!important}
  .grid{display:block!important}
@@ -330,7 +330,7 @@ body{margin:0}
 <form id="f" autocomplete="off" novalidate>
  <label for="nm">Имя<input id="nm" value="" placeholder="Введите имя"></label>
  <div class="row2"><label for="dtv">Дата рождения<input id="dtv" class="dtin" type="text" inputmode="numeric" placeholder="ДД.ММ.ГГГГ" autocomplete="off" required></label><label for="tmv">Время рождения<input id="tmv" class="tmin" type="text" inputmode="numeric" placeholder="ЧЧ:ММ" autocomplete="off" required></label></div><input id="dt" type="hidden"><input id="tm" type="hidden">
-  <div class="csearch"><label for="cq">Место рождения</label><div class="cbox"><input id="cq" type="text" placeholder="Начните вводить: Москва, Усть-Куйга…" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cres"><div id="cres" role="listbox"></div></div><p class="note" id="cfound"></p><div class="nfrow"><span><b>Не нашли место рождения?</b><br>Нажмите «Найти»</span><button type="button" id="cfind" class="findb">Найти</button></div><input id="city" type="hidden" value=""></div>
+  <div class="csearch"><label for="cq">Место рождения</label><div class="crow2"><div class="cbox"><input id="cq" type="text" placeholder="Например: Москва" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cres"><div id="cres" role="listbox"></div></div><button type="button" id="cfind" class="findb">Найти</button></div><p class="note chint">Начните вводить название и выберите место из списка. <b>Нет в списке?</b> Нажмите «Найти» - поиск пойдёт по всем населённым пунктам.</p><p class="note" id="cfound"></p><input id="city" type="hidden" value=""></div>
  <div class="manual" id="manbox" hidden><p class="note">Введите координаты и часовую зону вручную (их можно взять в Сотисе или ZET).</p>
  <div class="row2"><label for="zone">Часовая зона<select id="zone"></select></label><label for="tz">Поправка UTC ±ч<input id="tz" type="number" step="0.5" min="-12" max="14" value="" required></label></div>
  <p class="note" id="tznote">Подставляется автоматически по городу, дате и времени, с учётом летнего и декретного времени. При необходимости исправьте вручную.</p>
@@ -2160,7 +2160,7 @@ function autoTz(){ setTimeout(()=>{ if(typeof chkReady==='function') chkReady();
   try{ const o=zoneOffset($('zone').value,y,mo,d,hh,mm); $('tz').value=o; const std=zoneOffset($('zone').value,y,1,15,12,0), sum=zoneOffset($('zone').value,y,7,15,12,0);
    $('tznote').textContent=`Определено автоматически: UTC${o>=0?'+':''}${o}`+(std!==sum?(o===Math.max(std,sum)?', летнее время.':', зимнее время.'):', перехода на летнее время в этом году не было.')+' Сверьте с Сотисом; при необходимости исправьте вручную.'; }
   catch(e){ $('tznote').textContent='Не удалось определить поправку автоматически - введите вручную.'; } }
-function pickCity(i){ const c=CITIES[i]; cs.value=String(i); $('cq').value=cLab(c); $('lat').value=c[1]; $('lon').value=c[2]; ensureZone(c[3]); tzManual=false; autoTz(); $('cfound').dataset.place=''; $('cfound').textContent=`Координаты подставлены: ${(+c[1]).toFixed(4)}, ${(+c[2]).toFixed(4)}, зона ${c[3]}.`+(Math.abs(c[1])>66?' Широта выше 66°: дома будут построены равнодомной системой.':''); }
+function pickCity(i){ const c=CITIES[i]; cs.value=String(i); $('cq').value=cLab(c); $('lat').value=c[1]; $('lon').value=c[2]; ensureZone(c[3]); tzManual=false; autoTz(); $('cfound').dataset.place=''; $('cfound').textContent=`Координаты подставлены: ${(+c[1]).toFixed(4)}, ${(+c[2]).toFixed(4)}, зона ${c[3]}.`+(Math.abs(c[1])>66?' Широта выше 66°: дома будут построены равнодомной системой от MC, как в Сотисе.':''); }
 $('zone').addEventListener('change',()=>{ tzManual=false; autoTz(); });
 $('tz').addEventListener('input',()=>{ tzManual=true; $('tznote').textContent='Поправка введена вручную.'; });
 autoTz();
@@ -2386,7 +2386,7 @@ function run(){ window.__ran=true; $('resbox').classList.remove('pre'); if(!docu
  PLW.forEach(n=>{ const [x,y]=pt(disp[n],rad[n]||32); const dd=dms(N.P[n],false); ov+=`<span class="wp" style="left:${x}%;top:${y}%" title="${n} ${dd.txt} ${SIGN_GEN[dd.s]}${N.R[n]?', ретроградный':''}">${g(n)}<small><sup>${Math.floor(N.P[n]%30)}°</sup>${N.R[n]?'<b>R</b>':''}</small></span>`; });
  const fc=(v,p,n)=>{ const a=Math.abs(v), d=Math.floor(a), m=Math.round((a-d)*60); return `${d}°${p2(m)}' ${v>=0?p:n}`; };
  const place=cs.value!==''?CITIES[+cs.value][0]:($('cfound').dataset.place||'');
- const WHEEL=`<div class="wheel lightzone navy" role="img" aria-label="Натальная карта"><div class="wlab"><b>${$('nm').value.trim()||'Натальная карта'}</b><br>${$('dt').value.split('-').reverse().join('.')} ${$('tm').value} (UTC${tz>=0?'+':''}${tz})${place?'<br>'+place:''}<br>${fc(lat,'с.ш.','ю.ш.')}, ${fc(lon,'в.д.','з.д.')}</div>${sv}${ov}</div>`;
+ const WHEEL=`<div class="wbox lightzone navy"><div class="wlab"><b>${$('nm').value.trim()||'Натальная карта'}</b><br>${$('dt').value.split('-').reverse().join('.')} ${$('tm').value} (UTC${tz>=0?'+':''}${tz})${place?'<br>'+place:''}<br>${fc(lat,'с.ш.','ю.ш.')}, ${fc(lon,'в.д.','з.д.')}</div><div class="wheel lightzone navy" role="img" aria-label="Натальная карта">${sv}${ov}</div></div>`;
  // управители домов
  const RUL={0:['Марс'],1:['Венера'],2:['Меркурий'],3:['Луна'],4:['Солнце'],5:['Меркурий'],6:['Венера'],7:['Плутон','Марс'],8:['Юпитер'],9:['Сатурн'],10:['Уран','Сатурн'],11:['Нептун','Юпитер']};
  const rnames=sg=>RUL[sg].map((n,i)=>RUL[sg].length>1?`${g(n)} ${n} <span class="note">(${i?'младший':'старший'})</span>`:`${g(n)} ${n}`).join(', ');
@@ -2710,16 +2710,16 @@ function localCity(){ const q=cN($('cq').value); cs.value=''; if(q.length<1){ cS
   const st=[], inc=[]; CIDX.forEach((n,i)=>{ if(n.startsWith(q)) st.push(i); else if(n.includes(q)) inc.push(i); });
   const pop=i=>i<47?0:1; const res=[...st.sort((a,b)=>pop(a)-pop(b)||CIDX[a].localeCompare(CIDX[b],'ru')),...inc.sort((a,b)=>CIDX[a].localeCompare(CIDX[b],'ru'))].slice(0,12);
   let h=res.map(i=>`<button type="button" class="cbtn" role="option" data-c="${i}">${CITIES[i][0]}${CITIES[i][4]?`<small>${CITIES[i][4]}</small>`:''}</button>`).join('');
-  if(q.length>=2) h+=`<button type="button" class="cbtn all" data-w="1">Нет в списке? Искать «${$('cq').value.trim()}» среди всех населённых пунктов</button>`;
   cShow(h); clearTimeout(cTimer); if(!res.length&&q.length>=3) cTimer=setTimeout(findCity,700); }
-async function findCity(){ const q=$('cq').value.trim(); if(q.length<2){ cShow('<p class="note">Введите название населённого пункта.</p>'); return; } cShow('<p class="note">Ищу по всем населённым пунктам…</p>');
+function notFound(msg){ const f=$('cfound'); f.dataset.place=''; f.innerHTML=`<span class="nf">${msg}</span> <button type="button" class="linkb" id="manopen">Ввести координаты вручную</button>`; $('manopen').addEventListener('click',()=>{ $('manbox').hidden=false; $('lat').focus(); }); }
+async function findCity(){ $('cfound').textContent=''; const q=$('cq').value.trim(); if(q.length<2){ cShow('<p class="note">Введите название населённого пункта.</p>'); return; } cShow('<p class="note">Ищу по всем населённым пунктам…</p>');
   try{ const r=await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=8&accept-language=ru&q=${encodeURIComponent(q)}`); const js=await r.json();
-    if(!js.length){ cShow('<p class="note">Ничего не нашлось. Попробуйте написать иначе или добавьте область, например «Усть-Куйга Якутия».</p><button type="button" class="cbtn all" data-m="1">Ввести координаты вручную</button>'); return; }
+    if(!js.length){ cShow(''); notFound('Ничего не нашлось. Проверьте написание или добавьте область, например «Усть-Куйга Якутия», и снова нажмите «Найти».'); return; }
     window.__NOM=js; cShow(js.map((x,i)=>`<button type="button" class="cbtn" role="option" data-n="${i}">${x.display_name}</button>`).join('')); }
-  catch(e){ cShow('<p class="note">Поиск сейчас недоступен.</p><button type="button" class="cbtn all" data-m="1">Ввести координаты вручную</button>'); } }
+  catch(e){ cShow(''); notFound('Поиск сейчас недоступен. Попробуйте ещё раз позже.'); } }
 function pickNom(x){ const lat=+x.lat, lon=+x.lon; $('lat').value=lat.toFixed(4); $('lon').value=lon.toFixed(4); cs.value=''; const z=guessZone(x.address||{},lat,lon); if(z) ensureZone(z); tzManual=false; autoTz();
-  const place=x.display_name.split(',').slice(0,3).join(',').trim(); $('cq').value=place; $('cfound').dataset.place=place; $('cfound').textContent=`Координаты подставлены: ${lat.toFixed(4)}, ${lon.toFixed(4)}, зона ${z}. Сверьте поправку UTC с Сотисом.`+(Math.abs(lat)>66?' Широта выше 66°: дома будут построены равнодомной системой.':''); }
-$('cres').addEventListener('mousedown',e=>e.preventDefault()); $('cfind').addEventListener('mousedown',e=>e.preventDefault()); $('cfind').addEventListener('click',()=>{ if($('cq').value.trim().length<2){ cShow('<p class="note">Введите название населённого пункта.</p><button type="button" class="cbtn all" data-m="1">Ввести координаты вручную</button>'); $('cq').focus(); return; } findCity(); });
+  const ad=x.address||{}; const nm0=(x.name||x.display_name.split(',')[0]).replace(/^(городское|сельское) поселение\s+/i,'').trim(); const reg=(ad.country_code==='ru'?(ad.state||ad.region):(ad.country||ad.state))||''; const place=reg&&reg!==nm0?`${nm0}, ${reg}`:nm0; $('cq').value=place; $('cfound').dataset.place=place; $('cfound').textContent=`Координаты подставлены: ${lat.toFixed(4)}, ${lon.toFixed(4)}, зона ${z}. Сверьте поправку UTC с Сотисом.`+(Math.abs(lat)>66?' Широта выше 66°: дома будут построены равнодомной системой от MC, как в Сотисе.':''); }
+$('cres').addEventListener('mousedown',e=>e.preventDefault()); $('cfind').addEventListener('mousedown',e=>e.preventDefault()); $('cfind').addEventListener('click',()=>{ if($('cq').value.trim().length<2){ notFound('Сначала введите название населённого пункта.'); $('cq').focus(); return; } findCity(); });
 $('cres').addEventListener('click',e=>{ const b=e.target.closest('.cbtn'); if(!b) return; if(b.dataset.c!==undefined){ pickCity(+b.dataset.c); cShow(''); } else if(b.dataset.n!==undefined){ pickNom(window.__NOM[+b.dataset.n]); cShow(''); } else if(b.dataset.w){ findCity(); } else if(b.dataset.m){ $('manbox').hidden=false; cShow(''); $('lat').focus(); } });
 $('cq').addEventListener('input',()=>{ $('cfound').textContent=''; $('cfound').dataset.place=''; localCity(); });
 $('cq').addEventListener('focus',()=>{ if($('cq').value.trim()&&cs.value===''&&!$('lat').value) localCity(); });
