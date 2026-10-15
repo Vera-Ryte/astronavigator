@@ -6,11 +6,11 @@
 <style>
 /* Layout: рабочий инструмент астролога - форма слева, результаты вкладками справа; на телефоне в одну колонку */
 :root{
-  --bg:#08182F; --surface:rgba(4,22,44,.80); --surface-solid:#0B2240; --ink:#EEF2F7; --muted:#CDD2DB; --line:rgba(223,192,159,.24); --plum:#DFC09F; --plum-soft:rgba(223,192,159,.14); --plum-deep:rgba(223,192,159,.36); --gold:#DFC09F; --eclipse:#FF8F7D; --harm:#8CC4F5; --on:#08182F; color-scheme:dark;
+  --bg:#08182F; --surface:rgba(4,22,44,.80); --surface-solid:#0B2240; --ink:#EEF2F7; --muted:#CDD2DB; --line:rgba(223,192,159,.24); --plum:#DFC09F; --plum-soft:rgba(223,192,159,.14); --plum-deep:rgba(223,192,159,.36); --gold:#DFC09F; --eclipse:#FF8F7D; --harm:#8CC4F5; --ecl:#B88CFF; --on:#08182F; color-scheme:dark;
   --display:'Prata',Georgia,'Times New Roman',serif; --body:'PT Sans','Segoe UI',Arial,sans-serif; --mono:'PT Mono','Courier New',monospace;
   --gold-grad:linear-gradient(100deg,#F4D9BC,#DFC09F 45%,#9A8164);
 }
-.lightzone,.snap.lightzone{--bg:#FFFFFF; --surface:#FFFFFF; --surface-solid:#FFFFFF; --ink:#1A1A22; --muted:#5E6472; --line:#D9D4CA; --plum:#7D5B2E; --plum-soft:#F3EADC; --plum-deep:#E0C9A6; --gold:#7D5B2E; --eclipse:#C0392B; --harm:#2E7DBA; --on:#FFFFFF; color-scheme:light;}
+.lightzone,.snap.lightzone{--bg:#FFFFFF; --surface:#FFFFFF; --surface-solid:#FFFFFF; --ink:#1A1A22; --muted:#5E6472; --line:#D9D4CA; --plum:#7D5B2E; --plum-soft:#F3EADC; --plum-deep:#E0C9A6; --gold:#7D5B2E; --eclipse:#C0392B; --harm:#2E7DBA; --ecl:#7B4FD6; --on:#FFFFFF; color-scheme:light;}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.45}
 .wrap{max-width:1280px;margin:0 auto;padding-inline:20px;padding-block:28px 48px}
 header{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 18px;margin-bottom:20px}
@@ -19,19 +19,19 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;background:linear-grad
 body::after{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(5,15,32,.78) 0%,rgba(5,15,32,.55) 40%,rgba(5,15,32,.45) 100%)}
 header .gain,header p{color:#F3F5F8!important}
 label{color:#F3F5F8!important}
-input[type=date],input[type=time]{color-scheme:light}
-input[type=date],input[type=time]{background-repeat:no-repeat;background-position:right 10px center;background-size:18px;padding-right:36px;min-height:38px}
-input[type=date]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F3F5F8' stroke-width='1.7'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M3 10h18M8 3v4M16 3v4'/%3E%3C/svg%3E")}
-input[type=time]{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F3F5F8' stroke-width='1.7'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E")}
+input.dtin,input.tmin{background-repeat:no-repeat;background-position:right 10px center;background-size:18px;padding-right:36px;min-height:38px}
+input.dtin{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F3F5F8' stroke-width='1.7'%3E%3Crect x='3' y='5' width='18' height='16' rx='2'/%3E%3Cpath d='M3 10h18M8 3v4M16 3v4'/%3E%3C/svg%3E")}
+input.tmin{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F3F5F8' stroke-width='1.7'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E")}
 input::-webkit-calendar-picker-indicator{opacity:0;cursor:pointer;width:22px;height:22px}
 .tabs button{background:#011F39!important;border:2px solid #DFC09F!important;color:#FFFFFF!important;font-weight:700}
 .pre .tabs button{position:relative}
-.pre .tabs button:hover::after{content:'Сначала введите данные рождения и нажмите «Рассчитать» - расчёт строится по вашей натальной карте';position:absolute;left:0;top:calc(100% + 6px);z-index:40;width:260px;white-space:normal;text-align:left;font-weight:400;font-size:13px;line-height:1.35;background:#0B2240;color:#F3F5F8;border:1px solid #DFC09F;border-radius:8px;padding:8px 10px;box-shadow:0 6px 18px rgba(0,0,0,.4)}
+.pre .tabs button:hover::after{content:'Введите данные рождения и нажмите «Рассчитать»';position:absolute;left:0;top:calc(100% + 6px);z-index:40;width:max-content;max-width:240px;white-space:normal;text-align:left;font-weight:400;font-size:13px;line-height:1.35;background:#0B2240;color:#F3F5F8;border:1px solid #DFC09F;border-radius:8px;padding:8px 10px;box-shadow:0 6px 18px rgba(0,0,0,.4)}
 .tabs button:hover,.tabs button[aria-selected="true"]{background:var(--gold-grad)!important;color:#08182F!important;border-color:#DFC09F!important}
 .hdr{display:flex;align-items:center;gap:16px}
-.zanim{width:clamp(86px,12vw,128px);aspect-ratio:1;flex:none;margin-top:14px}
+.zanim{width:clamp(96px,12vw,132px);aspect-ratio:1;flex:none}
 .zanim svg{width:100%;height:100%;overflow:visible}
-@media (max-width:560px){.hdr{gap:10px}.zanim{width:72px;margin-top:6px}header h1{font-size:6.6vw}.brand{font-size:10px;letter-spacing:.08em}}
+.brand2{margin-top:8px}
+@media (max-width:560px){.hdr{gap:12px}.zanim{width:96px;margin-top:0}header h1{font-size:7.6vw}.brand{font-size:10.5px;letter-spacing:.08em}}
 .zr{animation:zrot 120s linear infinite;transform-origin:60px 60px}
 .zp1{animation:zrot 26s linear infinite;transform-origin:60px 60px}.zp2{animation:zrot 41s linear infinite;transform-origin:60px 60px}.zp3{animation:zrot 63s linear infinite;transform-origin:60px 60px}.zp4{animation:zrot 90s linear infinite;transform-origin:60px 60px}
 @keyframes zrot{to{transform:rotate(-360deg)}}
@@ -49,11 +49,11 @@ header p{margin:0;color:var(--muted);max-width:62ch}
 .priv{font-style:italic;color:var(--plum)!important;line-height:1.3}
 .grid{display:grid;grid-template-columns:320px minmax(0,1fr);gap:20px;align-items:start}
 @media (max-width:900px){.grid{grid-template-columns:minmax(0,1fr)}}
-form{background:var(--surface);border:1.5px solid #DFC09F;border-radius:10px;padding:16px 18px;display:grid;gap:9px}
+form{background:var(--surface);border:1px solid #DFC09F;border-radius:10px;padding:16px 18px;display:grid;gap:9px}
 .panel{border:1.5px solid rgba(223,192,159,.75)!important}
 label{line-height:1.25}
 label{display:grid;gap:4px;font-size:13px;color:var(--muted);letter-spacing:.02em}
-input,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;min-width:0}
+input,select{box-sizing:border-box;width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid rgba(223,192,159,.5);border-radius:6px;padding:8px 10px;min-width:0}
 input:focus-visible,select:focus-visible,button:focus-visible{outline:2px solid var(--plum);outline-offset:2px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .chk{display:flex;gap:8px;align-items:center;color:var(--ink);font-size:14px}
@@ -64,14 +64,33 @@ button.go{font:inherit;font-weight:700;background:var(--gold-grad);color:var(--o
 .badge:empty{display:none}
 .tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
 .tbr{display:none}
+.minib{font:inherit;font-size:13px;background:#011F39;color:#F3F5F8;border:1.5px solid #DFC09F;border-radius:8px;padding:6px 10px;cursor:pointer}
+.minib:hover{background:var(--gold-grad);color:#08182F}
+.people{display:grid;gap:6px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.pbtns{display:flex;flex-wrap:wrap;gap:6px}
+.csearch{display:grid;gap:6px}
+.crow{display:flex;gap:6px}.crow input{flex:1 1 auto}
+input[type=checkbox]{width:auto}
+#cres{display:grid;gap:4px}
+.cbtn{font:inherit;font-size:12.5px;text-align:left;background:#011F39;color:#F3F5F8;border:1px solid rgba(223,192,159,.6);border-radius:6px;padding:6px 8px;cursor:pointer}
+.cbtn:hover{border-color:#DFC09F}
+.pickrow{display:flex;justify-content:flex-start;margin:0 0 10px}
+.ppdlg{background:#0B2240;color:#F3F5F8;border:1.5px solid #DFC09F;border-radius:12px;padding:18px;max-width:min(92vw,460px)}
+.ppdlg::backdrop{background:rgba(3,10,22,.7)}
+.ppdlg h3{margin:0 0 10px;font-family:'Oswald',sans-serif;font-weight:500;text-transform:uppercase;letter-spacing:.03em;color:#E8CDAE}
+#pplist{display:grid;gap:6px;margin-bottom:12px}
+.ppi{display:flex;gap:8px;align-items:center;font-size:15px;color:#F3F5F8!important}
+.ppb{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;margin-bottom:8px}
 @media (max-width:700px){.tbr{display:block;flex-basis:100%;height:0;margin:-3px 0}.tabs{gap:5px}.tabs button{font-size:12.5px!important;padding:4px 8px!important;letter-spacing:-.01em}}
 .tabs button{font:inherit;font-size:14px;background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer}
 .tabs button[aria-selected="true"]{background:var(--gold-grad);border-color:transparent;color:var(--on);font-weight:700}
 .panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:16px;min-width:0}
-.panel h2{font-family:'Oswald','Arial Narrow',sans-serif;font-weight:500;font-size:24px;letter-spacing:.03em;text-transform:uppercase;margin:0 0 6px;line-height:1.15;color:#E8CDAE}
+.panel h2{font-family:'Oswald','Arial Narrow',sans-serif;font-weight:500;font-size:21px;letter-spacing:.03em;text-transform:uppercase;margin:0 0 6px;line-height:1.15;color:#E8CDAE}
 .lightzone h2{color:#11284A}
 .corh{color:#E8CDAE;font-weight:700}
-.panel .sub{color:var(--muted);font-size:14px;margin:0 0 14px;max-width:80ch}
+.panel .sub{color:var(--muted);font-size:15.5px;line-height:1.38;margin:0 0 14px;max-width:80ch}
+.panel{font-size:15.5px}
+table.t{font-size:15px!important}
 .scroll{overflow-x:auto}
 table{border-collapse:collapse;font-variant-numeric:tabular-nums}
 table.t{width:100%;font-size:14px}
@@ -90,7 +109,7 @@ table.t{width:100%;font-size:14px}
 .heat td.h small{font-family:var(--body);font-size:12px;color:var(--muted)}
 .heat td.c2{background:var(--plum-soft)} .heat td.c3{background:var(--plum-deep)}
 .heat td.mstart{border-left:2px solid var(--muted)}
-.g.ge{color:var(--eclipse)}
+.g.ge{color:var(--ecl)}
 .ecl-list{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:4px;font-size:14.5px}
 .ecl-list .cor{color:var(--muted);font-size:13.5px;padding-left:24px;margin-bottom:8px}
 .legend .row{display:grid;grid-template-columns:96px minmax(0,1fr);gap:4px 12px;align-items:start}
@@ -103,7 +122,24 @@ table.t{width:100%;font-size:14px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
 .chips button{font:inherit;font-size:13px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:999px;padding:4px 10px;cursor:pointer}
 .chips button[aria-pressed="true"]{background:var(--plum-soft);border-color:var(--plum)}
-.r{color:var(--eclipse);font-weight:700;font-size:12px}
+.r{color:#E8CDAE;font-weight:700;font-size:12px;margin-left:1px}
+.lightzone .r{color:#11284A}
+.totop{display:inline-block;margin-top:18px;font-weight:700;color:#E8CDAE;text-decoration:none;border:1.5px solid #DFC09F;border-radius:999px;padding:6px 14px;background:#011F39}
+.step .rt{color:#F4D9BC}
+.solform{display:grid;gap:6px;max-width:420px;margin:8px 0 6px}
+.sollist{display:grid;gap:10px}
+.solrow{border:1px solid rgba(223,192,159,.45);border-radius:10px;padding:10px 14px;background:rgba(1,31,57,.6)}
+.solrow p{margin:0 0 3px}
+.step.ret{border-color:#DFC09F;background:rgba(223,192,159,.15)}
+.mv{color:#F4D9BC;font-weight:700;font-size:13px}
+.lightzone .mv{color:#11284A}
+.ex{font-style:italic;color:#E8E2D6}
+.moons{width:84px;height:18px;vertical-align:-1px;margin-right:10px}
+.g.pmoon{width:1em;height:1em;margin-right:.35em;color:#F4D9BC;vertical-align:-.1em}
+.hrow{grid-template-columns:minmax(0,1fr)!important;gap:6px!important}
+.step{font-size:13.5px}
+@media (max-width:700px){.scroll:not(.lightcard){background:linear-gradient(90deg,transparent calc(100% - 18px),rgba(223,192,159,.25))}}
+.totop:hover{background:var(--gold-grad);color:#08182F}
 .err{color:var(--eclipse);font-size:14px}
 .hrow{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
 .hrow .pl{font-weight:700}
@@ -116,15 +152,17 @@ table.t{width:100%;font-size:14px}
 .lock input{flex:1 1 180px}
 .lock button{font:inherit;font-weight:700;background:var(--gold-grad);color:var(--on);border:0;border-radius:8px;padding:9px 14px;cursor:pointer}
 .lock .bad{color:var(--eclipse);font-size:14px;min-height:1.2em;margin:0}
-.cta{margin-top:18px;border-top:1px solid var(--line);padding-top:14px;display:grid;gap:10px}
-.cta .btns{display:flex;flex-wrap:wrap;gap:8px}
-.cta a{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:var(--plum);border:1px solid var(--plum);border-radius:999px;padding:7px 14px;text-decoration:none}
-.cta a:hover{background:var(--plum-soft)}
-.ctah{font-family:var(--display);font-size:19px;margin:0}
+.cta{margin-top:22px;display:grid;gap:14px}
+.ctab{border:1.5px solid #DFC09F;border-radius:12px;padding:16px 18px;background:linear-gradient(135deg,rgba(1,31,57,.92),rgba(11,34,64,.85));display:grid;gap:8px}
+.ctab p{margin:0;font-size:15.5px;line-height:1.4;color:#F3F5F8}
+.cta .btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.cta a{display:inline-flex;align-items:center;gap:8px;font-weight:700;color:#08182F;background:var(--gold-grad);border:0;border-radius:999px;padding:9px 18px;text-decoration:none}
+.cta a:hover{filter:brightness(1.08)}
+.ctah{font-family:'Oswald',sans-serif;font-weight:500;font-size:20px;text-transform:uppercase;letter-spacing:.03em;color:#E8CDAE;margin:0}
 .maxico{display:inline-grid;place-items:center;height:20px;padding:0 5px;border-radius:6px;background:linear-gradient(135deg,#3D7BFF,#8A3FFC);color:#fff;font-size:10px;font-weight:700;letter-spacing:.03em}
 .heat .gw{position:relative;display:inline-block;padding-right:5px}
-.heat .gw .rr{position:absolute;right:-1px;bottom:-3px;font-size:9px;font-weight:700;color:var(--eclipse);line-height:1}
-.loopintro p{margin:0 0 6px}
+.heat .gw .rr{position:absolute;right:1px;bottom:-2px;font-size:9px;font-weight:700;color:#F4D9BC;line-height:1}
+.loopintro p{margin:0 0 4px}
 .loop{padding:12px 0;border-bottom:1px solid var(--line);display:grid;gap:4px}
 .loop .hd{font-weight:700;font-size:16px}
 .loop .ln{font-size:14.5px}
@@ -140,7 +178,7 @@ img.prev{width:100%;border:1px solid var(--line);border-radius:6px;margin-top:8p
 .wheel .wp{position:absolute;transform:translate(-30%,-50%);display:flex;align-items:center;line-height:1;font-size:max(9px,3.3cqw)}
 .wheel .wp small{display:flex;flex-direction:column;justify-content:space-between;height:1em;font-size:max(6.5px,1.85cqw);color:var(--ink);font-family:var(--mono);margin-left:2px}
 .wheel .wp sup{vertical-align:baseline;font-size:1em;line-height:1}
-.wheel .wp small b{color:var(--eclipse);line-height:1;font-family:var(--body)}
+.wheel .wp small b{color:#11284A;line-height:1;font-family:var(--body)}
 .wheel .wz{position:absolute;transform:translate(-50%,-50%);font-size:max(8px,2.8cqw)}
 .wheel .wh{position:absolute;transform:translate(-50%,-50%);font-size:clamp(8px,1.8vw,11px);color:var(--muted)}
 .wheel .wc{position:absolute;transform:translate(-50%,-50%);font-size:max(6px,1.65cqw);font-family:var(--mono);color:var(--muted);white-space:nowrap;display:flex;align-items:center;gap:1px}
@@ -154,10 +192,13 @@ img.prev{width:100%;border:1px solid var(--line);border-radius:6px;margin-top:8p
 .printbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:8px;margin:-4px 0 6px}
 .printbar::after{content:'Печатается на белом фоне';flex-basis:100%;text-align:right;font-size:12px;color:var(--muted);margin-top:-2px}
 .igrow{min-height:96px}
-.igseg{position:absolute;top:6px;height:62px;background:var(--c);color:#1A1F2C;border-radius:3px;overflow:hidden;font-size:12.5px;line-height:1.25;border-right:1px solid rgba(255,255,255,.7)}
+.igseg{position:absolute;top:6px;height:62px;padding:0;margin:0;text-align:left;font-family:inherit;border-top:0;border-bottom:0;border-left:0;background:linear-gradient(180deg,#F4D9BC,#DFC09F);color:#08182F;border-radius:3px;overflow:hidden;font-size:12.5px;line-height:1.25;border-right:1px solid #08182F;cursor:pointer}
+.igseg.alt{background:linear-gradient(180deg,#C9AE8E,#9A8164)}
 .igseg>div{padding:3px 5px;white-space:nowrap}
-.igseg .g{color:#1A1F2C}
-.igseg.igr{background:repeating-linear-gradient(135deg,var(--c) 0 6px,#fff 6px 9px)}
+.igseg .g{color:#08182F}
+.igchart{min-width:1700px}
+.igseg.igr{background:repeating-linear-gradient(135deg,#DFC09F 0 6px,#08182F 6px 8px)}
+.igseg.igr>div{background:rgba(244,217,188,.92);display:inline-block;border-radius:3px}
 .igseg.nar>div{writing-mode:vertical-rl;transform:rotate(180deg);font-size:10.5px;height:100%;padding:3px 2px}
 .igseg.nar b{font-weight:700}
 .igR{position:absolute;top:71px;height:6px;background:var(--plum);border-radius:3px}
@@ -166,10 +207,15 @@ img.prev{width:100%;border:1px solid var(--line);border-radius:6px;margin-top:8p
 .ingsw{display:inline-block;width:14px;height:11px;border-radius:2px;margin:0 3px 0 8px;vertical-align:-1px}
 .egb{all:unset;cursor:pointer;display:inline-flex;border-radius:50%}
 .egb:focus-visible{outline:2px solid var(--plum)}
-.egpop{position:absolute;z-index:50;max-width:260px;background:var(--surface-solid);color:var(--ink);border:1.5px solid var(--eclipse);border-radius:8px;padding:8px 10px;font-size:13.5px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.egpop{position:absolute;z-index:50;max-width:260px;background:var(--surface-solid);color:var(--ink);border:1.5px solid var(--ecl);border-radius:8px;padding:8px 10px;font-size:13.5px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
 .pick{font-weight:700;margin:10px 0 6px;font-size:15px}
 .h2s{font-family:var(--body);font-size:14px;color:var(--muted)}
-.ecl-lines p{margin:0 0 4px;font-size:14.5px}
+.ecl-lines p{margin:0 0 4px;font-size:15.5px}
+.nw{white-space:nowrap}
+.corh3{font-family:'Oswald',sans-serif;font-weight:500;font-size:18px;text-transform:uppercase;letter-spacing:.03em;color:#E8CDAE;margin:14px 0 6px}
+html{scroll-behavior:smooth}
+.wlab{position:absolute;left:10px;top:8px;font-size:max(9px,1.9cqw);line-height:1.3;color:#11284A;max-width:42%;z-index:2}
+.wlab b{font-size:1.1em}
 .qh{font-size:16px;margin:24px 0 8px}
 .qbars{display:grid;gap:6px;max-width:640px}
 .qrow{display:grid;grid-template-columns:118px 1fr 44px minmax(0,190px);align-items:center;gap:8px;font-size:14px}
@@ -193,14 +239,14 @@ img.prev{width:100%;border:1px solid var(--line);border-radius:6px;margin-top:8p
 .loopnav a{color:var(--plum);font-weight:700}
 .printhead{display:none}
 @media print{
- :root{--bg:#FFFFFF; --surface:#FFFFFF; --surface-solid:#FFFFFF; --ink:#1A1A22; --muted:#5E6472; --line:#D9D4CA; --plum:#7D5B2E; --plum-soft:#F3EADC; --plum-deep:#E0C9A6; --gold:#7D5B2E; --eclipse:#C0392B; --harm:#2E7DBA; --on:#FFFFFF; color-scheme:light;}
+ :root{--bg:#FFFFFF; --surface:#FFFFFF; --surface-solid:#FFFFFF; --ink:#1A1A22; --muted:#5E6472; --line:#D9D4CA; --plum:#7D5B2E; --plum-soft:#F3EADC; --plum-deep:#E0C9A6; --gold:#7D5B2E; --eclipse:#C0392B; --harm:#2E7DBA; --ecl:#7B4FD6; --on:#FFFFFF; color-scheme:light;}
  body::before,body::after,.zanim{display:none!important}
  h1{-webkit-text-fill-color:#1A1A22;background:none}
  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
  body{background:#fff!important;color:#000}
  .wheel{max-width:150mm!important}
  tr{break-inside:avoid}
- header,form,.tabs,.badge,.printbar,.printnote,.saverow,.mobhint,.chips,.cta,.lock{display:none!important}
+ header,form,.tabs,.badge,.pickrow,dialog,.printbar,.printnote,.saverow,.mobhint,.chips,.cta,.lock{display:none!important}
  .grid{display:block!important}
  .panel{border:0!important;padding:0!important}
  .panel[hidden]{display:none!important}
@@ -228,12 +274,21 @@ img.prev{width:100%;border:1px solid var(--line);border-radius:6px;margin-top:8p
 .rl .g{width:1.6em;height:1.6em}
 .rtrack{position:relative;flex:1}
 .rgrid i{position:absolute;top:0;bottom:0;border-left:1px solid var(--line)}
-.rl1{position:absolute;top:10px;height:12px;background:var(--plum-soft);border-radius:3px}
+.rl1{position:absolute;top:10px;height:12px;background:rgba(232,205,174,.42);border-radius:3px}
+.rov{position:absolute;top:10px;height:12px;background:repeating-linear-gradient(135deg,rgba(244,217,188,.9) 0 3px,transparent 3px 6px);border-radius:3px}
+.ekinds{margin-top:14px}.ekinds p{margin:0 0 4px;font-size:15.5px}
+.lsch{margin:6px 0 16px;padding:12px;max-width:760px!important;border:1px solid rgba(223,192,159,.45);border-radius:12px;background:rgba(1,31,57,.6);max-width:680px}
+.lsch figcaption{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.03em;color:#E8CDAE;margin-bottom:6px}
+.lsch svg{width:100%;height:auto;display:block}
+.lsch .lp{fill:none;stroke:#DFC09F;stroke-width:2.5}.lsch .ld{stroke:rgba(223,192,159,.45);stroke-dasharray:4 4}.lsch .lc{fill:#F4D9BC}.lsch .la{fill:#DFC09F}
+.lsch .lt{fill:#F3F5F8;font:600 13px 'PT Sans',sans-serif}.lsch .ls{fill:#CDD2DB;font:12px 'PT Sans',sans-serif}
+.lsch .lb{fill:#F4D9BC}.lsch .lbt{fill:#08182F;font:700 12.5px 'PT Sans',sans-serif}.lsch .lw{fill:#EEF2F7}.lsch .lwt{fill:#0B1B33;font:700 13px 'PT Sans',sans-serif}.lsch .lwt2{fill:#11284A;font:600 10.5px 'Montserrat','PT Sans',sans-serif;letter-spacing:.06em}
+.lsch figcaption span{display:block;font-size:14px;color:#F3F5F8;text-transform:none}
 .rl2{position:absolute;top:10px;height:12px;background:var(--plum);border-radius:3px}
 .rlab{position:absolute;top:26px;font-size:15.5px;line-height:1.35;color:var(--ink);white-space:nowrap}
 .rlab .rio{color:var(--muted)}
-.rdot{position:absolute;top:8px;width:12px;height:12px;margin-left:-6px;border-radius:50%;border:1.5px solid var(--eclipse);background:var(--surface-solid)}
-.rdot.sol{background:var(--eclipse)}
+.rdot{position:absolute;top:8px;width:12px;height:12px;margin-left:-6px;border-radius:50%;border:1.5px solid var(--ecl);background:var(--surface-solid)}
+.rdot.sol{background:var(--ecl)}
 .relab{position:absolute;font-size:15.5px;white-space:nowrap}
 .printnote{font-size:12px;color:var(--muted);margin-left:8px}
 #printarea{display:none}
@@ -242,13 +297,15 @@ img.prev{width:100%;border:1px solid var(--line);border-radius:6px;margin-top:8p
 
 body{margin:0}
 </style></head><body>
-<div class="wrap">
-<header><div class="hdr"><div class="zanim" id="zanim" aria-hidden="true"></div><div><div class="brand">Вера Райт · важные показатели года</div><h1>Астронавигатор</h1></div></div><div class="intro"><p class="lead">Введите данные рождения - и за минуту увидите акценты своего года:</p><ul class="gain"><li>где сосредоточатся энергия и внимание - фокус года по сферам жизни</li><li>когда планеты входят в ваши дома и где петляют ретроградные планеты</li><li>в какие дома попадают затмения</li><li>точные даты аспектов транзитных планет к планетам вашей натальной карты</li><li>прогрессивная Луна: в каком знаке и доме она у вас сейчас</li></ul><p class="priv">Расчёт идёт прямо в вашем браузере.<br>Данные рождения никуда не отправляются и не сохраняются на сервере - конфиденциальность под вашим контролем.</p></div></header>
+<div class="wrap" id="top">
+<header><div class="hdr"><div class="zanim" id="zanim" aria-hidden="true"></div><div><h1>Астронавигатор</h1><div class="brand brand2">Веры Райт · важные показатели года</div></div></div><div class="intro"><p class="lead">Введите данные рождения - и за минуту увидите акценты своего года:</p><ul class="gain"><li>где сосредоточатся энергия и внимание - фокус года по сферам жизни</li><li>когда планеты входят в ваши дома и где петляют ретроградные планеты</li><li>в какие дома попадают затмения</li><li>точные даты аспектов транзитных планет к планетам вашей натальной карты</li><li>прогрессивная Луна: в каком знаке и доме она у вас сейчас</li></ul><p class="priv">Расчёт идёт прямо в вашем браузере.<br>Данные рождения никуда не отправляются и не сохраняются на сервере - конфиденциальность под вашим контролем.</p></div></header>
 <div class="grid">
 <form id="f" autocomplete="off">
  <label for="nm">Имя<input id="nm" value="" placeholder="Введите имя"></label>
- <div class="row2"><label for="dt">Дата рождения<input id="dt" type="date" value="" required></label><label for="tm">Время рождения<input id="tm" type="time" value="" required></label></div>
+ <div class="people"><label for="ppl">Мои карты<select id="ppl"></select></label><div class="pbtns"><button type="button" id="psave" class="minib">Сохранить текущую карту</button><button type="button" id="pdel" class="minib">Удалить выбранную</button></div><p class="note" id="pst" aria-live="polite"></p><p class="note">Карты хранятся только в этом браузере на этом устройстве и никуда не отправляются.</p></div>
+ <div class="row2"><label for="dtv">Дата рождения<input id="dtv" class="dtin" type="text" inputmode="numeric" placeholder="ДД.ММ.ГГГГ" autocomplete="off" required></label><label for="tmv">Время рождения<input id="tmv" class="tmin" type="text" inputmode="numeric" placeholder="ЧЧ:ММ" autocomplete="off" required></label></div><input id="dt" type="hidden"><input id="tm" type="hidden">
  <label for="city">Город<select id="city"></select></label>
+ <div class="csearch"><label for="cq">Нет в списке? Найдите любой населённый пункт</label><div class="crow"><input id="cq" type="text" placeholder="Например: Усть-Куйга" autocomplete="off"><button type="button" id="cfind" class="minib">Найти</button></div><div id="cres"></div><p class="note" id="cfound"></p><p class="note">Для поиска название пункта отправляется в OpenStreetMap. Данные рождения никуда не отправляются.</p></div>
  <label for="zone">Часовая зона<select id="zone"></select></label>
  <label for="tz">Поправка на момент рождения, UTC ±ч<input id="tz" type="number" step="0.5" min="-12" max="14" value="" required></label>
  <p class="note" id="tznote">Подставляется автоматически по городу, дате и времени, с учётом летнего и декретного времени. При необходимости исправьте вручную.</p>
@@ -263,6 +320,8 @@ body{margin:0}
 </form>
 <section class="res pre" id="resbox" aria-live="polite">
  <div id="who" class="badge"></div>
+ <div class="pickrow" id="pickrow" hidden><button type="button" id="pickprint" class="printbtn">Распечатать выбранные разделы</button></div>
+ <dialog id="ppdlg" class="ppdlg"><h3>Что распечатать или сохранить в PDF</h3><div id="pplist"></div><div class="ppb"><button type="button" id="ppall" class="minib">Выбрать все / снять все</button><button type="button" id="ppcancel" class="minib">Отмена</button><button type="button" id="ppgo" class="printbtn">Распечатать</button></div><p class="note">Каждый раздел начнётся с новой страницы. Печатается на белом фоне.</p></dialog>
  <div class="tabs" role="tablist">
   <button role="tab" id="tb-nat" aria-selected="false" data-p="nat">Натальная карта</button>
   <button role="tab" id="tb-natasp" aria-selected="false" data-p="natasp">Аспекты НК</button>
@@ -279,6 +338,7 @@ body{margin:0}
   <span class="tbr" aria-hidden="true"></span>
   <button role="tab" id="tb-lun" aria-selected="false" data-p="lun">Новолуния и Полнолуния</button>
   <button role="tab" id="tb-prog" aria-selected="false" data-p="prog">Прогрессии</button>
+  <button role="tab" id="tb-solar" aria-selected="false" data-p="solar">Соляр</button>
  </div>
  <div class="panel" id="p-nat"></div>
  <div class="panel" id="p-natasp" hidden></div>
@@ -291,6 +351,7 @@ body{margin:0}
  <div class="panel" id="p-per" hidden></div>
  <div class="panel" id="p-lun" hidden></div>
  <div class="panel" id="p-prog" hidden></div>
+ <div class="panel" id="p-solar" hidden></div>
 </section>
 </div>
 </div>
@@ -667,6 +728,12 @@ function loopsOf(ser,names){ const out=[]; const H=3600000;
         let inMs=null; for(let k=i;k>0;k--){ const x=(a[k]-dLon+540)%360-180, y=(a[k-1]-dLon+540)%360-180; if(x>=0&&y<0){ inMs=refine(m=>((lonAt(n,m)-dLon+540)%360-180),T[k-1],T[k]); break; } }
         let outMs=null; for(let k=j;k<a.length-1;k++){ const x=(a[k]-rLon+540)%360-180, y=(a[k+1]-rLon+540)%360-180; if(x<0&&y>=0){ outMs=refine(m=>((lonAt(n,m)-rLon+540)%360-180),T[k],T[k+1]); break; } }
         out.push({pl:n,inMs,rMs,dMs,outMs,rLon,dLon}); i=j; } } });
+  const df=(x,y)=>((x-y+540)%360)-180, D=864e5;
+  const bis=(f,a,b)=>{ for(let i=0;i<50;i++){ const m=(a+b)/2; if((f(m)>0)===(f(a)>0)) a=m; else b=m; } return (a+b)/2; };
+  out.forEach(l=>{ const n=l.pl, st=['Меркурий','Венера','Марс'].includes(n)?D:3*D;
+    if(!l.dMs){ const s=m=>spd(n,m); let m=l.rMs+D; for(let i=0;i<500&&s(m)<=0;i++) m+=st; l.dMs=bis(s,m-st,m); l.dLon=lonAt(n,l.dMs); l.dLate=true; }
+    if(!l.inMs){ const f=m=>df(lonAt(n,m),l.dLon); let m=l.rMs; for(let i=0;i<400&&f(m)>=0;i++) m-=st; l.inMs=bis(f,m,m+st); }
+    if(!l.outMs){ const f=m=>df(lonAt(n,m),l.rLon); let m=l.dMs; for(let i=0;i<400&&f(m)<0;i++) m+=st; l.outMs=bis(f,m-st,m); } });
   return out.sort((x,y)=>x.rMs-y.rMs); }
 function inArc(l,a,b){ return norm(l-a)<=norm(b-a); } // дуга от a вперёд до b
 // взаимные аспекты транзитных планет (общие транзиты)
@@ -685,6 +752,23 @@ function tSquares(ser,names,y0,y1){ const res=[]; const T=ser.T; const sep=(x,y)
       for(const c of names){ if(c===a||c===b) continue; if(Math.abs(sep(ser.S[c][k],ser.S[a][k])-90)<=6&&Math.abs(sep(ser.S[c][k],ser.S[b][k])-90)<=6){ const key=a+'|'+b+'|'+c; now.add(key); if(!open[key]) open[key]={a,b,c,from:T[k],to:T[k]}; else open[key].to=T[k]; } } }
     Object.keys(open).forEach(key=>{ if(!now.has(key)){ res.push(open[key]); delete open[key]; } }); }
   Object.values(open).forEach(v=>res.push(v)); return res.sort((x,y)=>x.from-y.from); }
+
+// конфигурации: тау-квадраты, большие трины, бисекстили (без Луны) + количество с Луной
+function configs(ser,names,y0,y1,orb){ orb=orb||6; const T=ser.T; const sep=(x,y)=>Math.abs(((x-y+540)%360)-180); const near=(x,y,ang)=>Math.abs(sep(x,y)-ang)<=orb;
+  const find=(P,nm,cb)=>{ for(let i=0;i<nm.length;i++)for(let j=i+1;j<nm.length;j++){ const a=nm[i],b=nm[j], pa=P[a], pb=P[b];
+      if(near(pa,pb,180)) nm.forEach(c=>{ if(c!==a&&c!==b&&near(P[c],pa,90)&&near(P[c],pb,90)) cb('tsq',[a,b,c].join('|')); });
+      if(near(pa,pb,120)){ nm.forEach(c=>{ if(c===a||c===b) return; if(near(P[c],pa,120)&&near(P[c],pb,120)) cb('gtr',[a,b,c].sort().join('|')); if(near(P[c],pa,60)&&near(P[c],pb,60)) cb('bis',[a,b,c].join('|')); }); } } };
+  const res={tsq:[],gtr:[],bis:[]}; const open={};
+  for(let k=0;k<T.length;k++){ if(T[k]<y0||T[k]>=y1) continue; const P={}; names.forEach(n=>P[n]=ser.S[n][k]); const now=new Set();
+    find(P,names,(ty,key)=>{ const id=ty+'#'+key; now.add(id); if(!open[id]) open[id]={ty,key,from:T[k],to:T[k]}; else open[id].to=T[k]; });
+    Object.keys(open).forEach(id=>{ if(!now.has(id)){ res[open[id].ty].push(open[id]); delete open[id]; } }); }
+  Object.values(open).forEach(v=>res[v.ty].push(v)); ['tsq','gtr','bis'].forEach(k=>res[k].sort((x,y)=>x.from-y.from));
+  // с Луной: шаг 3 часа, остальные планеты интерполируются по суточному ряду
+  const moon={tsq:0,gtr:0,bis:0}; const prev=new Set(); const nm2=names.concat(['Луна']); const H3=3*3600000;
+  for(let m=y0;m<y1;m+=H3){ const k=Math.max(0,Math.min(T.length-2,Math.floor((m-T[0])/(T[1]-T[0])))); const f=(m-T[k])/(T[k+1]-T[k]); const P={};
+    names.forEach(n=>{ const a=ser.S[n][k], b=ser.S[n][k+1]; P[n]=((a+(((b-a+540)%360)-180)*f)%360+360)%360; }); P['Луна']=lonAt('Луна',m);
+    const now=new Set(); find(P,nm2,(ty,key)=>{ if(key.includes('Луна')){ const id=ty+'#'+key; now.add(id); if(!prev.has(id)) moon[ty]++; } }); prev.clear(); now.forEach(x=>prev.add(x)); }
+  res.moon=moon; return res; }
 
 /* QRCode for JavaScript - Kazuhiko Arase (MIT), via qrcode-terminal (Apache-2.0) */
 const QRLib=(function(){const M={},C={};function R(n){n=n.replace(/^\.\//,"").replace(/\.js$/,"");if(C[n])return C[n].exports;const m={exports:{}};C[n]=m;M[n](m,m.exports,R);return m.exports;}
@@ -2004,10 +2088,10 @@ function doPrint(html,btn){ let pa=document.getElementById('printarea'); if(!pa)
   document.body.classList.add('pa'); const done=()=>{ document.body.classList.remove('pa'); window.removeEventListener('afterprint',done); };
   window.addEventListener('afterprint',done); try{ window.print(); }catch(_){} setTimeout(done,1500);
   if(btn&&!btn.parentElement.querySelector('.printnote')) btn.insertAdjacentHTML('afterend','<span class="printnote">Если окно печати не открылось, откройте сайт в Chrome или Safari: во встроенном браузере Telegram и MAX печать не работает.</span>'); }
-document.addEventListener('click',e=>{ const b=e.target.closest('.printbtn:not(.pngbtn):not(.printblk):not(.pngblk):not(.rcsave)'); if(b){ const pn=b.closest('.panel'); doPrint(pn.innerHTML,b); return; }
+document.addEventListener('click',e=>{ const b=e.target.closest('.printbtn:not(.pngbtn):not(.printblk):not(.pngblk):not(.rcsave)'); if(b&&b.closest('.panel')){ const pn=b.closest('.panel'); doPrint(pn.innerHTML,b); return; }
   const k=e.target.closest('.printblk'); if(k){ doPrint(k.closest('.pblock').innerHTML,k); } });
 // ---- затмение в «Фокусе года»: по нажатию показываем дату, градус и знак
-document.addEventListener('click',e=>{ const old=document.querySelector('.egpop'); const b=e.target.closest('.egb');
+document.addEventListener('click',e=>{ const old=document.querySelector('.egpop'); const b=e.target.closest('.egb,.igclick');
   if(old&&(!b||old.dataset.for===b.dataset.t)){ old.remove(); if(b) return; } else if(old) old.remove();
   if(!b) return; const r=b.getBoundingClientRect(); const p=document.createElement('div'); p.className='egpop'; p.dataset.for=b.dataset.t; p.textContent=b.dataset.t; document.body.appendChild(p);
   const w=p.offsetWidth; p.style.left=Math.max(8,Math.min(window.scrollX+r.left-w/2+r.width/2,window.scrollX+document.documentElement.clientWidth-w-8))+'px'; p.style.top=(window.scrollY+r.bottom+6)+'px'; });
@@ -2035,8 +2119,8 @@ document.addEventListener('click',e=>{ const r=e.target.closest('.igsave'); if(r
 
 const CITIES=[["Москва", 55.7558, 37.6173, "Europe/Moscow"], ["Санкт-Петербург", 59.9343, 30.3351, "Europe/Moscow"], ["Новосибирск", 55.0084, 82.9357, "Asia/Novosibirsk"], ["Екатеринбург", 56.8389, 60.6057, "Asia/Yekaterinburg"], ["Казань", 55.7963, 49.1088, "Europe/Moscow"], ["Нижний Новгород", 56.3269, 44.0059, "Europe/Moscow"], ["Челябинск", 55.1644, 61.4368, "Asia/Yekaterinburg"], ["Самара", 53.1959, 50.1002, "Europe/Samara"], ["Омск", 54.9885, 73.3242, "Asia/Omsk"], ["Ростов-на-Дону", 47.2357, 39.7015, "Europe/Moscow"], ["Уфа", 54.7388, 55.9721, "Asia/Yekaterinburg"], ["Красноярск", 56.0153, 92.8932, "Asia/Krasnoyarsk"], ["Воронеж", 51.672, 39.1843, "Europe/Moscow"], ["Пермь", 58.0105, 56.2502, "Asia/Yekaterinburg"], ["Волгоград", 48.708, 44.5133, "Europe/Volgograd"], ["Краснодар", 45.0355, 38.9753, "Europe/Moscow"], ["Саратов", 51.5331, 46.0342, "Europe/Saratov"], ["Ульяновск", 54.3142, 48.4031, "Europe/Ulyanovsk"], ["Астрахань", 46.3479, 48.0336, "Europe/Astrakhan"], ["Киров", 58.6036, 49.668, "Europe/Kirov"], ["Тюмень", 57.153, 65.5343, "Asia/Yekaterinburg"], ["Барнаул", 53.3474, 83.7784, "Asia/Barnaul"], ["Томск", 56.4846, 84.9476, "Asia/Tomsk"], ["Иркутск", 52.287, 104.305, "Asia/Irkutsk"], ["Якутск", 62.0355, 129.6755, "Asia/Yakutsk"], ["Владивосток", 43.1155, 131.8855, "Asia/Vladivostok"], ["Хабаровск", 48.4802, 135.0719, "Asia/Vladivostok"], ["Магадан", 59.5682, 150.8085, "Asia/Magadan"], ["Петропавловск-Камчатский", 53.0452, 158.6511, "Asia/Kamchatka"], ["Мурманск", 68.9585, 33.0827, "Europe/Moscow"], ["Архангельск", 64.5401, 40.5433, "Europe/Moscow"], ["Норильск", 69.3558, 88.1893, "Asia/Krasnoyarsk"], ["Брянск", 53.2434, 34.364, "Europe/Moscow"], ["Кемерово", 55.3547, 86.0873, "Asia/Novokuznetsk"], ["Тула", 54.1931, 37.6177, "Europe/Moscow"], ["Калининград", 54.7104, 20.4522, "Europe/Kaliningrad"], ["Симферополь", 44.9521, 34.1024, "Europe/Simferopol"], ["Минск", 53.9006, 27.559, "Europe/Minsk"], ["Киев", 50.4501, 30.5234, "Europe/Kiev"], ["Алматы", 43.222, 76.8512, "Asia/Almaty"], ["Ташкент", 41.2995, 69.2401, "Asia/Tashkent"], ["Баку", 40.4093, 49.8671, "Asia/Baku"], ["Ереван", 40.1792, 44.4991, "Asia/Yerevan"], ["Тбилиси", 41.7151, 44.8271, "Asia/Tbilisi"], ["Кишинёв", 47.0105, 28.8638, "Europe/Chisinau"], ["Рига", 56.9496, 24.1052, "Europe/Riga"], ["Сан-Франциско", 37.7749, -122.4194, "America/Los_Angeles"]];
 const $=id=>document.getElementById(id);
-const PANELS=["p-nat", "p-natasp", "p-heat", "p-mun", "p-loops", "p-ingr", "p-asp", "p-houses", "p-per", "p-lun", "p-prog"];
-const TABNAME={"nat": "Натальная карта", "natasp": "Аспекты НК", "houses": "Транзиты по домам НК", "heat": "Фокус года", "loops": "Петли планет", "ingr": "Ингрессии планет", "mun": "Общие транзиты", "asp": "Аспекты транзитов к НК", "per": "Благоприятные и напряжённые транзиты к НК", "lun": "Новолуния и Полнолуния", "prog": "Прогрессии"};
+const PANELS=["p-nat", "p-natasp", "p-heat", "p-mun", "p-loops", "p-ingr", "p-asp", "p-houses", "p-per", "p-lun", "p-prog", "p-solar"];
+const TABNAME={"nat": "Натальная карта", "natasp": "Аспекты НК", "houses": "Транзиты по домам НК", "heat": "Фокус года", "loops": "Петли планет", "ingr": "Ингрессии планет", "mun": "Общие транзиты", "asp": "Аспекты транзитов к НК", "per": "Благоприятные и напряжённые транзиты к НК", "lun": "Новолуния и Полнолуния", "prog": "Прогрессии", "solar": "Соляр"};
 const cs=$('city'); cs.innerHTML='<option value="">Другой - введите координаты и зону</option>'+CITIES.map((c,i)=>`<option value="${i}">${c[0]}</option>`).join(''); cs.value='';
 const ZONES=[...new Set(CITIES.map(c=>c[3]))]; $('zone').innerHTML=ZONES.map(z=>`<option>${z}</option>`).join(''); $('zone').value='Europe/Moscow';
 function zoneOffset(zone,y,mo,d,hh,mm){ const want=Date.UTC(y,mo-1,d,hh,mm); let u=want; const f=new Intl.DateTimeFormat('en-US',{timeZone:zone,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
@@ -2047,8 +2131,8 @@ function autoTz(){ if(tzManual) return; const v=$('dt').value, tm=$('tm').value;
   try{ const o=zoneOffset($('zone').value,y,mo,d,hh,mm); $('tz').value=o; const std=zoneOffset($('zone').value,y,1,15,12,0), sum=zoneOffset($('zone').value,y,7,15,12,0);
    $('tznote').textContent=`Определено автоматически: UTC${o>=0?'+':''}${o}`+(std!==sum?(o===Math.max(std,sum)?', летнее время.':', зимнее время.'):', перехода на летнее время в этом году не было.')+' Сверьте с Сотисом; при необходимости исправьте вручную.'; }
   catch(e){ $('tznote').textContent='Не удалось определить поправку автоматически - введите вручную.'; } }
-cs.addEventListener('change',()=>{ if(cs.value==='')return; const c=CITIES[+cs.value]; $('lat').value=c[1]; $('lon').value=c[2]; $('zone').value=c[3]; tzManual=false; autoTz(); });
-['zone','dt','tm'].forEach(id=>$(id).addEventListener('change',()=>{ if(id==='zone') tzManual=false; autoTz(); }));
+cs.addEventListener('change',()=>{ if(cs.value==='')return; $('cfound').textContent=''; $('cfound').dataset.place=''; const c=CITIES[+cs.value]; $('lat').value=c[1]; $('lon').value=c[2]; $('zone').value=c[3]; tzManual=false; autoTz(); });
+$('zone').addEventListener('change',()=>{ tzManual=false; autoTz(); });
 $('tz').addEventListener('input',()=>{ tzManual=true; $('tznote').textContent='Поправка введена вручную.'; });
 autoTz();
 const ys=$('yr'); const cy=new Date().getFullYear(); for(let y=cy-1;y<=cy+4;y++) ys.insertAdjacentHTML('beforeend',`<option ${y===2027?'selected':''}>${y}</option>`);
@@ -2072,7 +2156,7 @@ const ACCESS=[{"h": "0bb686b4eacf1448780304e1dcb26e50c757e075a60f41420af4d4833c7
 let ACCESS_KIND=null, TRIAL=null;
 const UTM='utm_source=astrodnevnik&utm_medium=tool&utm_campaign=fokus_goda';
 const LINKS={tg:'https://t.me/+aYy5Y7upMNplZWYy', tgImg:'https://t.me/+aYy5Y7upMNplZWYy', max:'https://max.ru/join/rGnFtiQoAVelV5fMrXZbtBnn5IpxleIGVxX61Sr2mR4',
-  club:'https://veraryte.ru/p/astro-club/?'+UTM, course:'https://veraryte.ru/p/astro-education-expert/?'+UTM}; // tgImg - отдельная пригласительная ссылка для QR на картинке
+  club:'https://veraryte.ru/p/astro-club/?'+UTM, basic:'https://veraryte.ru/p/astro-education-basic/?'+UTM, course:'https://veraryte.ru/p/astro-education-expert/?'+UTM}; // tgImg - отдельная пригласительная ссылка для QR на картинке
 const normCode=x=>x.toLowerCase().replace(/ё/g,'е').replace(/\s+/g,'');
 async function sha(x){ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(x)); return [...new Uint8Array(b)].map(v=>v.toString(16).padStart(2,'0')).join(''); }
 let UNLOCKED=false;
@@ -2084,9 +2168,10 @@ function trialCharts(){ try{ return JSON.parse(localStorage.getItem('astro_trial
 function trialAllows(key){ const l=trialCharts(); if(l.includes(key)) return true; if(l.length>=TRIAL.limit) return false; l.push(key); try{ localStorage.setItem('astro_trial',JSON.stringify(l)); }catch(e){} return true; }
 const MAX_ICO='data:image/png;base64,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';
 const TG_ICO='<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#2AABEE"/><path d="M5.4 11.8l11-4.3c.5-.2 1 .1.8.9l-1.9 8.8c-.1.6-.5.8-1 .5l-2.8-2.1-1.4 1.3c-.2.2-.3.3-.6.3l.2-2.9 5.2-4.7c.2-.2 0-.3-.3-.1l-6.4 4-2.8-.9c-.6-.2-.6-.6.1-.9z" fill="#fff"/></svg>';
-function ctaHTML(){ const a=(h,ico,t)=>`<a href="${h}" target="_blank" rel="noopener">${ico}<span>${t}</span></a>`;
-  return `<div class="cta"><p class="ctah">Хотите понимать, что значат ваши транзиты?</p><p class="sub" style="margin:0">«Понятная астрология» - бесплатный закрытый канал Веры Райт: транзиты, затмения и петли планет простым языком.</p><div class="btns">${a(LINKS.tg,TG_ICO,'Понятная астрология в Telegram')}${a(LINKS.max,`<img src="${MAX_ICO}" width="20" height="20" alt="" style="border-radius:5px">`,'Понятная астрология в MAX')}</div>
-  <p class="sub" style="margin:6px 0 0">Хотите сами строить прогнозы? Обучение «Прогнозирование» (2 ступень) - ещё можно успеть присоединиться. А в Астроклубе разбираем транзиты на живых встречах.</p><div class="btns">${a(LINKS.course,'','Обучение «Прогнозирование»')}${a(LINKS.club,'','Астроклуб')}</div></div>`; }
+function ctaHTML(full){ const a=(h,ico,t,cls)=>`<a class="${cls||''}" href="${h}" target="_blank" rel="noopener">${ico}<span>${t}</span></a>`;
+  const ch=`<div class="ctab"><h3 class="ctah">Хотите понимать, что значат ваши транзиты?</h3><p>Переходите в бесплатный закрытый канал Веры Райт «Понятная астрология»: разбираем транзиты, затмения и петли планет простым языком.</p><div class="btns">${a(LINKS.tg,TG_ICO,'Перейти в Telegram','gold')}${a(LINKS.max,`<img src="${MAX_ICO}" width="20" height="20" alt="" style="border-radius:5px">`,'Перейти в MAX','gold')}</div></div>`;
+  if(!full) return `<div class="cta">${ch}</div>`;
+  return `<div class="cta">${ch}<div class="ctab"><h3 class="ctah">Хотите сами составлять прогнозы?</h3><p>Обучение астрологии у Веры Райт - ещё можно успеть присоединиться.</p><p>Уже практикуете? В Астроклубе отрабатываем прогнозы на реальных картах и разбираем дополнительные факторы гороскопа.</p><div class="btns">${a(LINKS.basic,'','Обучение с нуля','gold')}${a(LINKS.course,'','Обучение прогнозированию','gold')}${a(LINKS.club,'','Астроклуб','gold')}</div></div></div>`; }
 function lockHTML(msg){ return `<div class="lock"><h2>Полная версия для участниц</h2>${msg?`<p class="bad" style="font-size:15px">${msg}</p>`:''}<p class="sub" style="margin:0">Даты входа планет в дома, аспекты транзитов и аспекты натальной карты открываются по коду. Код лежит в закрепе закрытого канала и обновляется 1-го числа каждого месяца.</p><form class="codef"><input type="text" placeholder="Код доступа" aria-label="Код доступа" autocomplete="off"><button type="submit">Открыть</button></form><p class="bad" aria-live="polite"></p></div>`+ctaHTML(); }
 document.addEventListener('submit',async e=>{ if(!e.target.classList.contains('codef')) return; e.preventDefault(); const inp=e.target.querySelector('input'); const ok=await checkCode(inp.value);
   if(ok&&ok!=='expired'){ setAccess(ok); try{localStorage.setItem('astro_code',inp.value);}catch(_){} run(); } else e.target.parentElement.querySelector('.bad').textContent=ok==='expired'?'Срок этого кода закончился. Актуальный код - в закрепе канала.':'Код не подошёл. Проверьте закреп канала: код меняется 1-го числа.'; });
@@ -2097,15 +2182,18 @@ function run(){ window.__ran=true; $('resbox').classList.remove('pre'); if(!docu
  if([y,mo,d,hh,mm,tz,lat,lon].some(Number.isNaN)) throw new Error('Заполните дату, время, часовой пояс и координаты.');
  NODE_MODE=$('nmode').value; const split=+$('split').value;
  const N=natal(y,mo,d,hh,mm,tz,lat,lon,topo); const c=N.c;
- const pn=n=>`${g(n)}${N.R[n]?' <span class="r">R</span>':''} ${n}`;
- $('who').textContent=`${$('nm').value||'Карта'} · ${$('dt').value.split('-').reverse().join('.')} ${$('tm').value} · UTC${tz>=0?'+':''}${tz} · прогноз на ${Y} год`;
+ const pn=n=>`${g(n)}${N.R[n]?'<span class="r">R</span>':''} ${n}`;
+ $('who').textContent=`${$('nm').value||'Карта'} · ${$('dt').value.split('-').reverse().join('.')} ${$('tm').value} · UTC${tz>=0?'+':''}${tz} · прогноз на ${Y} год · время в таблицах: ${vtz===3?'московское':'UTC'+(vtz>=0?'+':'')+vtz}`;
  const ser=yearSeries(Y,24);
  const dsg=l=>{ const d=dms(l,false); return `${d.txt} ${gz(d.s)}`; };
  const isR=(n,ms)=>{ if(n==='Солнце'||n==='Луна') return false; return ((lonAt(n,ms+432e5)-lonAt(n,ms-432e5)+540)%360-180)<0; };
  const pblock=(html)=>`<section class="pblock">${html}</section>`;
  const pblock2=(html,nm)=>`<section class="pblock" data-nm="${nm}"><div class="printbar"><button type="button" class="printbtn printblk">Распечатать или сохранить в PDF</button><button type="button" class="printbtn pngblk">Сохранить картинкой</button></div>${html}</section>`;
  const STN={}; loopsOf(ser,['Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон']).forEach(l=>{ (STN[l.pl]=STN[l.pl]||[]).push({ms:l.rMs,t:'R'}); if(l.dMs) STN[l.pl].push({ms:l.dMs,t:'D'}); });
- const moveTxt=(a)=>{ if(a.exact.length>1) return `R, петля: ${a.exact.length} касания`; if(!a.exact.length) return 'R, разворот в орбисе'; return isR(a.tr,a.exact[0])?'R':''; };
+ const OA={'Солнце':4,'Меркурий':4,'Венера':4,'Марс':4,'Юпитер':3,'Сатурн':3,'Уран':2,'Нептун':2,'Плутон':2,'Сев. Узел':3,'Лилит':3}, OS={'Солнце':3,'Меркурий':3,'Венера':3,'Марс':3,'Юпитер':2,'Сатурн':2,'Уран':1.5,'Нептун':1.5,'Плутон':1.5,'Сев. Узел':2,'Лилит':2};
+ const ANG={a0:0,a60:60,a90:90,a120:120,a180:180};
+ const winBy=(dvAt,ms,oa,os)=>{ const D=864e5; let a=ms, b=ms; for(let i=0;i<800&&dvAt(a-D)<=oa;i++) a-=D; for(let i=0;i<800&&dvAt(b+D)<=os;i++) b+=D; return [a,b]; };
+ const moveTxt=(a)=>{ if(a.exact.length>1) return `петля, ${a.exact.length} ${a.exact.length>4?'касаний':'касания'}:<br>${a.exact.map(m=>fdt(m,vtz,false)).join('<br>')}`; if(!a.exact.length) return 'разворот в орбисе'; return isR(a.tr,a.exact[0])?'ретро':''; };
  // ---- heat
  const y0=Date.UTC(Y,0,1), y1=Date.UTC(Y+1,0,1);
  const per=[]; for(let m=0;m<12;m++){ const e=Date.UTC(Y,m+1,1);
@@ -2117,11 +2205,15 @@ function run(){ window.__ran=true; $('resbox').classList.remove('pre'); if(!docu
    PTS.forEach(n=>cell[houseOf(ser.S[n][i],c)][k].x.add(n)); });
  const EC=eclipses(Y).map(e=>{ const m=A.SearchMoonPhase(e.solar?0:180,A.MakeTime(new Date(e.ms-3*864e5)),6); return m?{...e,ms:m.date.getTime(),lon:eclLon('Луна',m),peak:e.ms}:e; });
  EC.forEach(e=>{ const k=per.findIndex(([a,b])=>e.ms>=a&&e.ms<b); if(k>=0) cell[houseOf(e.lon,c)][k].e.push(e); });
- const ecLine=e=>`${fdt(e.ms,vtz)} ${e.solar?'Новолуние (солнечное затмение)':'Полнолуние (лунное затмение)'}, ${dms(e.lon,false).txt} ${SIGN_GEN[dms(e.lon,false).s]}, ${ROM[houseOf(e.lon,c)]} дом`;
+ const ecLine=e=>`${fdt(e.ms,vtz)} ${e.solar?'Новолуние (Солнечное затмение)':'Полнолуние (Лунное затмение)'}, ${dms(e.lon,false).txt} ${SIGN_GEN[dms(e.lon,false).s]}, ${ROM[houseOf(e.lon,c)]} дом`;
+ const ecHtml=e=>{ const f=fdt(e.ms,vtz); return `<b>${f.slice(0,10)}</b> ${f.slice(11)} ${e.solar?'Новолуние (Солнечное затмение)':'Полнолуние (Лунное затмение)'}, <span class="nw">${dms(e.lon,false).txt} ${SIGN_GEN[dms(e.lon,false).s]}, ${ROM[houseOf(e.lon,c)]} дом</span>`; };
+ const LPH=loopsOf(ser,['Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон']);
+ const rTxt=(n,a,b)=>{ const l=LPH.find(x=>x.pl===n&&x.rMs<b&&(x.dMs||1e15)>a); if(!l) return `${n} ретроградный`; const d1=dms(l.rLon,false), d2=l.dMs?dms(l.dLon,false):null; return `${n} ретроградный с ${fdt(l.rMs,vtz,false)} по ${l.dMs?fdt(l.dMs,vtz,false):'…'}: ${d1.txt} ${SIGN_GEN[d1.s]}${d2?' - '+d2.txt+' '+SIGN_GEN[d2.s]:''}`; };
  const eg=e=>e.lon===undefined?`<span class="g ge" style="--m:url(${SYM[e.solar?'eS':'eL']})"></span>`:`<button type="button" class="egb" data-t="${ecLine(e)}" aria-label="${ecLine(e)}"><span class="g ge" style="--m:url(${SYM[e.solar?'eS':'eL']})"></span></button>`;
- const ECLB=()=>{ const COR=corridors(EC).filter(x=>x.n>1); return `<h2 style="margin-top:20px">Затмения ${Y}</h2><div class="ecl-lines">`+EC.map(e=>`<p>${ecLine(e)}</p>`).join('')+'</div>'+(COR.length?`<p class="sub" style="margin:10px 0 2px"><b class="corh">Коридоры затмений в ${Y} году:</b></p><div class="ecl-lines">`+COR.map(x=>`<p>с ${fdm(x.a,vtz)} по ${fdt(x.b,vtz,false)}</p>`).join('')+'</div>':''); };
- let h=`<h2><span class="calico"></span>Фокус года ${Y} по сферам жизни</h2><div class="sub loopintro"><p>Показывает периоды, когда в доме находятся несколько транзитных планет (две и больше). В это время сфера этого дома активируется.</p><p>Нажмите на значок затмения в таблице - появятся дата, градус и знак затмения.</p><p>Две планеты за ${split===2?'половину месяца':'декаду'} - клетка подсвечена, три и больше - цвет темнее.</p><p>Медленные планеты стоят в доме месяцами и задают фон. Быстрые, проходя по ним, активируют и усиливают их действие.</p><p>Лунные Узлы и Лилит показаны, но в подсветке не учитываются.</p></div><div class="saverow"><button type="button" class="savebtn">Сохранить «Фокус года» картинкой</button><span class="savest note"></span></div><div class="zoombar"><span class="note">Масштаб таблицы:</span><button type="button" class="zb" data-z="-">−</button><button type="button" class="zb" data-z="+">+</button><button type="button" class="zb" data-z="fit">Вся таблица на экран</button></div><div class="scroll"><table class="heat${split===3?' dec':''}"><thead><tr><th></th>`+MON.map(m=>`<th class="m" colspan="${split}">${m}</th>`).join('')+'</tr><tr><th></th>'+per.map(p=>`<th>${p[2]}</th>`).join('')+'</tr></thead><tbody>';
- for(let r=1;r<=12;r++){ h+=`<tr><td class="h">${ROM[r]} <small>(${r})</small></td>`; cell[r].forEach((q,k)=>{ const n=q.p.size; h+=`<td class="${n>=3?'c3':n===2?'c2':''} ${k%split===0?'mstart':''}"><div class="cl">${[...q.p].map(x=>q.r[x]>0?`<span class="gw">${g(x)}<span class="rr">R</span></span>`:g(x)).join('')}${[...q.x].map(x=>g(x)).join('')}${q.e.map(eg).join('')}</div></td>`; }); h+='</tr>'; }
+ const MOONS='<svg class="moons" viewBox="0 0 120 24" aria-hidden="true">'+[0,1,2,3,4].map(i=>{ const x=12+i*24; const f=[0,.5,1,.5,0][i]; const o=[.25,.55,1,.55,.25][i]; return `<g opacity="${o}"><circle cx="${x}" cy="12" r="9" fill="none" stroke="#DFC09F" stroke-width="1.4"/>${f===1?`<circle cx="${x}" cy="12" r="9" fill="#F4D9BC"/>`:f>0?`<path d="M${x} 3 A9 9 0 0 ${i<2?1:0} ${x} 21 Z" fill="#F4D9BC"/>`:''}</g>`; }).join('')+'</svg>';
+ const ECLB=()=>{ const COR=corridors(EC).filter(x=>x.n>1); return `<h2 style="margin-top:20px">Затмения ${Y}</h2><div class="ecl-lines">`+EC.map(e=>`<p>${ecHtml(e)}</p>`).join('')+'</div>'+(COR.length?`<h3 class="corh3">Коридоры затмений в ${Y} году</h3><div class="ecl-lines">`+COR.map(x=>`<p>с <b>${fdt(x.a,vtz,false)}</b> по <b>${fdt(x.b,vtz,false)}</b></p>`).join('')+'</div>':''); };
+ let h=`<h2><span class="calico"></span>Фокус года ${Y} по сферам жизни</h2><div class="sub loopintro"><p>Показывает периоды, когда в доме находятся несколько транзитных планет (две и больше). В это время сфера этого дома активируется.</p><p>Нажмите на значок затмения или на ретроградную планету - появятся даты, градус и знак.</p><p>Две планеты за ${split===2?'половину месяца':'декаду'} - клетка подсвечена, три и больше - цвет темнее.</p><p>Медленные планеты стоят в доме месяцами и задают фон. Быстрые, проходя по ним, активируют и усиливают их действие.</p><p>Лунные Узлы и Лилит показаны, но в подсветке не учитываются.</p></div><div class="saverow"><button type="button" class="savebtn">Сохранить «Фокус года» картинкой</button><span class="savest note"></span></div><div class="zoombar"><span class="note">Масштаб таблицы:</span><button type="button" class="zb" data-z="-">−</button><button type="button" class="zb" data-z="+">+</button><button type="button" class="zb" data-z="fit">Вся таблица на экран</button></div><div class="scroll"><table class="heat${split===3?' dec':''}"><thead><tr><th></th>`+MON.map(m=>`<th class="m" colspan="${split}">${m}</th>`).join('')+'</tr><tr><th></th>'+per.map(p=>`<th>${p[2]}</th>`).join('')+'</tr></thead><tbody>';
+ for(let r=1;r<=12;r++){ h+=`<tr><td class="h">${ROM[r]} <small>(${r})</small></td>`; cell[r].forEach((q,k)=>{ const n=q.p.size; h+=`<td class="${n>=3?'c3':n===2?'c2':''} ${k%split===0?'mstart':''}"><div class="cl">${[...q.p].map(x=>q.r[x]>0?`<button type="button" class="egb gw" data-t="${rTxt(x,per[k][0],per[k][1])}">${g(x)}<span class="rr">R</span></button>`:g(x)).join('')}${[...q.x].map(x=>g(x)).join('')}${q.e.map(eg).join('')}</div></td>`; }); h+='</tr>'; }
  h+='</tbody></table></div><div class="legend">'
   +'<div class="row"><b>Планеты</b><div class="items">'+PLAN.map(n=>`<span>${g(n)} ${n}</span>`).join('')+'</div></div>'
   +`<div class="row"><b>Точки</b><div class="items"><span>${g('Сев. Узел')} Северный Узел</span><span>${g('Юж. Узел')} Южный Узел</span><span>${g('Лилит')} Лилит</span></div></div>`
@@ -2132,11 +2224,12 @@ function run(){ window.__ran=true; $('resbox').classList.remove('pre'); if(!docu
  { const ci=cs.value===''?'':', '+CITIES[+cs.value][0]; LAST={Y,cell,per,split,EC,c,vtz,name:$('nm').value.trim(),birth:`${$('dt').value.split('-').reverse().join('.')} ${$('tm').value}${ci}`}; }
  // ---- houses
  const ING=houseIngresses(ser,c);
-  let H='<h2>Транзитные планеты по домам натальной карты '+Y+'</h2><div class="sub loopintro"><p>Периоды, когда транзитная планета идёт по дому вашей натальной карты.</p><p>Если планета петляет по куспиду, она касается его до трёх раз, поэтому события могут повторяться.</p><p>Внутри периода отмечено, когда планета разворачивается: «R с …» - стала ретроградной, «директно с …» - пошла прямо.</p></div>';
+  let H='<h2>Транзитные планеты<br>по домам натальной карты '+Y+'</h2><div class="sub loopintro"><p>Периоды, когда транзитная планета идёт по дому вашей натальной карты.</p><p>Если планета петляет по куспиду, она касается его до трёх раз: вероятность событий по этому дому возрастает, события могут повторяться.</p><p>Внутри периода отмечено, когда планета разворачивается: «ретро с …» - стала ретроградной, «директно с …» - пошла прямо.</p><p>Для Венеры, Марса, Юпитера и Сатурна отмечен возврат планеты - соединение с её натальным положением.</p><p>Время - '+(vtz===3?'московское':'UTC'+(vtz>=0?'+':'')+vtz)+'.</p></div>';
+ const RGEN={'Венера':'Венеры','Марс':'Марса','Юпитер':'Юпитера','Сатурн':'Сатурна'}; const RET={}; { const tg0={}; Object.keys(RGEN).forEach(n=>tg0[n]=N.P[n]); transitAspects(ser,tg0).filter(a=>a.s==='a0'&&a.tr===a.to).forEach(a=>{ (RET[a.tr]=RET[a.tr]||[]).push(...a.exact.filter(m=>m>=y0&&m<y1)); }); }
  ser.names.forEach(n=>{ const it=ING[n]; let cur=houseOf(ser.S[n][ser.T.findIndex(ms=>ms>=y0)],c); const ev=it.ev.filter(e=>e.ms>=y0&&e.ms<y1); const prevEv=it.ev.filter(e=>e.ms<y0).pop(); const nextEv=it.ev.find(e=>e.ms>=y1);
    const pr=[]; let st=prevEv?prevEv.ms:null, h0=cur, rr=prevEv?prevEv.retro:false; ev.forEach(e=>{ pr.push({a:st,b:e.ms,h:h0,r:rr}); st=e.ms; h0=e.h; rr=e.retro; }); pr.push({a:st,b:nextEv?nextEv.ms:null,h:h0,r:rr});
    const fp=(m,first)=>m===null?(first?'ранее':'позже'):fdt(m,vtz);
-   H+=`<div class="hrow"><div class="pl">${g(n)} ${n}</div><div class="steps">${pr.map((p,k)=>{ const st2=(STN[n]||[]).filter(x=>(p.a===null||x.ms>p.a)&&(p.b===null||x.ms<p.b)&&x.ms>=y0-200*864e5&&x.ms<y1+60*864e5); return `<span class="step"><b>${hs(p.h)}</b>: ${p.a===null?'до':'с '+fdt(p.a,vtz)} ${p.a===null?fp(p.b,false):'по '+fp(p.b,false)}${st2.map(x=>` · <span class="r">${x.t==='R'?'R с '+fdt(x.ms,vtz,false):'</span><span>директно с '+fdt(x.ms,vtz,false)}</span>`).join('')}</span>`; }).join('')}</div></div>`; });
+   H+=`<div class="hrow"><div class="pl">${g(n)} ${n}</div><div class="steps">${pr.map((p,k)=>{ const st2=(STN[n]||[]).filter(x=>(p.a===null||x.ms>p.a)&&(p.b===null||x.ms<p.b)&&x.ms>=y0-200*864e5&&x.ms<y1+60*864e5); return `<span class="step"><b>${hs(p.h)}</b>: ${p.a===null?'до':'с '+fdt(p.a,vtz)} ${p.a===null?fp(p.b,false):'по '+fp(p.b,false)}${st2.map(x=>` · <b class="rt">${x.t==='R'?'ретро с '+fdt(x.ms,vtz,false):'директно с '+fdt(x.ms,vtz,false)}</b>`).join('')}</span>`; }).join('')}${(RET[n]||[]).map(m=>`<span class="step ret">Возврат ${RGEN[n]}: <b>${fdt(m,vtz)}</b></span>`).join('')}</div></div>`; });
  H=pblock2(H,'Транзитные планеты по домам');
  const ctg={}; for(let h=1;h<=12;h++) ctg[ROM[h]]=c[h];
  const CA=transitAspects(ser,ctg,()=>3).filter(a=>a.s==='a0'&&a.end>=y0&&a.start<y1&&(a.exact.length===0||a.exact.some(m=>m>=y0-30*864e5&&m<y1))).sort((a,b)=>(a.exact[0]||a.start)-(b.exact[0]||b.start));
@@ -2154,8 +2247,8 @@ function run(){ window.__ran=true; $('resbox').classList.remove('pre'); if(!docu
  const chr=sx=>sx==='a0'?'<span class="note">соединение</span>':CHR[sx]==='напряжённый'?'<span style="color:var(--eclipse);font-weight:700">напряжённый</span>':'<span style="color:var(--harm);font-weight:700">гармоничный</span>';
  let aspKind='all';
  const drawAsp=()=>{ const rows=AS.filter(a=>shown.has(a.tr)&&(aspKind==='all'||(aspKind==='t'&&(a.s==='a90'||a.s==='a180'))||(aspKind==='h'&&(a.s==='a60'||a.s==='a120'))||(aspKind==='c'&&a.s==='a0')));
-   $('aspbody').innerHTML=rows.map(a=>{ const tm=a.exact[0]||a.start; return `<tr><td>${g(a.tr)} ${a.tr} <span class="num note">${dsg(lonAt(a.tr,tm))}</span></td><td>${ga(a.s)}</td><td>${g(a.to)} ${a.to} <span class="num note">${dsg(N.P[a.to])}</span></td><td>${chr(a.s)}</td><td class="num">${a.start<=ser.T[0]?'ранее':fdt(a.start,vtz,false)}</td><td class="num">${a.exact.length?a.exact.map(m=>fdt(m,vtz)).join('<br>'):'без точного аспекта'}</td><td class="num">${a.end>=ser.T[ser.T.length-1]?'позже':fdt(a.end,vtz,false)}</td><td><span class="r">${moveTxt(a)}</span></td></tr>`; }).join('')||'<tr><td colspan="8">Нет аспектов для выбранных планет.</td></tr>'; };
- $('p-asp').innerHTML='<h2>Аспекты транзитов к натальной карте '+Y+'</h2><div class="sub loopintro"><p><b>Сходящийся аспект</b> - транзитная планета подходит к натальной.</p><p><b>Точный аспект</b> - градус в градус.</p><p><b>Расходящийся аспект</b> - транзитная планета уходит от натальной.</p><p>Если планета в петле, она касается точки натальной карты до трёх раз: тогда в колонке «Точный аспект» несколько дат.</p><p>Транзиты Лунных Узлов и Лилит учитываются только в соединении с планетами и куспидами домов.</p><p>Орбисы транзитов: Солнце 7°, Меркурий, Венера, Марс 5°, Юпитер и Сатурн 3°, Уран, Нептун, Плутон 2°, Лунные Узлы 3°, Лилит 4° (для соединения; для секстиля меньше).</p><p>Колонка «Движение»: R - транзитная планета ретроградна; «петля» - несколько касаний; «разворот в орбисе» - планета вошла в орбис, развернулась и ушла, не дойдя до точного аспекта.</p></div><p class="pick">Выбирайте кнопки с планетами, по которым нужны расчёты.</p><div class="chips" id="aspchips">'+trn.map(n=>`<button type="button" aria-pressed="true" data-n="${n}">${g(n)} ${n}</button>`).join('')+'</div><div class="chips" id="aspkind"><button type="button" aria-pressed="true" data-k="all">Все аспекты</button><button type="button" aria-pressed="false" data-k="t">Напряжённые</button><button type="button" aria-pressed="false" data-k="h">Гармоничные</button><button type="button" aria-pressed="false" data-k="c">Соединения</button></div><div class="scroll"><table class="t"><thead><tr><th>Транзит</th><th>Аспект</th><th>К натальной</th><th>Характер</th><th>Сходящийся с</th><th>Точный аспект</th><th>Расходящийся до</th><th>Движение</th></tr></thead><tbody id="aspbody"></tbody></table></div>';
+   $('aspbody').innerHTML=rows.map(a=>{ const tm=a.exact[0]||a.start; return `<tr><td>${g(a.tr)} ${a.tr} <span class="num note">${dsg(lonAt(a.tr,tm))}</span></td><td>${ga(a.s)}</td><td>${g(a.to)} ${a.to} <span class="num note">${dsg(N.P[a.to])}</span></td><td>${chr(a.s)}</td><td class="num">${a.start<=ser.T[0]?'ранее':fdt(a.start,vtz,false)}</td><td class="num">${a.exact.length?a.exact.map(m=>fdt(m,vtz)).join('<br>'):'без точного аспекта'}</td><td class="num">${a.end>=ser.T[ser.T.length-1]?'позже':fdt(a.end,vtz,false)}</td><td><span class="mv">${moveTxt(a)}</span></td></tr>`; }).join('')||'<tr><td colspan="8">Нет аспектов для выбранных планет.</td></tr>'; };
+ $('p-asp').innerHTML='<h2>Аспекты транзитов<br>к натальной карте '+Y+'</h2><div class="sub loopintro"><p><b>Сходящийся аспект</b> - транзитная планета подходит к натальной.</p><p><b>Точный аспект</b> - градус в градус.</p><p><b>Расходящийся аспект</b> - транзитная планета уходит от натальной.</p><p>Если планета в петле, она касается точки натальной карты до трёх раз: тогда в колонке «Точный аспект» несколько дат.</p><p>Транзиты Лунных Узлов и Лилит учитываются только в соединении с планетами и куспидами домов.</p><p>Орбисы транзитов: Солнце 7°, Меркурий, Венера, Марс 5°, Юпитер и Сатурн 3°, Уран, Нептун, Плутон 2°, Лунные Узлы 3°, Лилит 4° (для соединения; для секстиля меньше).</p><p>Колонка «Движение»: R - транзитная планета ретроградна; «петля» - несколько касаний; «разворот в орбисе» - планета вошла в орбис, развернулась и ушла, не дойдя до точного аспекта.</p></div><p class="pick">Выбирайте кнопки с планетами, по которым нужны расчёты.</p><div class="chips" id="aspchips">'+trn.map(n=>`<button type="button" aria-pressed="true" data-n="${n}">${g(n)} ${n}</button>`).join('')+'</div><div class="chips" id="aspkind"><button type="button" aria-pressed="true" data-k="all">Все аспекты</button><button type="button" aria-pressed="false" data-k="t">Напряжённые</button><button type="button" aria-pressed="false" data-k="h">Гармоничные</button><button type="button" aria-pressed="false" data-k="c">Соединения</button></div><div class="scroll"><table class="t"><thead><tr><th>Транзит</th><th>Аспект</th><th>К натальной</th><th>Характер</th><th>Сходящийся с</th><th>Точный аспект</th><th>Расходящийся до</th><th>Движение</th></tr></thead><tbody id="aspbody"></tbody></table></div>';
  $('aspchips').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ const on=b.getAttribute('aria-pressed')!=='true'; b.setAttribute('aria-pressed',on); on?shown.add(b.dataset.n):shown.delete(b.dataset.n); drawAsp(); }));
  $('aspkind').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{ aspKind=b.dataset.k; $('aspkind').querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',x===b)); drawAsp(); }));
  drawAsp();
@@ -2171,10 +2264,11 @@ function run(){ window.__ran=true; $('resbox').classList.remove('pre'); if(!docu
    const mt=Array(12).fill(0), mh=Array(12).fill(0); EV.forEach(e=>{ const mo=new Date(e.m+vtz*3600000).getUTCMonth(); (e.k==='t'?mt:mh)[mo]++; });
    const top=(arr)=>{ const mx=Math.max(...arr); return mx>0?MONF.filter((_,i)=>arr[i]===mx).join(', '):'нет'; };
    const mxv=Math.max(1,...mt,...mh);
-   let P=`<h2>Благоприятные и напряжённые транзиты к натальной карте ${Y}</h2><div class="sub loopintro"><p><b>Напряжённые</b> - аспекты мужских планет (Марс, Сатурн, Уран, Плутон) и Солнца между собой. Например:</p><p>транзитный Марс к натальному Сатурну;</p><p>транзитный Сатурн к натальному Марсу.</p><p><b>Гармоничные</b> - трины и секстили всех планет, соединения транзитных Юпитера и Венеры с натальными планетами.</p><p>Если период орбиса длинный, транзитная планета ретроградна или петляет - смотрите колонку «Движение».</p></div>`;
+   let P=`<h2>Благоприятные и напряжённые транзиты<br>к натальной карте ${Y}</h2><div class="sub loopintro"><p><b>Напряжённые</b> - аспекты мужских планет (Марс, Сатурн, Уран, Плутон) и Солнца между собой. Например:</p><p>транзитный Марс к натальному Сатурну;</p><p>транзитный Сатурн к натальному Марсу.</p><p><b>Гармоничные</b> - трины и секстили всех планет, соединения транзитных Юпитера и Венеры с натальными планетами.</p><p>Орбис: Солнце, Меркурий, Венера, Марс - 4° до точного аспекта и 3° после; Юпитер и Сатурн - 3° и 2°; Уран, Нептун, Плутон - 2° и 1,5°.</p><p>Если транзитная планета ретроградна или петляет, смотрите колонку «Движение»: там даты всех касаний.</p></div>`;
    P+=`<div class="kingbox"><p style="margin:0">Больше всего напряжённых аспектов: <b>${top(mt)}</b></p><p style="margin:4px 0 0">Больше всего гармоничных: <b>${top(mh)}</b></p></div><p class="note">Цифры в таблице - количество точных аспектов в месяце.</p>`;
    P+='<div class="scroll"><table class="t mbar"><thead><tr><th>Месяц</th><th>Напряжённые</th><th>Гармоничные</th></tr></thead><tbody>'+MONF.map((m,i)=>`<tr><td>${m}</td><td><span class="bar bt" style="width:${mt[i]/mxv*100}%"></span> ${mt[i]||''}</td><td><span class="bar bh" style="width:${mh[i]/mxv*100}%"></span> ${mh[i]||''}</td></tr>`).join('')+'</tbody></table></div>';
-   const tbl=(arr,title)=>pblock(`<h2 style="margin-top:18px">${title}</h2><div class="scroll"><table class="t"><thead><tr><th>Точный аспект</th><th>Транзит</th><th></th><th>К натальной</th><th>Орбис: с - по</th><th>Движение</th></tr></thead><tbody>`+(arr.map(e=>`<tr><td class="num">${fdt(e.m,vtz)}</td><td>${g(e.a.tr)} ${e.a.tr} <span class="num note">${dsg(lonAt(e.a.tr,e.m))}</span></td><td>${ga(e.a.s)}</td><td>${g(e.a.to)} ${e.a.to} <span class="num note">${dsg(N.P[e.a.to])}</span></td><td class="num">${e.a.start<=ser.T[0]?'ранее':fdt(e.a.start,vtz,false)} - ${e.a.end>=ser.T[ser.T.length-1]?'позже':fdt(e.a.end,vtz,false)}</td><td><span class="r">${moveTxt(e.a)}</span></td></tr>`).join('')||'<tr><td colspan="6">Нет таких аспектов в этом году.</td></tr>')+'</tbody></table></div>');
+   const nw=(e)=>{ const ang=ANG[e.a.s]; return winBy(t2=>Math.abs(Math.abs(((lonAt(e.a.tr,t2)-N.P[e.a.to]+540)%360)-180)-ang),e.m,OA[e.a.tr]||2,OS[e.a.tr]||1.5); };
+   const tbl=(arr,title)=>pblock(`<h2 style="margin-top:18px">${title}</h2><div class="scroll"><table class="t"><thead><tr><th>Точный аспект</th><th>Аспект</th><th>Орбис: с - по</th><th>Движение</th></tr></thead><tbody>`+(arr.map(e=>{ const [w1,w2]=nw(e); return `<tr><td class="num">${fdt(e.m,vtz)}</td><td><span class="nw">${g(e.a.tr)} ${e.a.tr} <span class="num note">${dsg(lonAt(e.a.tr,e.m))}</span></span> ${ga(e.a.s)} <span class="nw">${g(e.a.to)} ${e.a.to} <span class="num note">${dsg(N.P[e.a.to])}</span></span></td><td class="num"><span class="nw">${fdt(w1,vtz,false)} -</span> <span class="nw">${fdt(w2,vtz,false)}</span></td><td><span class="mv">${moveTxt(e.a)}</span></td></tr>`; }).join('')||'<tr><td colspan="4">Нет таких аспектов в этом году.</td></tr>')+'</tbody></table></div>');
    P=pblock(P)+tbl(EV.filter(e=>e.k==='t'),'Напряжённые аспекты')+tbl(EV.filter(e=>e.k==='h'),'Гармоничные аспекты');
    $('p-per').innerHTML=P; }
  // ---- общие транзиты
@@ -2184,11 +2278,13 @@ function run(){ window.__ran=true; $('resbox').classList.remove('pre'); if(!docu
    const tk=m=>((m.s==='a90'||m.s==='a180'||m.s==='a0')&&MS2.has(m.a)&&MS2.has(m.b)&&(MAL.has(m.a)||MAL.has(m.b)))?'t':((m.s==='a60'||m.s==='a120')||(m.s==='a0'&&(BEN.has(m.a)||BEN.has(m.b))&&!MAL.has(m.a)&&!MAL.has(m.b)))?'h':'';
    const L2=MA.map(m=>({...m,k:tk(m)})).filter(m=>m.k);
    const TS=tSquares(ser,PLM,y0,y1);
-   let M=`<h2>Общие транзиты ${Y}</h2><div class="sub loopintro"><p>Аспекты транзитных планет между собой - фон года для всех, без привязки к натальной карте.</p><p><b>Напряжённые:</b> квадраты, оппозиции и соединения Марса, Сатурна, Урана и Плутона между собой и с Солнцем.</p><p><b>Гармоничные:</b> трины и секстили всех планет.</p><p>Период - пока аспект в орбисе 2°, пик - день точного аспекта.</p></div>`;
-   const win=(m)=>{ const A1=ser.S[m.a],B1=ser.S[m.b],T=ser.T; const ang={a0:0,a60:60,a90:90,a120:120,a180:180}[m.s]; const dv=k=>Math.abs(Math.abs(((A1[k]-B1[k]+540)%360)-180)-ang); let k0=T.findIndex(t=>t>=m.ms); if(k0<0) k0=T.length-1; let i1=k0,i2=k0; while(i1>0&&dv(i1-1)<=2) i1--; while(i2<T.length-1&&dv(i2+1)<=2) i2++; return [T[i1],T[i2]]; };
-   const mt2=(arr,title)=>pblock(`<h2 style="margin-top:18px">${title}</h2><div class="scroll"><table class="t"><thead><tr><th>Период (орбис 2°)</th><th>Пик - точный аспект</th><th>Аспект</th></tr></thead><tbody>`+(arr.map(m=>{ const [w1,w2]=win(m); return `<tr><td class="num">${fdt(w1,vtz,false)} - ${fdt(w2,vtz,false)}</td><td class="num"><b>${fdt(m.ms,vtz)}</b></td><td>${g(m.a)} ${m.a} <span class="num note">${dsg(lonAt(m.a,m.ms))}${isR(m.a,m.ms)?' R':''}</span> ${ga(m.s)} ${g(m.b)} ${m.b} <span class="num note">${dsg(lonAt(m.b,m.ms))}${isR(m.b,m.ms)?' R':''}</span></td></tr>`; }).join('')||'<tr><td colspan="3">Нет.</td></tr>')+'</tbody></table></div>');
+   let M=`<h2>Общие транзиты ${Y}</h2><div class="sub loopintro"><p><b>Транзиты</b> - единственный метод прогноза в астрологии, основанный на реальном движении планет.</p><p>В этом разделе отражены аспекты всех транзитных планет между собой в течение года: общий фон для всех, без привязки к натальной карте.</p><p>Орбисы: Солнце, Меркурий, Венера, Марс - 4° до точного аспекта и 3° после; Юпитер и Сатурн - 3° и 2°; Уран, Нептун, Плутон - 2° и 1,5°. Для пары планет берётся орбис более быстрой.</p></div>`;
+   const win=(m)=>{ const ang=ANG[m.s]; const oa=Math.max(OA[m.a]||2,OA[m.b]||2), os=Math.max(OS[m.a]||1.5,OS[m.b]||1.5); return winBy(t2=>Math.abs(Math.abs(((lonAt(m.a,t2)-lonAt(m.b,t2)+540)%360)-180)-ang),m.ms,oa,os); };
+   const mt2=(arr,title)=>pblock(`<h2 style="margin-top:18px">${title}</h2><div class="scroll"><table class="t"><thead><tr><th>Период</th><th>Точный аспект</th><th>Аспект</th></tr></thead><tbody>`+(arr.map(m=>{ const [w1,w2]=win(m); return `<tr><td class="num">${fdt(w1,vtz,false)} - ${fdt(w2,vtz,false)}</td><td class="num"><b>${fdt(m.ms,vtz)}</b></td><td>${g(m.a)} ${m.a} <span class="num note">${dsg(lonAt(m.a,m.ms))}${isR(m.a,m.ms)?' R':''}</span> ${ga(m.s)} ${g(m.b)} ${m.b} <span class="num note">${dsg(lonAt(m.b,m.ms))}${isR(m.b,m.ms)?' R':''}</span></td></tr>`; }).join('')||'<tr><td colspan="3">Нет.</td></tr>')+'</tbody></table></div>');
    M=pblock(M)+mt2(L2.filter(m=>m.k==='t'),'Напряжённые аспекты')+mt2(L2.filter(m=>m.k==='h'),'Гармоничные аспекты');
-   M+=pblock(`<h2 style="margin-top:18px">Тау-квадраты ${Y}</h2><p class="sub">Две планеты в оппозиции и третья в квадрате к обеим, орбис 6°. Считаются все планеты от Солнца до Плутона; Луна не учитывается - её конфигурации длятся несколько часов. Вершина - планета в квадрате. Градусы указаны на середину периода.</p>`+(TS.length?'<div class="scroll"><table class="t"><thead><tr><th>Период</th><th>Оппозиция</th><th>Вершина</th></tr></thead><tbody>'+TS.map(t=>{ const mid=(t.from+t.to)/2; return `<tr><td class="num">${fdt(t.from,vtz,false)} - ${fdt(t.to,vtz,false)}</td><td>${g(t.a)} ${t.a} <span class="num note">${dsg(lonAt(t.a,mid))}</span> ${ga('a180')} ${g(t.b)} ${t.b} <span class="num note">${dsg(lonAt(t.b,mid))}</span></td><td>${g(t.c)} ${t.c} <span class="num note">${dsg(lonAt(t.c,mid))}</span></td></tr>`; }).join('')+'</tbody></table></div>':'<p class="sub">В этом году тау-квадратов нет.</p>'));
+   { const CF=configs(ser,PLM,y0,y1,6); const fr=x=>fdt(x.from,vtz,false)===fdt(x.to,vtz,false)?`<b>${fdt(x.from,vtz,false)}</b>`:`с <b>${fdt(x.from,vtz,false)}</b> по <b>${fdt(x.to,vtz,false)}</b>`; const who=k=>k.split('|').join(', ');
+     const blk=(arr,name)=>`<h3 class="corh3">${name} - ${arr.length} ${arr.length%10===1&&arr.length%100!==11?'раз':(arr.length%10>=2&&arr.length%10<=4&&(arr.length%100<10||arr.length%100>=20))?'раза':'раз'}</h3><div class="ecl-lines">`+(arr.length?arr.map(x=>`<p>${x.from<=y0&&x.to>=y1-2*864e5?'<b>весь год</b>':fr(x)} <span class="note">(${who(x.key)})</span></p>`).join(''):'<p>нет</p>')+'</div>';
+     M+=pblock(`<h2 style="margin-top:22px">Конфигурации ${Y}</h2><p class="sub">Справочно, без учёта Луны, орбис 6°. Даты - для самостоятельного разбора.</p>`+blk(CF.tsq,'Тау-квадраты')+blk(CF.gtr,'Большие трины')+blk(CF.bis,'Бисекстили')+`<p class="sub" style="margin-top:12px">С участием Луны за год: тау-квадратов - ${CF.moon.tsq}, больших тринов - ${CF.moon.gtr}, бисекстилей - ${CF.moon.bis}. Каждая такая конфигурация длится несколько часов.</p>`); }
    $('p-mun').innerHTML=M; }
  // ---- natal for verification
  const DIGN={'Солнце':[[4],[10],[0],[6]],'Луна':[[3],[9],[1],[7]],'Меркурий':[[2,5],[8,11],[10],[4]],'Венера':[[1,6],[7,0],[11],[5]],'Марс':[[0,7],[6,1],[9],[3]],'Юпитер':[[8,11],[2,5],[3],[9]],'Сатурн':[[9,10],[3,4],[6],[0]],'Уран':[[10],[4],[7],[1]],'Нептун':[[11],[5],[8],[2]],'Плутон':[[7],[1],[4],[10]]};
@@ -2236,7 +2332,9 @@ function run(){ window.__ran=true; $('resbox').classList.remove('pre'); if(!docu
  AMID.forEach(m=>{ ov+=`<span class="wam" style="left:${m.x}%;top:${m.y}%;color:${ACOL[m.s]};--m:url(${SYM[m.s]})"></span>`; });
  
  PLW.forEach(n=>{ const [x,y]=pt(disp[n],rad[n]||32); const dd=dms(N.P[n],false); ov+=`<span class="wp" style="left:${x}%;top:${y}%" title="${n} ${dd.txt} ${SIGN_GEN[dd.s]}${N.R[n]?', ретроградный':''}">${g(n)}<small><sup>${Math.floor(N.P[n]%30)}°</sup>${N.R[n]?'<b>R</b>':''}</small></span>`; });
- const WHEEL=`<div class="wheel lightzone navy" role="img" aria-label="Натальная карта">${sv}${ov}</div>`;
+ const fc=(v,p,n)=>{ const a=Math.abs(v), d=Math.floor(a), m=Math.round((a-d)*60); return `${d}°${p2(m)}' ${v>=0?p:n}`; };
+ const place=cs.value!==''?CITIES[+cs.value][0]:($('cfound').dataset.place||'');
+ const WHEEL=`<div class="wheel lightzone navy" role="img" aria-label="Натальная карта"><div class="wlab"><b>${$('nm').value.trim()||'Натальная карта'}</b><br>${$('dt').value.split('-').reverse().join('.')} ${$('tm').value} (UTC${tz>=0?'+':''}${tz})${place?'<br>'+place:''}<br>${fc(lat,'с.ш.','ю.ш.')}, ${fc(lon,'в.д.','з.д.')}</div>${sv}${ov}</div>`;
  // управители домов
  const RUL={0:['Марс'],1:['Венера'],2:['Меркурий'],3:['Луна'],4:['Солнце'],5:['Меркурий'],6:['Венера'],7:['Плутон','Марс'],8:['Юпитер'],9:['Сатурн'],10:['Уран','Сатурн'],11:['Нептун','Юпитер']};
  const rnames=sg=>RUL[sg].map((n,i)=>RUL[sg].length>1?`${g(n)} ${n} <span class="note">(${i?'младший':'старший'})</span>`:`${g(n)} ${n}`).join(', ');
@@ -2251,26 +2349,42 @@ function run(){ window.__ran=true; $('resbox').classList.remove('pre'); if(!docu
    const nowL=pmL(y0); const dN=dms(nowL,false);
    const ch=[]; let pS=Math.floor(nowL/30), pH=houseOf(nowL,c);
    for(let ms=y0+864e5;ms<y1;ms+=864e5){ const l=pmL(ms), s=Math.floor(l/30), hh=houseOf(l,c);
-     if(s!==pS) ch.push(`${fdt(ms,vtz,false)} прогрессивная Луна переходит в знак ${SIGNS[s]}.`);
-     if(hh!==pH) ch.push(`${fdt(ms,vtz,false)} прогрессивная Луна переходит в ${ROM[hh]} дом.`);
+     if(s!==pS) ch.push(`<b>${fdt(ms,vtz,false)}</b> прогрессивная Луна переходит в знак ${gz(s)} ${SIGNS[s]}.`);
+     if(hh!==pH) ch.push(`<b>${fdt(ms,vtz,false)}</b> прогрессивная Луна переходит в ${ROM[hh]} дом.`);
      pS=s; pH=hh; }
    const nextCh=(kind)=>{ let p0=kind==='s'?Math.floor(pmL(y1)/30):houseOf(pmL(y1),c); for(let ms=y1;ms<y1+40*365*864e5;ms+=3*864e5){ const l=pmL(ms), v=kind==='s'?Math.floor(l/30):houseOf(l,c); if(v!==p0){ let a=ms-3*864e5,b=ms; while(b-a>864e5){ const m=(a+b)/2, lm=pmL(m), vm=kind==='s'?Math.floor(lm/30):houseOf(lm,c); if(vm===p0) a=m; else b=m; } return {ms:b,v}; } } return null; };
    const ns=nextCh('s'), nh=nextCh('h');
    const lun=[]; let tt=A.MakeTime(new Date(bms-40*864e5)); for(let i=0;i<5;i++){ const m=A.SearchMoonPhase(0,tt,40); if(!m) break; lun.push({r:real(m.date.getTime()),lon:eclLon('Солнце',m)}); tt=m.AddDays(1); }
    const prev=lun.filter(x=>x.r<=y0).pop(), next=lun.find(x=>x.r>y0);
    const nl=x=>`${x.r<bms?'до рождения':fdt(x.r,vtz,false)}, ${dms(x.lon,false).txt} ${SIGN_GEN[dms(x.lon,false).s]}, ${ROM[houseOf(x.lon,c)]} дом`;
-   PG=`<h2><span class="calico"></span>Прогрессии ${Y} <span class="h2s">(вторичные, день = год)</span></h2><div class="sub loopintro">`
-     +`<p>На 1 января ${Y} года прогрессивная Луна в <b>${dN.txt} ${gz(dN.s)} ${SIGN_GEN[dN.s]}</b>, в ${ROM[houseOf(nowL,c)]} доме.</p>`
-     +(ch.length?ch.map(x=>`<p>${x}</p>`).join(''):`<p>В течение ${Y} года прогрессивная Луна не меняет ни знак, ни дом.</p>`)
-     +(ns?`<p>Следующий переход в новый знак: ${fdt(ns.ms,vtz,false)} - в знак ${SIGNS[ns.v]}.</p>`:'')+(nh?`<p>Следующий переход в новый дом: ${fdt(nh.ms,vtz,false)} - в ${ROM[nh.v]} дом.</p>`:'')
-     +`<p class="note">Прогрессивная Луна в среднем проходит один знак зодиака примерно за два с половиной года.</p>`
-     +`<p style="margin-top:12px"><b>Прогрессивное Новолуние</b></p>`
-     +(prev?`<p>Последнее: ${nl(prev)}.</p>`:'')+(next?`<p>Следующее: ${nl(next)}.</p>`:'')+'</div>'; }
+   const sp=(l)=>{ const q=dms(l,false); return `<span class="nw">${q.txt} ${gz(q.s)} ${SIGN_GEN[q.s]}</span>`; };
+   PG=`<h2>${g('Луна','pmoon')}Прогрессии ${Y}<br><span class="h2s">(вторичные, 1 день = 1 год)</span></h2><div class="sub loopintro">`
+     +`<p><b>Прогрессии</b> - символический метод прогноза. В Астронавигаторе используются вторичные прогрессии: один день после рождения равен одному году жизни.</p>`
+     +`<p>Главная планета в прогрессиях - Луна. Она отражает эмоциональный, внутренний фон человека, его внутреннюю мотивацию и реакции.</p>`
+     +`<p>Важное событие в прогрессиях - Прогрессивное Новолуние. Оно формирует тенденции последующих 29,5 лет, обычно в это время происходят значимые события.</p>`
+     +`<p>Прогрессивная Луна в среднем смещается на 12° в год и проходит один знак зодиака примерно за 2,5 года.</p>`
+     +`<p style="margin-top:14px">На 1 января ${Y} года прогрессивная Луна находится <b>в ${ROM[houseOf(nowL,c)]} доме, в ${dN.txt} ${gz(dN.s)} ${SIGN_GEN[dN.s]}</b>.</p>`
+     +ch.map(x=>`<p>${x}</p>`).join('')
+     +(ns?`<p><b>${fdt(ns.ms,vtz,false)}</b> прогрессивная Луна перейдёт в знак ${gz(ns.v)} ${SIGNS[ns.v]}.</p>`:'')+(nh?`<p><b>${fdt(nh.ms,vtz,false)}</b> прогрессивная Луна перейдёт в ${ROM[nh.v]} дом.</p>`:'')
+     +`<h3 class="corh3">Прогрессивное Новолуние</h3>`
+     +(prev?`<p>Последнее: <b>${prev.r<bms?'до рождения':fdt(prev.r,vtz,false)}</b>, ${ROM[houseOf(prev.lon,c)]} дом, ${sp(prev.lon)}.</p>`:'')+(next?`<p>Следующее: <b>${fdt(next.r,vtz,false)}</b>, ${ROM[houseOf(next.lon,c)]} дом, ${sp(next.lon)}.</p>`:'')+'</div>'; }
+ // соляр
+ { const SH=['','год личных начинаний и самопроявления: внимание к себе, внешности, здоровью, новым ролям','деньги, доходы и ресурсы, вопросы самооценки и того, что вы цените','учёба, поездки, общение, документы, ближнее окружение, братья и сёстры','дом, семья, родители, недвижимость, переезды и корни','творчество, любовь, дети, удовольствия и всё, что приносит радость','работа, режим, обязанности, здоровье и повседневные дела','партнёрство, брак, договоры и отношения с людьми','кризисы и трансформации, общие деньги, кредиты, налоги, наследство','дальние поездки, обучение, заграница, расширение мировоззрения','карьера, статус, цели и достижения','друзья, единомышленники, коллективы, планы на будущее','уединение, завершение цикла, отдых, внутренняя работа, тайное'];
+   const sunN=N.P['Солнце']; const bms=N.t.date.getTime();
+   const sr=(yr)=>{ let m=Date.UTC(yr,mo-1,d,hh,mm)-tz*3600000; for(let i=0;i<30;i++){ const df=((sunN-lonAt('Солнце',m)+540)%360)-180; if(Math.abs(df)<1e-6) break; m+=df/0.98565*864e5; } return m; };
+   window.__SOLAR=(slat,slon,slabel)=>{ const rows=[Y-1,Y,Y+1].map(yr=>{ const ms=sr(yr); const cc=placidus(A.MakeTime(new Date(ms)),slat,slon); const h=houseOf(sunN,cc); return {yr,ms,h,asc:cc[1]}; });
+     let S=`<h2>${g('Солнце','pmoon')}Соляр ${Y}</h2><div class="sub loopintro"><p><b>Соляр</b> (солнечное возвращение) - карта на момент, когда Солнце возвращается в свой натальный градус. Она описывает год от дня рождения до следующего дня рождения.</p><p>Соляр строится на место проживания в день рождения. Если в день рождения вы были в другом месте, выберите его ниже.</p></div>`;
+     S+=`<div class="solform"><label>Где вы были в день рождения<select id="solplace"><option value="birth">Место рождения</option>${CITIES.map((c2,i)=>`<option value="${i}">${c2[0]}</option>`).join('')}</select></label><p class="note">Место соляра: ${slabel} (${slat.toFixed(2)}, ${slon.toFixed(2)})</p></div>`;
+     S+=`<h3 class="corh3">Солнце в доме соляра</h3><div class="sollist">`+rows.map(r=>`<div class="solrow"><p><b>Соляр ${r.yr}</b> - с ${fdt(r.ms,vtz)}</p><p>Солнце в <b>${ROM[r.h]} доме</b> соляра: ${SH[r.h]}.</p></div>`).join('')+'</div>';
+     S+=`<p class="note" style="margin-top:12px">Время соляра - ${vtz===3?'московское':'UTC'+(vtz>=0?'+':'')+vtz}. Короткие трактовки - черновик, будут дополнены.</p>`;
+     $('p-solar').innerHTML=S; const sel=$('solplace'); sel.value=window.__SOLSEL||'birth';
+     sel.addEventListener('change',()=>{ window.__SOLSEL=sel.value; if(sel.value==='birth') window.__SOLAR(lat,lon,'место рождения'); else { const c2=CITIES[+sel.value]; window.__SOLAR(c2[1],c2[2],c2[0]); } }); };
+   if(window.__SOLSEL&&window.__SOLSEL!=='birth'){ const c2=CITIES[+window.__SOLSEL]; window.__SOLAR(c2[1],c2[2],c2[0]); } else window.__SOLAR(lat,lon,'место рождения'); }
  // кресты и стихии
  let QUAL='';
  { const WQ={'Солнце':3,'Луна':2,'Asc':2,'Марс':2,'Венера':1.5,'Меркурий':1.5,'Юпитер':1,'Сатурн':1,'Уран':0.5,'Нептун':0.5,'Плутон':0.5};
    const EL=['Огонь','Земля','Воздух','Вода'], ELG=['огня','земли','воздуха','воды'], CR=['Кардинальный','Фиксированный','Мутабельный'];
-   const ELC=['linear-gradient(90deg,#A8433A,#E8806F)','linear-gradient(90deg,#A88A2E,#EBCB6B)','linear-gradient(90deg,#2F6BAA,#8CC4F5)','linear-gradient(90deg,#2E7A52,#79C99A)'];
+   const ELC=['linear-gradient(90deg,#9A8164,#F4D9BC)','linear-gradient(90deg,#86704F,#E6CBA6)','linear-gradient(90deg,#6F5E47,#D6BC98)','linear-gradient(90deg,#5E5140,#C4AC8C)'];
    const es=[0,0,0,0], cr=[0,0,0], ep=[[],[],[],[]], cp=[[],[],[]];
    Object.entries(WQ).forEach(([n,w])=>{ const s=Math.floor(norm(N.P[n])/30); es[s%4]+=w; cr[s%3]+=w; ep[s%4].push(n); cp[s%3].push(n); });
    const tot=es.reduce((a,b)=>a+b,0);
@@ -2345,8 +2459,8 @@ function run(){ window.__ran=true; $('resbox').classList.remove('pre'); if(!docu
  { const L=[]; let t=A.MakeTime(new Date(Date.UTC(Y,0,1))); const end=Date.UTC(Y+1,0,1);
    for(const ph of [0,180]){ let tt=A.MakeTime(new Date(Date.UTC(Y,0,1))); for(;;){ const m=A.SearchMoonPhase(ph,tt,40); if(!m||m.date.getTime()>=end) break; L.push({ms:m.date.getTime(),nm:ph===0,lon:eclLon(ph===0?'Солнце':'Луна',m)}); tt=m.AddDays(1); } }
    L.sort((a,b)=>a.ms-b.ms); const ecl=EC.map(e=>e.ms);
-   let LU=`<h2><span class="calico"></span>Новолуния и Полнолуния ${Y}</h2><div class="sub loopintro"><p><b>Новолуние</b> - соединение Солнца и Луны.</p><p>После Новолуния Луна растёт, поэтому это хорошее время, чтобы начинать новое в сфере дома, куда попало Новолуние, за исключением первых двух дней, пока Луна в сожжении рядом с Солнцем.</p><p>Активизируется дом, где произошло соединение Солнца и Луны. Но рассматривается и ось домов: смысловая ось «что начинаю» и «чем жертвую, что уходит на второй план». Например, Новолуние в 10-м доме (карьера, статус) - время начинать новое в работе, а домашние дела и семья (4-й дом) на время уходят на второй план, где-то придётся пойти на уступки.</p><p><b>Полнолуние</b> - оппозиция Солнца и Луны.</p><p>После Полнолуния Луна убывает: время завершать начатое, подводить итоги, избавляться от лишнего, садиться на диету.</p><p>Затрагивается ось домов. Например, Луна в 4-м доме (семья, корни), Солнце в 10-м (карьера, статус) - тема Полнолуния может звучать как «конфликт или баланс между домом и работой» или «решение, которое затрагивает и семью, и репутацию».</p><p>Затмения отмечены отдельно.</p></div><div class="scroll"><table class="t"><thead><tr><th>Дата и время</th><th></th><th>Градус</th><th>Дом (у Полнолуния - дом Луны)</th></tr></thead><tbody>`;
-   L.forEach(x=>{ const isE=ecl.some(e=>Math.abs(e-x.ms)<864e5); const hh=houseOf(x.lon,c); LU+=`<tr><td class="num">${fdt(x.ms,vtz)}</td><td>${g(x.nm?'Солнце':'Луна')} ${x.nm?'Новолуние':'Полнолуние'}${isE?` <span style="color:var(--harm);font-weight:700">· ${x.nm?'Солнечное':'Лунное'} затмение</span>`:''}</td><td class="num">${deg(x.lon,false)}</td><td>${hs(hh)} <span class="note">${x.nm?`на второй план - ${ROM[houseOf(norm(x.lon+180),c)]}`:`Солнце - ${ROM[houseOf(norm(x.lon+180),c)]}`}</span></td></tr>`; });
+   let LU=`<h2>${MOONS}Новолуния и Полнолуния ${Y}</h2><div class="sub loopintro"><p><b>Новолуние</b> - соединение Солнца и Луны.</p><p>После Новолуния Луна начинает расти. В это время хорошо начинать что-то новое в сфере того дома, куда попало Новолуние, за исключением первых двух дней, пока Луна находится в сожжении.</p><p>При этом рассматривается не только сфера дома, в котором произошло Новолуние, но и смысловая ось домов: «что начинаю» и «чем жертвую, что уходит на второй план».</p><p class="ex">Например, Новолуние в 10-м доме (карьера, статус) - время начинать новое в работе, а домашние дела и семья (4-й дом) на время уходят на второй план, где-то придётся пойти на уступки.</p><p><b>Полнолуние</b> - оппозиция Солнца и Луны.</p><p>После Полнолуния Луна убывает: время завершать начатое, подводить итоги, избавляться от лишнего, садиться на диету.</p><p>Также затрагивается ось домов.</p><p class="ex">Например, Луна в 4-м доме (семья, корни), Солнце в 10-м (карьера, статус) - тема Полнолуния может звучать как «конфликт или баланс между домом и работой» или «решение, которое затрагивает и семью, и репутацию».</p><p><b>Затмения отмечены отдельно.</b></p></div><div class="scroll"><table class="t"><thead><tr><th>Дата и время</th><th></th><th>Градус</th><th>Дом (у Полнолуния - дом Луны)</th></tr></thead><tbody>`;
+   L.forEach(x=>{ const isE=ecl.some(e=>Math.abs(e-x.ms)<864e5); const hh=houseOf(x.lon,c); LU+=`<tr><td class="num">${fdt(x.ms,vtz)}</td><td>${g(x.nm?'Солнце':'Луна')} ${x.nm?'Новолуние':'Полнолуние'}${isE?` <span style="color:var(--ecl);font-weight:700">· ${x.nm?'Солнечное':'Лунное'} затмение</span>`:''}</td><td class="num">${deg(x.lon,false)}</td><td>${hs(hh)} <span class="note">${x.nm?`на второй план - ${ROM[houseOf(norm(x.lon+180),c)]}`:`Солнце - ${ROM[houseOf(norm(x.lon+180),c)]}`}</span></td></tr>`; });
    $('p-lun').innerHTML=pblock(LU+'</tbody></table></div>'+(EC.length?ECLB():'')); }
  // ---- natal aspects
  const NA=natalAspects(N.P).sort((a,b)=>a.dv-b.dv);
@@ -2356,32 +2470,59 @@ function run(){ window.__ran=true; $('resbox').classList.remove('pre'); if(!docu
  const LP=loopsOf(ser,['Меркурий','Венера','Марс','Юпитер','Сатурн']).filter(l=>l.dMs&&(l.inMs||l.rMs)<y1&&(l.outMs||l.dMs)>=y0);
  const NPTS=['Солнце','Луна','Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон','Сев. Узел','Юж. Узел','Лилит','Asc','MC'];
  const arcHouses=(a,b)=>{ const hs0=[houseOf(a,c)]; for(let k=1;k<=12;k++){ const h=(hs0[hs0.length-1])%12+1; if(inArc(c[h],a,b)&&!hs0.includes(h)) hs0.push(h); else break; } return hs0; };
- const pd=(m,early)=>m?fdt(m,vtz,false):(early?'до 01.07.'+(Y-1):'после 01.03.'+(Y+1));
- let LH=`<h2>Петли планет ${Y}</h2><nav class="loopnav"><a href="#loopsnat">Петли по натальной карте: дома и планеты</a><a href="#rchartbox">График ретроградности</a></nav><div class="sub loopintro"><p><b>Петля</b> - участок, который планета проходит трижды: вперёд, назад (ретро) и снова вперёд.</p><p><b>Вход в петлю</b> - день, когда планета впервые доходит до градуса, в который потом вернётся в ретроградном движении и развернётся в прямое (точка разворота).</p><p><b>Выход из петли</b> - день, когда планета повторно проходит градус, в котором стала ретроградной, и дальше идёт в прямом движении.</p><p>Всё, что находится на отрезке петли, планета касается трижды. Как правило, первое касание - завязка: событие начинает формироваться. Ретро - пересмотр, возврат к теме. Третье касание, после разворота вперёд, - развязка: решение или завершение ситуации.</p><p>Для каждой петли указаны дома вашей натальной карты, по которым петляет планета, и натальные планеты и точки на отрезке петли. График ретроградности ниже - общий для всех, без привязки к натальной карте.</p></div><div id="loopsnat"></div>`;
+ const pd=(m)=>fdt(m,vtz,false);
+ const degN=(l)=>`<span class="nw">${deg(l,false)}</span>`;
+ const LSCH=(()=>{ const ml=LP.filter(l=>l.pl==='Меркурий'); const l=ml.find(x=>x.rMs>=y0)||ml[0]; if(!l) return '';
+   const d=x=>{ const q=dms(x,false); return `${q.txt} ${SIGN_GEN[q.s]}`; };
+   const sph=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="url(#lsg)"/>`;
+   return `<figure class="lsch"><figcaption>Петля Меркурия <span>с ${pd(l.inMs)} по ${pd(l.outMs)}</span></figcaption><svg viewBox="0 0 680 300" role="img" aria-label="Схема петли Меркурия">
+   <defs><radialGradient id="lsg" cx="35%" cy="30%"><stop offset="0" stop-color="#FFF1DC"/><stop offset=".55" stop-color="#C9AE8E"/><stop offset="1" stop-color="#5E5140"/></radialGradient></defs>
+   <line x1="170" y1="78" x2="170" y2="190" class="ld"/><line x1="500" y1="140" x2="500" y2="250" class="ld"/>
+   <path d="M20 78 H470 Q500 78 500 108 Q500 140 470 140 H200 Q170 140 170 170 Q170 200 200 200 H560" class="lp"/><path d="M560 200 H660" class="lp"/><polygon points="664,200 652,194 652,206" class="la"/>
+   ${sph(80,78,16)}${sph(450,140,15)}${sph(210,200,15)}${sph(610,200,16)}
+   <circle cx="170" cy="78" r="6" class="lc"/><circle cx="500" cy="108" r="6" class="lc"/><circle cx="170" cy="170" r="6" class="lc"/><circle cx="500" cy="200" r="6" class="lc"/>
+   <text x="170" y="40" class="lt" text-anchor="middle">Движение вперёд</text><text x="170" y="56" class="ls" text-anchor="middle">(начало петли)</text>
+   <rect x="182" y="86" width="98" height="24" rx="5" class="lb"/><text x="231" y="103" class="lbt" text-anchor="middle">${pd(l.inMs)}</text>
+   <rect x="40" y="106" width="110" height="40" rx="6" class="lw"/><text x="95" y="122" class="lwt" text-anchor="middle">${dms(l.dLon,false).txt}</text><text x="95" y="139" class="lwt" text-anchor="middle">${SIGN_GEN[dms(l.dLon,false).s]}</text>
+   <rect x="392" y="80" width="98" height="24" rx="5" class="lb"/><text x="441" y="97" class="lbt" text-anchor="middle">${pd(l.rMs)}</text>
+   <text x="515" y="98" class="lt">Ретроградная точка</text><text x="515" y="114" class="ls">(разворот в ретродвижение)</text>
+   <rect x="520" y="124" width="120" height="40" rx="6" class="lw"/><text x="580" y="140" class="lwt" text-anchor="middle">${dms(l.rLon,false).txt}</text><text x="580" y="157" class="lwt" text-anchor="middle">${SIGN_GEN[dms(l.rLon,false).s]}</text>
+   <text x="320" y="122" class="lt" text-anchor="middle">Ретроградное движение</text><text x="320" y="134" class="ls" text-anchor="middle">(период ретроградности)</text>
+   <text x="158" y="166" class="lt" text-anchor="end">Прямая точка</text><text x="158" y="182" class="ls" text-anchor="end">(разворот в прямое</text><text x="158" y="196" class="ls" text-anchor="end">движение)</text>
+   <rect x="186" y="150" width="98" height="24" rx="5" class="lb"/><text x="235" y="167" class="lbt" text-anchor="middle">${pd(l.dMs)}</text>
+   <rect x="392" y="166" width="98" height="24" rx="5" class="lb"/><text x="441" y="183" class="lbt" text-anchor="middle">${pd(l.outMs)}</text>
+   <text x="340" y="228" class="lt" text-anchor="middle">Повторное движение вперёд (выход из петли)</text>
+   <rect x="20" y="246" width="315" height="46" rx="8" class="lw"/><text x="36" y="265" class="lwt2">ПЕРИОД РЕТРОГРАДНОСТИ</text><text x="36" y="284" class="lwt">с ${pd(l.rMs)} по ${pd(l.dMs)}</text>
+   <rect x="345" y="246" width="315" height="46" rx="8" class="lw"/><text x="361" y="265" class="lwt2">ГРАДУСЫ РЕТРОГРАДНОСТИ</text><text x="361" y="284" class="lwt">с ${d(l.rLon)} по ${d(l.dLon)}</text>
+   </svg></figure>`; })();
+ let LH=`<h2>Петли планет ${Y}</h2><nav class="loopnav"><a href="#loopsnat">Петли по натальной карте: дома и планеты</a><a href="#rchartbox">График ретроградности</a></nav>__LSCHEMA__<div class="sub loopintro"><p><b>Петля</b> - участок, который планета проходит трижды: вперёд, назад (ретро) и снова вперёд.</p><p><b>Вход в петлю</b> - день, когда планета впервые доходит до градуса, в который потом вернётся в ретроградном движении и развернётся в прямое (точка разворота).</p><p><b>Выход из петли</b> - день, когда планета повторно проходит градус, в котором стала ретроградной, и дальше идёт в прямом движении.</p><p>Всё, что находится на отрезке петли, планета касается трижды. Как правило, первое касание - завязка: событие начинает формироваться. Ретро - пересмотр, возврат к теме. Третье касание, после разворота вперёд, - развязка: решение или завершение ситуации.</p><p>Для каждой петли указаны дома вашей натальной карты, по которым петляет планета, и натальные планеты и точки на отрезке петли. График ретроградности ниже - общий для всех, без привязки к натальной карте.</p></div><div id="loopsnat"></div>`;
+ LH=LH.replace('__LSCHEMA__',LSCH);
  LP.forEach(l=>{ const hsx=arcHouses(l.dLon,l.rLon); const tp=NPTS.filter(n=>N.P[n]!==undefined&&inArc(N.P[n],l.dLon,l.rLon));
-   LH+=`<div class="loop"><div class="hd">${g(l.pl)} <span class="r">R</span> ${l.pl}: вход в петлю ${pd(l.inMs,true)}, выход ${pd(l.outMs,false)}</div>
-   <div class="ln"><span class="k">Ретро:</span> с ${fdt(l.rMs,vtz)} по ${fdt(l.dMs,vtz)}, ${deg(l.rLon,false)} - ${deg(l.dLon,false)}</div>
+   LH+=`<div class="loop"><div class="hd">${g(l.pl)}<span class="r">R</span> ${l.pl}</div>
+   <div class="ln">Вход в петлю: <b>${pd(l.inMs)}</b> · Выход: <b>${pd(l.outMs)}</b></div>
+   <div class="ln"><b>Ретро:</b> с <b>${fdt(l.rMs,vtz)}</b> по <b>${fdt(l.dMs,vtz)}</b><br>${degN(l.rLon)} - ${degN(l.dLon)}</div>
    <div class="ln"><span class="k">Дома, по которым петляет планета:</span> ${hsx.map(hs).join(' → ')}</div>
-   <div class="ln"><span class="k">Натальные точки на отрезке петли:</span> ${tp.length?tp.map(n=>`${g(n)} ${n} ${deg(N.P[n],false)}`).join(', '):'нет'}</div></div>`; });
+   <div class="ln"><span class="k">Натальные точки на отрезке петли:</span>${tp.length?'<br>'+tp.map(n=>`<span class="nw">${g(n)} ${n} ${deg(N.P[n],false)}</span>`).join(', '):' нет'}</div></div>`; });
  if(!LP.length) LH+='<p class="sub">В этом году петель нет.</p>';
  { const PLR=['Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон']; const LA=loopsOf(ser,PLR); const X=m=>Math.max(0,Math.min(100,(m-y0)/(y1-y0)*100));
    const yd=ms=>new Date(ms+vtz*3600000).getUTCFullYear()===Y?fdm(ms,vtz):fdt(ms,vtz,false);
    const dg=l=>{ const d=dms(l,false); return `${d.txt} ${SIGN_GEN[d.s]}`; };
    const EK={total:'полное',annular:'кольцеобразное',partial:'частное',penumbral:'полутеневое'};
    const grid=`<div class="rgrid">${MON.map((m,i)=>`<i style="left:${X(Date.UTC(Y,i,1))}%"></i>`).join('')}</div>`;
-   let G=`<div class="rwrap" id="rchartbox"><h2 style="margin-top:22px">Ретроградность планет ${Y}</h2><p class="sub">Светлая полоса - петля планеты (от входа до выхода), тёмная - ретроградное движение (R). Под полосой: даты ретро, градусы разворота, вход и выход из петли.</p><div class="saverow"><button type="button" class="printbtn rcsave">Сохранить график картинкой</button><span class="savest note"></span><span class="note">График печатается в цвете.</span></div><div class="scroll"><div class="rchart"><div class="rmon">${MONF.map((m,i)=>`<span style="left:${X(Date.UTC(Y,i,1))}%;width:${100/12}%">${m}</span>`).join('')}</div>`;
+   let G=`<div class="rwrap" id="rchartbox"><h2 style="margin-top:22px">Ретроградность планет ${Y}</h2><p class="sub">Светлая полоса - петля планеты (от входа до выхода), тёмная - ретроградное движение (R). Под полосой: даты ретро, градусы разворота, вход и выход из петли. Штриховка - две соседние петли накладываются.</p><div class="saverow"><button type="button" class="printbtn rcsave">Сохранить график картинкой</button><span class="savest note"></span><span class="note">График печатается в цвете.</span></div><div class="scroll"><div class="rchart"><div class="rmon">${MONF.map((m,i)=>`<span style="left:${X(Date.UTC(Y,i,1))}%;width:${100/12}%">${m}</span>`).join('')}</div>`;
    PLR.forEach(n=>{ G+=`<div class="rrow"><div class="rl">${g(n)}<span>${n}</span></div><div class="rtrack">${grid}`;
-     LA.filter(l=>l.pl===n).forEach(l=>{ const a=l.inMs||ser.T[0], o=l.outMs||ser.T[ser.T.length-1], r=l.rMs, d=l.dMs||ser.T[ser.T.length-1]; if(o<y0||a>=y1) return;
+     const LL=LA.filter(l=>l.pl===n); LL.forEach((l,i)=>{ const nx=LL[i+1]; if(nx&&nx.inMs<l.outMs){ const a1=Math.max(nx.inMs,y0), b1=Math.min(l.outMs,y1); if(b1>a1) G+=`<span class="rov" style="left:${X(a1)}%;width:${Math.max(.4,X(b1)-X(a1))}%" title="Петли накладываются: ${fdt(nx.inMs,vtz,false)} - ${fdt(l.outMs,vtz,false)}"></span>`; } });
+     LL.forEach(l=>{ const a=l.inMs||ser.T[0], o=l.outMs||ser.T[ser.T.length-1], r=l.rMs, d=l.dMs||ser.T[ser.T.length-1]; if(o<y0||a>=y1) return;
        G+=`<span class="rl1" style="left:${X(a)}%;width:${Math.max(.4,X(o)-X(a))}%"></span>`;
        if(d>=y0&&r<y1) G+=`<span class="rl2" style="left:${X(r)}%;width:${Math.max(.6,X(d)-X(r))}%"></span>`;
        const lx=Math.max(X(r),X(a)); const side=lx>78?`right:0`:`left:${lx}%`;
-       G+=`<span class="rlab" style="${side}"><b>R ${yd(r)} - ${l.dMs?yd(l.dMs):'…'}</b><br>${dg(l.rLon)}${l.dMs?' - '+dg(l.dLon):''}<br><span class="rio">вход ${l.inMs?yd(l.inMs):'ранее'} · выход ${l.outMs?yd(l.outMs):'позже'}</span></span>`; });
+       G+=`<span class="rlab" style="${side}"><b>R ${yd(r)} - ${yd(l.dMs)}</b><br>${dg(l.rLon)} - ${dg(l.dLon)}<br><span class="rio">вход ${yd(l.inMs)} · выход ${yd(l.outMs)}</span></span>`; });
      G+='</div></div>'; });
    if(EC.length){ G+=`<div class="rrow recl"><div class="rl"><span>Затмения</span></div><div class="rtrack">${grid}`;
      const lv=[]; { let k=0; EC.forEach((e,i)=>{ k=(i>0&&e.ms-EC[i-1].ms<20*864e5)?k+1:0; lv.push(k); }); }
      EC.forEach((e,i)=>{ const x=X(e.ms); G+=`<span class="rdot${e.solar?' sol':''}" style="left:${x}%"></span><span class="relab" style="${x>78?'right:0':'left:'+Math.max(0,x-1)+'%'};top:${26+lv[i]%3*24}px"><b>${e.solar?'Солнечное':'Лунное'} ${fdm(e.ms,vtz)}</b>, ${EK[e.kind]||''}, ${dg(e.lon)}</span>`; });
      G+='</div></div>'; }
-   G+=`</div></div><p class="note" style="margin-top:8px"><b>Виды затмений.</b> Солнечное полное - Луна целиком закрывает Солнце. Солнечное кольцеобразное - Луна проходит по центру Солнца, но выглядит меньше его, по краям остаётся светящееся кольцо. Лунное полное - Луна целиком входит в тень Земли. Лунное частное - в тень Земли входит только часть Луны. Лунное полутеневое - Луна проходит через полутень Земли и слегка тускнеет.</p></div>`;
+   G+=`</div></div><div class="ekinds"><h3 class="corh3">Виды затмений</h3><p><b>Солнечное полное</b> - Луна целиком закрывает Солнце.</p><p><b>Солнечное кольцеобразное</b> - Луна проходит по центру Солнца, но выглядит меньше его, по краям остаётся светящееся кольцо.</p><p><b>Лунное полное</b> - Луна целиком входит в тень Земли.</p><p><b>Лунное частное</b> - в тень Земли входит только часть Луны.</p><p><b>Лунное полутеневое</b> - Луна проходит через полутень Земли и слегка тускнеет.</p></div></div>`;
    LH+=G; }
  $('p-loops').innerHTML=LH;
  // ---- ингрессии: планеты в знаках
@@ -2394,32 +2535,34 @@ function run(){ window.__ran=true; $('resbox').classList.remove('pre'); if(!docu
    const SEG={}; PI.forEach(n=>{ const segs=[]; let a=edge(n,y0,-1), s=sg(n,y0), m=y0;
      for(let t=y0+864e5;t<=y1;t+=864e5){ const s2=sg(n,t); if(s2!==s){ const e=ref(n,t-864e5,t,s); segs.push({n,s,a,b:e}); a=e; s=s2; } }
      segs.push({n,s,a,b:edge(n,y1-1,1)}); segs.forEach(x=>{ x.r=!isNode(n)&&x.a!==null&&spd(n,x.a+36e5)<0; }); SEG[n]=segs; });
-   const EL=['#F4C7BC','#F5E3A6','#C9DDF2','#CFE7C6'], ELN=['огонь','земля','воздух','вода'];
+   const SPREP=['в Овне','в Тельце','в Близнецах','в Раке','во Льве','в Деве','в Весах','в Скорпионе','в Стрельце','в Козероге','в Водолее','в Рыбах'];
    const fd=(ms,t)=>ms===null?'…':(new Date(ms+vtz*3600000).getUTCFullYear()===Y?(t?fdt(ms,vtz).slice(0,5)+fdt(ms,vtz).slice(10):fdm(ms,vtz)):fdt(ms,vtz,false));
    const X=m=>Math.max(0,Math.min(100,(m-y0)/(y1-y0)*100));
    const LA2=loopsOf(ser,['Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон']);
    const dgs=l=>{ const d=dms(l,false); return `${d.txt} ${SIGN_GEN[d.s]}`; };
    const moving=PI.filter(n=>SEG[n].length>1&&!isNode(n)), still=PI.filter(n=>!moving.includes(n));
-   let IG=`<h2><span class="calico"></span>Ингрессии планет ${Y}</h2><div class="sub loopintro"><p>Ингрессия - вход планеты в новый знак зодиака. В таблице - период, когда планета находится в знаке.</p><p>R - планета вернулась в знак ретроградно. Время московское (или выбранное в форме).</p></div>`;
-   IG+=`<div class="rwrap" id="ingrbox"><h2 style="margin-top:18px">Планеты в знаках ${Y}</h2><p class="sub">Цвет - стихия знака: ${ELN.map((e,i)=>`<span class="ingsw" style="background:${EL[i]}"></span>${e}`).join(' ')}. Штриховка - планета вернулась в знак ретроградно. Тёмная полоса под знаками - ретроградность (R).</p><div class="saverow"><button type="button" class="printbtn igsave">Сохранить график картинкой</button><span class="savest note"></span><span class="note">График печатается в цвете.</span></div><div class="scroll"><div class="rchart igchart"><div class="rmon">${MONF.map((m,i)=>`<span style="left:${X(Date.UTC(Y,i,1))}%;width:${100/12}%">${m}</span>`).join('')}</div>`;
+   let IG=`<h2>Ингрессии планет ${Y}</h2><div class="sub loopintro"><p>Ингрессия - вход планеты в новый знак зодиака.</p><p>R - планета вернулась в знак ретроградно.</p></div>`;
+   IG+=`<div class="rwrap" id="ingrbox"><h2 style="margin-top:18px">Планеты в знаках ${Y}</h2><p class="sub">Штриховка - планета вернулась в знак ретроградно. Полоса под знаками - ретроградность (R). Нажмите на узкий блок - появятся знак и даты.</p><div class="saverow"><button type="button" class="printbtn igsave">Сохранить график картинкой</button><span class="savest note"></span><span class="note">График печатается в цвете.</span></div><div class="scroll"><div class="rchart igchart"><div class="rmon">${MONF.map((m,i)=>`<span style="left:${X(Date.UTC(Y,i,1))}%;width:${100/12}%">${m}</span>`).join('')}</div>`;
    const grid=`<div class="rgrid">${MON.map((m,i)=>`<i style="left:${X(Date.UTC(Y,i,1))}%"></i>`).join('')}</div>`;
    moving.forEach(n=>{ IG+=`<div class="rrow igrow"><div class="rl">${g(n)}<span>${n}</span></div><div class="rtrack">${grid}`;
-     SEG[n].forEach(x=>{ const l=X(x.a===null?y0:x.a), r=X(x.b===null?y1:x.b), w=r-l; if(w<=0) return; const nar=w<7.5;
-       IG+=`<div class="igseg${x.r?' igr':''}${nar?' nar':''}" style="left:${l}%;width:${w}%;--c:${EL[x.s%4]}" title="${n} в знаке ${SIGNS[x.s]}: с ${x.a===null?'…':fdt(x.a,vtz)} по ${x.b===null?'…':fdt(x.b,vtz)}${x.r?' (R)':''}"><div><b>${gz(x.s)} ${SIGNS[x.s]}</b><br>с ${fd(x.a,1)}<br>по ${fd(x.b,1)}</div></div>`; });
+     SEG[n].forEach((x,i)=>{ const l=X(x.a===null?y0:x.a), r=X(x.b===null?y1:x.b), w=r-l; if(w<=0) return; const full=`${n} ${SPREP[x.s]}: с ${x.a===null?'…':fdt(x.a,vtz)} по ${x.b===null?'…':fdt(x.b,vtz)}${x.r?' (вернулся ретроградно)':''}`;
+       const body=w>=9?`<b>${gz(x.s)} ${SIGNS[x.s]}</b><br>с ${fd(x.a,1)}<br>по ${fd(x.b,1)}`:w>=5.2?`<b>${gz(x.s)} ${SIGNS[x.s]}</b><br>с ${fd(x.a)}<br>по ${fd(x.b)}`:`<b>${gz(x.s)}</b>`;
+       IG+=`<button type="button" class="igclick igseg${x.r?' igr':''}${i%2?' alt':''}" style="left:${l}%;width:${w}%" data-t="${full}"><div>${body}</div></button>`; });
      LA2.filter(q=>q.pl===n).forEach(q=>{ const r=q.rMs, d=q.dMs||ser.T[ser.T.length-1]; if(d<y0||r>=y1) return; const lx=X(r); IG+=`<span class="igR" style="left:${lx}%;width:${Math.max(.6,X(d)-lx)}%"></span><span class="igRl" style="${lx>70?'right:0':'left:'+lx+'%'}"><b>R ${fd(r)} - ${q.dMs?fd(q.dMs):'…'}</b> · ${dgs(q.rLon)}${q.dMs?' - '+dgs(q.dLon):''}</span>`; });
      IG+='</div></div>'; });
    IG+='</div></div><div class="igstill">'+still.map(n=>{ const segs=SEG[n].filter(x=>(x.b===null||x.b>y0)&&(x.a===null||x.a<y1));
-       return segs.map(x=>`<p>${g(n)} <b>${n} в знаке ${SIGNS[x.s]}${segs.length===1?' весь год':''}</b> (с ${x.a===null?'…':fdt(x.a,vtz,false)} по ${x.b===null?'…':fdt(x.b,vtz,false)})${x.r?' <span class="r">R</span>':''}</p>`).join(''); }).join('')+'</div></div>';
+       return segs.map(x=>`<p>${g(n)} <b>${n} ${SPREP[x.s]}${segs.length===1?' весь год':''}</b>${x.r?'<span class="r">R</span>':''}<br><span class="note">(с ${x.a===null?'…':fdt(x.a,vtz,false)} по ${x.b===null?'…':fdt(x.b,vtz,false)})</span></p>`).join(''); }).join('')+'</div></div>';
    IG+=pblock2(`<h2 style="margin-top:22px">Таблица ингрессий ${Y}</h2><div class="scroll"><table class="t"><thead><tr><th>Планета</th><th>Знак</th><th>С</th><th>По</th><th></th></tr></thead><tbody>`+PI.map(n=>SEG[n].filter(x=>(x.b===null||x.b>y0)&&(x.a===null||x.a<y1)).map(x=>`<tr><td>${g(n)} ${n}</td><td>${gz(x.s)} ${SIGNS[x.s]}</td><td class="num">${x.a===null?'…':fdt(x.a,vtz)}</td><td class="num">${x.b===null?'…':fdt(x.b,vtz)}</td><td>${x.r?'<span class="r">R</span>':''}</td></tr>`).join('')).join('')+'</tbody></table></div>','Ингрессии планет');
    $('p-ingr').innerHTML=IG; }
 
  let lockMsg='';
  if(UNLOCKED&&TRIAL){ const key=[y,mo,d,hh,mm,lat.toFixed(2),lon.toFixed(2)].join('|'); const demo=key.startsWith('1955|2|24|19|15|'); if(!demo&&!trialAllows(key)){ UNLOCKED=false; lockMsg=`Пробный доступ: использованы все ${TRIAL.limit} карты на этом устройстве.`; } }
- if(UNLOCKED&&!(lockMsg)){ const who=$('who').textContent;
+ if(UNLOCKED&&!(lockMsg)){ const who=$('who').textContent; $('pickrow').hidden=false;
    PANELS.forEach(id=>$(id).insertAdjacentHTML('afterbegin',(id==='p-houses'?'':`<div class="printbar"><button type="button" class="printbtn">Распечатать или сохранить в PDF</button>${id==='p-heat'?'':'<button type="button" class="printbtn pngbtn">Сохранить картинкой</button>'}</div>`)+`<div class="printhead">Астронавигатор · Вера Райт · ${who}</div>`)); }
  if(!UNLOCKED){ ['p-houses','p-asp','p-per','p-lun','p-natasp'].forEach(id=>$(id).innerHTML=lockHTML(lockMsg)); if(lockMsg){ UNLOCKED=true; } }
  else if(TRIAL){ $('p-houses').insertAdjacentHTML('afterbegin',`<p class="note" style="margin-bottom:10px">Пробный доступ: карт осталось ${Math.max(0,TRIAL.limit-trialCharts().length)} из ${TRIAL.limit}.</p>`); }
- $('p-heat').insertAdjacentHTML('beforeend',ctaHTML());
+ $('p-heat').insertAdjacentHTML('beforeend',ctaHTML(true)); ['p-loops','p-mun'].forEach(id=>$(id).insertAdjacentHTML('beforeend',ctaHTML(false)));
+ PANELS.filter(id=>id!=='p-prog'&&id!=='p-solar').forEach(id=>$(id).insertAdjacentHTML('beforeend','<p style="margin:0"><a class="totop" href="#top">↑ Наверх</a></p>'));
  }catch(e){ $('p-nat').innerHTML=`<p class="err">${e.message}</p>`; document.querySelector('[data-p="nat"]').click(); console.error(e); }
 }
 $('f').addEventListener('submit',e=>{e.preventDefault(); document.querySelector('.panel:not([hidden])').innerHTML='<p class="sub">Считаю…</p>'; setTimeout(run,30);});
@@ -2434,7 +2577,55 @@ PANELS.forEach(id=>$(id).innerHTML=INTRO);
   s+='<circle cx="60" cy="60" r="16" fill="none" stroke="#A7B6CA" stroke-width=".4" opacity=".6"/><circle cx="60" cy="60" r="7" fill="url(#zsun)"/>';
   s+='<g class="zp1"><circle cx="71" cy="60" r="2" fill="#CFE3F7"/><circle cx="48" cy="55" r="1.5" fill="#F4D9BC"/></g><g class="zp2"><circle cx="60" cy="34" r="2.6" fill="#FF9E8A"/><circle cx="36" cy="68" r="2.2" fill="#F4D9BC"/></g><g class="zp3"><circle cx="95" cy="58" r="3.2" fill="#E8C988"/><circle cx="30" cy="84" r="2.8" fill="#8CC4F5"/><circle cx="74" cy="96" r="1.9" fill="#FFFFFF"/></g><g class="zp4"><circle cx="60" cy="20" r="2.4" fill="#B9D7F2"/><circle cx="22" cy="52" r="1.8" fill="#DFC09F"/></g>';
   z.innerHTML=`<svg viewBox="0 0 120 120">${d}${s}</svg>`; })();
-$('demo').addEventListener('click',()=>{ $('nm').value='Стив Джобс (пример)'; $('dt').value='1955-02-24'; $('tm').value='19:15'; cs.value=String(CITIES.length-1); $('lat').value='37.7749'; $('lon').value='-122.4194'; $('zone').value='America/Los_Angeles'; tzManual=false; autoTz(); document.querySelector('.panel:not([hidden])').innerHTML='<p class="sub">Считаю…</p>'; setTimeout(run,30); });
+// ---- дата и время: текстовые поля с маской (надёжно на Android и iPhone)
+function syncVis(){ const d=$('dt').value, t=$('tm').value; $('dtv').value=d?d.split('-').reverse().join('.'):''; $('tmv').value=t||''; }
+function ensureZone(z){ const s=$('zone'); if(![...s.options].some(o=>o.value===z)) s.insertAdjacentHTML('beforeend',`<option>${z}</option>`); s.value=z; }
+$('dtv').addEventListener('input',e=>{ const v=e.target.value.replace(/\D/g,'').slice(0,8); let f=v; if(v.length>4) f=v.slice(0,2)+'.'+v.slice(2,4)+'.'+v.slice(4); else if(v.length>2) f=v.slice(0,2)+'.'+v.slice(2); e.target.value=f;
+  if(v.length===8){ const dd=+v.slice(0,2), mm=+v.slice(2,4), yy=+v.slice(4); const ok=mm>=1&&mm<=12&&dd>=1&&dd<=new Date(Date.UTC(yy,mm,0)).getUTCDate(); $('dt').value=ok?`${yy}-${p2(mm)}-${p2(dd)}`:''; $('dtv').setCustomValidity(ok?'':'Проверьте дату'); } else $('dt').value='';
+  autoTz(); });
+$('tmv').addEventListener('input',e=>{ const v=e.target.value.replace(/\D/g,'').slice(0,4); e.target.value=v.length>2?v.slice(0,2)+':'+v.slice(2):v;
+  if(v.length===4){ const h=+v.slice(0,2), m=+v.slice(2); const ok=h<24&&m<60; $('tm').value=ok?`${p2(h)}:${p2(m)}`:''; $('tmv').setCustomValidity(ok?'':'Проверьте время'); } else $('tm').value='';
+  autoTz(); });
+// ---- мои карты: хранятся только в этом браузере
+const PKEY='astro_people';
+const people=()=>{ try{ return JSON.parse(localStorage.getItem(PKEY)||'[]'); }catch(e){ return []; } };
+function drawPeople(){ const l=people(); $('ppl').innerHTML='<option value="">'+(l.length?'Выберите сохранённую карту':'Сохранённых карт пока нет')+'</option>'+l.map((p,i)=>`<option value="${i}">${p.nm||'Без имени'} · ${p.dt.split('-').reverse().join('.')}</option>`).join(''); }
+$('psave').addEventListener('click',()=>{ const st=$('pst'); if(!$('dt').value||!$('tm').value||!$('lat').value){ st.textContent='Сначала заполните дату, время и место рождения.'; return; }
+  const rec={nm:$('nm').value.trim(),dt:$('dt').value,tm:$('tm').value,city:cs.value,zone:$('zone').value,tz:$('tz').value,tzManual,lat:$('lat').value,lon:$('lon').value,place:$('cfound').dataset.place||''};
+  const l=people(); const i=l.findIndex(p=>p.nm===rec.nm&&p.dt===rec.dt&&p.tm===rec.tm); if(i>=0) l[i]=rec; else l.push(rec);
+  try{ localStorage.setItem(PKEY,JSON.stringify(l)); st.textContent=`Карта «${rec.nm||'Без имени'}» сохранена в этом браузере.`; }catch(e){ st.textContent='Браузер не разрешает сохранять данные (например, в режиме инкогнито).'; } drawPeople(); });
+$('ppl').addEventListener('change',()=>{ const p=people()[+$('ppl').value]; if(!p) return; $('nm').value=p.nm; $('dt').value=p.dt; $('tm').value=p.tm; syncVis(); cs.value=p.city; $('lat').value=p.lat; $('lon').value=p.lon; ensureZone(p.zone);
+  $('cfound').dataset.place=p.place||''; $('cfound').textContent=p.place?('Место: '+p.place):''; tzManual=!!p.tzManual; if(tzManual){ $('tz').value=p.tz; $('tznote').textContent='Поправка введена вручную.'; } else autoTz(); $('pst').textContent=''; });
+$('pdel').addEventListener('click',()=>{ const i=$('ppl').value; if(i==='') { $('pst').textContent='Выберите карту в списке.'; return; } const l=people(); const p=l.splice(+i,1)[0]; try{ localStorage.setItem(PKEY,JSON.stringify(l)); }catch(e){} drawPeople(); $('pst').textContent=`Карта «${p.nm||'Без имени'}» удалена.`; });
+drawPeople();
+// ---- поиск любого населённого пункта (OpenStreetMap)
+const RUZ=[['Калининград','Europe/Kaliningrad'],['Самарск','Europe/Samara'],['Удмурт','Europe/Samara'],['Ульяновск','Europe/Ulyanovsk'],['Саратовск','Europe/Saratov'],['Астраханск','Europe/Astrakhan'],['Волгоградск','Europe/Volgograd'],['Кировск','Europe/Kirov'],
+ ['Свердловск','Asia/Yekaterinburg'],['Челябинск','Asia/Yekaterinburg'],['Курганск','Asia/Yekaterinburg'],['Тюменск','Asia/Yekaterinburg'],['Ханты','Asia/Yekaterinburg'],['Ямало','Asia/Yekaterinburg'],['Пермск','Asia/Yekaterinburg'],['Оренбург','Asia/Yekaterinburg'],['Башкорт','Asia/Yekaterinburg'],
+ ['Омск','Asia/Omsk'],['Новосибирск','Asia/Novosibirsk'],['Алтай','Asia/Barnaul'],['Томск','Asia/Tomsk'],['Кемеров','Asia/Novokuznetsk'],['Кузбасс','Asia/Novokuznetsk'],['Красноярск','Asia/Krasnoyarsk'],['Хакас','Asia/Krasnoyarsk'],['Тыва','Asia/Krasnoyarsk'],['Тува','Asia/Krasnoyarsk'],
+ ['Иркутск','Asia/Irkutsk'],['Бурят','Asia/Irkutsk'],['Забайкаль','Asia/Chita'],['Амурск','Asia/Yakutsk'],['Приморск','Asia/Vladivostok'],['Хабаровск','Asia/Vladivostok'],['Еврейск','Asia/Vladivostok'],['Сахалин','Asia/Sakhalin'],['Магадан','Asia/Magadan'],['Камчат','Asia/Kamchatka'],['Чукот','Asia/Anadyr']];
+const CCZ={ua:'Europe/Kiev',by:'Europe/Minsk',uz:'Asia/Tashkent',az:'Asia/Baku',am:'Asia/Yerevan',ge:'Asia/Tbilisi',md:'Europe/Chisinau',lv:'Europe/Riga',lt:'Europe/Vilnius',ee:'Europe/Tallinn',kg:'Asia/Bishkek',tj:'Asia/Dushanbe',tm:'Asia/Ashgabat',de:'Europe/Berlin',fr:'Europe/Paris',it:'Europe/Rome',es:'Europe/Madrid',gb:'Europe/London',il:'Asia/Jerusalem',tr:'Europe/Istanbul',cz:'Europe/Prague',pl:'Europe/Warsaw',bg:'Europe/Sofia',rs:'Europe/Belgrade',gr:'Europe/Athens',fi:'Europe/Helsinki',ae:'Asia/Dubai',th:'Asia/Bangkok',cy:'Asia/Nicosia',me:'Europe/Podgorica',at:'Europe/Vienna',ch:'Europe/Zurich',nl:'Europe/Amsterdam',be:'Europe/Brussels',pt:'Europe/Lisbon',cn:'Asia/Shanghai',jp:'Asia/Tokyo',kr:'Asia/Seoul',in:'Asia/Kolkata',eg:'Africa/Cairo',hu:'Europe/Budapest',ro:'Europe/Bucharest',sk:'Europe/Bratislava',hr:'Europe/Zagreb',si:'Europe/Ljubljana',dk:'Europe/Copenhagen',se:'Europe/Stockholm',no:'Europe/Oslo',ie:'Europe/Dublin',vn:'Asia/Ho_Chi_Minh',id:'Asia/Jakarta',mn:'Asia/Ulaanbaatar'};
+function guessZone(a,lat,lon){ const cc=(a.country_code||'').toLowerCase(), st=[a.state,a.region,a.province].filter(Boolean).join(' ');
+  if(cc==='ru'){ if(/Саха|Якут/.test(st)) return lon>=150?'Asia/Srednekolymsk':lon>=133.5?'Asia/Vladivostok':'Asia/Yakutsk'; const m=RUZ.find(([k])=>st.includes(k)); return m?m[1]:'Europe/Moscow'; }
+  if(cc==='kz') return lon<58?'Asia/Aqtobe':'Asia/Almaty';
+  if(cc==='us') return lon>-87?'America/New_York':lon>-101?'America/Chicago':lon>-115?'America/Denver':'America/Los_Angeles';
+  if(CCZ[cc]) return CCZ[cc];
+  let best=null,bd=1e9; CITIES.forEach(c=>{ const d=(c[1]-lat)**2+((c[2]-lon)*Math.cos(lat*Math.PI/180))**2; if(d<bd){bd=d;best=c[3];} }); return best; }
+async function findCity(){ const q=$('cq').value.trim(), out=$('cres'); if(q.length<2){ out.innerHTML='<p class="note">Введите название населённого пункта.</p>'; return; } out.innerHTML='<p class="note">Ищу…</p>';
+  try{ const r=await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&addressdetails=1&limit=6&accept-language=ru&q=${encodeURIComponent(q)}`); const js=await r.json();
+    if(!js.length){ out.innerHTML='<p class="note">Ничего не нашлось. Попробуйте написать иначе или добавьте область, например «Усть-Куйга Якутия».</p>'; return; }
+    out.innerHTML=js.map((x,i)=>`<button type="button" class="cbtn" data-i="${i}">${x.display_name}</button>`).join(''); out.querySelectorAll('.cbtn').forEach(b=>b.addEventListener('click',()=>{ const x=js[+b.dataset.i]; const lat=+x.lat, lon=+x.lon;
+      $('lat').value=lat.toFixed(4); $('lon').value=lon.toFixed(4); cs.value=''; const z=guessZone(x.address||{},lat,lon); if(z) ensureZone(z); tzManual=false; autoTz();
+      const place=x.display_name.split(',').slice(0,3).join(','); $('cfound').dataset.place=place; $('cfound').textContent=`Место: ${place}. Координаты ${lat.toFixed(4)}, ${lon.toFixed(4)}, зона ${z}. Сверьте поправку UTC с Сотисом.`+(Math.abs(lat)>66?' Широта выше 66°: дома будут построены равнодомной системой.':''); out.innerHTML=''; })); }
+  catch(e){ out.innerHTML='<p class="note">Поиск сейчас недоступен. Введите координаты и часовой пояс вручную (их можно взять в Сотисе).</p>'; } }
+$('cfind').addEventListener('click',findCity); $('cq').addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); findCity(); } });
+// ---- печать выбранных разделов
+$('pickprint').addEventListener('click',()=>{ const box=$('pplist'); box.innerHTML=PANELS.map(id=>{ const p=$(id); const ok=p&&!p.querySelector('.lock')&&p.textContent.trim().length>200; return ok?`<label class="ppi"><input type="checkbox" value="${id}" checked> ${TABNAME[id.slice(2)]}</label>`:''; }).join('')||'<p class="note">Сначала рассчитайте карту.</p>'; $('ppdlg').showModal(); });
+$('ppgo').addEventListener('click',()=>{ const ids=[...$('pplist').querySelectorAll('input:checked')].map(i=>i.value); $('ppdlg').close(); if(!ids.length) return;
+  const html=ids.map((id,k)=>`<section class="pblock"${k?' style="break-before:page"':''}>${$(id).innerHTML}</section>`).join(''); doPrint(html,$('pickprint')); });
+$('ppcancel').addEventListener('click',()=>$('ppdlg').close());
+$('ppall').addEventListener('click',()=>{ const bs=$('pplist').querySelectorAll('input'); const on=[...bs].some(b=>!b.checked); bs.forEach(b=>b.checked=on); });
+
+$('demo').addEventListener('click',()=>{ $('nm').value='Стив Джобс (пример)'; $('dt').value='1955-02-24'; $('tm').value='19:15'; syncVis(); cs.value=String(CITIES.length-1); $('lat').value='37.7749'; $('lon').value='-122.4194'; $('zone').value='America/Los_Angeles'; tzManual=false; autoTz(); document.querySelector('.panel:not([hidden])').innerHTML='<p class="sub">Считаю…</p>'; setTimeout(run,30); });
 </script>
 
 </body></html>
