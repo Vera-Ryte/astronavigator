@@ -205,20 +205,20 @@ img.prev{width:100%;border:1px solid var(--line);border-radius:6px;margin-top:8p
 .wheel .wa{position:absolute;transform:translate(-50%,-50%);font-size:clamp(9px,2vw,12px);font-weight:700;color:var(--plum)}
 .printbar{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:center;gap:8px;margin:-4px 0 6px}
 .printbar::after{content:'Печатается на белом фоне';flex-basis:100%;text-align:right;font-size:12px;color:var(--muted);margin-top:-2px}
-.igrow{min-height:96px}
-.igseg{position:absolute;top:6px;height:62px;padding:0;margin:0;text-align:left;font-family:inherit;border-top:0;border-bottom:0;border-left:0;background:linear-gradient(180deg,#F4D9BC,#DFC09F);color:#08182F;border-radius:3px;overflow:hidden;font-size:12.5px;line-height:1.25;border-right:1px solid #08182F;cursor:pointer}
+.igrow{min-height:112px}.igseg.cmp>div{font-size:13px;padding:3px 3px}
+.igseg{position:absolute;top:6px;height:68px;padding:0;margin:0;text-align:left;font-family:inherit;border-top:0;border-bottom:0;border-left:0;background:linear-gradient(180deg,#F4D9BC,#DFC09F);color:#08182F;border-radius:3px;overflow:hidden;font-size:12.5px;line-height:1.25;border-right:1px solid #08182F;cursor:pointer}
 .igseg.alt{background:linear-gradient(180deg,#C9AE8E,#9A8164)}
 .igseg>div{padding:3px 5px;white-space:nowrap}
 .igseg .g{color:#08182F}
-.rchart.igchart{min-width:2600px}
-.igseg{font-size:13.5px!important}
+.rchart.igchart{min-width:2000px}
+.igseg{font-size:15px!important}
 .igsep{border-top:1.5px solid rgba(223,192,159,.6);margin:22px 0 4px}
 .igseg.igr{background:repeating-linear-gradient(135deg,#DFC09F 0 6px,#08182F 6px 8px)}
 .igseg.igr>div{background:rgba(244,217,188,.92);display:inline-block;border-radius:3px}
 .igseg.nar>div{writing-mode:vertical-rl;transform:rotate(180deg);font-size:10.5px;height:100%;padding:3px 2px}
 .igseg.nar b{font-weight:700}
-.igR{position:absolute;top:71px;height:6px;background:var(--plum);border-radius:3px}
-.igRl{position:absolute;top:78px;font-size:12.5px;white-space:nowrap;color:var(--ink)}
+.igR{position:absolute;top:78px;height:6px;background:var(--plum);border-radius:3px}
+.igRl{position:absolute;top:88px;font-size:13.5px;white-space:nowrap;color:var(--ink)}
 .igstill{margin-top:14px}.igstill p{margin:0 0 6px;font-size:15px}
 .ingsw{display:inline-block;width:14px;height:11px;border-radius:2px;margin:0 3px 0 8px;vertical-align:-1px}
 .egb{all:unset;cursor:pointer;display:inline-flex;border-radius:50%}
@@ -2519,26 +2519,26 @@ function run(){ window.__ran=true; $('resbox').classList.remove('pre'); if(!docu
    <rect x="186" y="150" width="98" height="24" rx="5" class="lb"/><text x="235" y="167" class="lbt" text-anchor="middle">${pd(l.dMs)}</text>
    <rect x="392" y="166" width="98" height="24" rx="5" class="lb"/><text x="441" y="183" class="lbt" text-anchor="middle">${pd(l.outMs)}</text>
    <text x="340" y="228" class="lt" text-anchor="middle">Повторное движение вперёд (выход из петли)</text>
-   <g class="lnum"><circle cx="330" cy="78" r="10"/><text x="330" y="82" text-anchor="middle">1</text><circle cx="335" cy="140" r="10"/><text x="335" y="144" text-anchor="middle">2</text><circle cx="335" cy="200" r="10"/><text x="335" y="204" text-anchor="middle">3</text></g>
+   <g class="lnum"><circle cx="170" cy="78" r="11"/><text x="170" y="82" text-anchor="middle">1</text><circle cx="500" cy="108" r="11"/><text x="500" y="112" text-anchor="middle">2</text><circle cx="500" cy="200" r="11"/><text x="500" y="204" text-anchor="middle">3</text></g>
    <rect x="20" y="246" width="315" height="46" rx="8" class="lw"/><text x="36" y="265" class="lwt2">ПЕРИОД РЕТРОГРАДНОСТИ</text><text x="36" y="284" class="lwt">с ${pd(l.rMs)} по ${pd(l.dMs)}</text>
    <rect x="345" y="246" width="315" height="46" rx="8" class="lw"/><text x="361" y="265" class="lwt2">ГРАДУСЫ РЕТРОГРАДНОСТИ</text><text x="361" y="284" class="lwt">с ${d(l.rLon)} по ${d(l.dLon)}</text>
    </svg></figure>`; })();
- let LH=`<h2>Петли планет ${Y}</h2><nav class="loopnav"><a href="#loopsnat">Петли по натальной карте: дома и планеты</a><a href="#nloopbox">График петель по натальной карте</a><a href="#rchartbox">График ретроградности</a></nav>__LSCHEMA__<div class="sub loopintro"><p><b>Петля</b> - участок, который планета проходит трижды: вперёд, назад (ретро) и снова вперёд.</p><p><b>Вход в петлю</b> - день, когда планета впервые доходит до градуса, в который потом вернётся в ретроградном движении и развернётся в прямое (точка разворота).</p><p><b>Выход из петли</b> - день, когда планета повторно проходит градус, в котором стала ретроградной, и дальше идёт в прямом движении.</p><p>Всё, что находится на отрезке петли, планета касается трижды. Как правило, первое касание - завязка: событие начинает формироваться. Ретро - пересмотр, возврат к теме. Третье касание, после разворота вперёд, - развязка: решение или завершение ситуации.</p><p>Для каждой петли указаны дома вашей натальной карты, по которым петляет планета, и натальные планеты и точки на отрезке петли. График ретроградности ниже - общий для всех, без привязки к натальной карте.</p></div><div id="loopsnat"></div>`;
+ let LH=`<h2>Петли планет ${Y}</h2><nav class="loopnav"><a href="#loopsnat">Петли по натальной карте: дома и планеты</a><a href="#nloopbox">График петель по натальной карте</a><a href="#rchartbox">График ретроградности</a></nav>__LSCHEMA__<div class="sub loopintro"><p><b>Петля</b> - участок, который планета проходит трижды: вперёд, назад (ретро) и снова вперёд.</p><p><b>Вход в петлю</b> - день, когда планета впервые доходит до градуса, в который потом вернётся в ретроградном движении и развернётся в прямое (точка разворота).</p><p><b>Выход из петли</b> - день, когда планета повторно проходит градус, в котором стала ретроградной, и дальше идёт в прямом движении.</p><p>Всё, что находится на отрезке петли, планета касается трижды. Как правило, первое касание - завязка: событие начинает формироваться. Ретро - пересмотр, возврат к теме. Третье касание, после разворота вперёд, - развязка: решение или завершение ситуации.</p><p>Для каждой петли указаны дома вашей натальной карты, по которым петляет планета, и натальные планеты и точки, которые попадают в петлю. График ретроградности ниже - общий для всех, без привязки к натальной карте.</p></div><div id="loopsnat"></div>`;
  LH=LH.replace('__LSCHEMA__',LSCH);
  LP.forEach(l=>{ const hsx=arcHouses(l.dLon,l.rLon); const tp=NPTS.filter(n=>N.P[n]!==undefined&&inArc(N.P[n],l.dLon,l.rLon));
    LH+=`<div class="loop"><div class="hd">${g(l.pl)}<span class="r">R</span> ${l.pl}</div>
    <div class="ln">Вход в петлю: <b>${pd(l.inMs)}</b> · Выход: <b>${pd(l.outMs)}</b></div>
    <div class="ln"><b>Ретро:</b> с <b>${fdt(l.rMs,vtz)}</b> по <b>${fdt(l.dMs,vtz)}</b><br>${degN(l.rLon)} - ${degN(l.dLon)}</div>
    <div class="ln"><span class="k">Дома, по которым петляет планета:</span> ${hsx.map(hs).join(' → ')}</div>
-   <div class="ln"><span class="k">Натальные точки на отрезке петли:</span>${tp.length?'<br>'+tp.map(n=>`<span class="nw">${g(n)} ${n} ${deg(N.P[n],false)}</span>`).join(', '):' нет'}</div></div>`; });
+   <div class="ln"><span class="k">Натальные планеты и точки в петле:</span>${tp.length?'<br>'+tp.map(n=>`<span class="nw">${g(n)} ${n} ${deg(N.P[n],false)}</span>`).join(', '):' нет'}</div></div>`; });
  if(!LP.length) LH+='<p class="sub">В этом году петель нет.</p>';
  if(LP.length){ const X=m=>Math.max(0,Math.min(100,(m-y0)/(y1-y0)*100)); const yd=ms=>new Date(ms+vtz*3600000).getUTCFullYear()===Y?fdm(ms,vtz):fdt(ms,vtz,false);
-   let NG=`<div class="rwrap" id="nloopbox"><h2 style="margin-top:22px">Петли по вашей натальной карте ${Y}</h2><p class="sub">Светлая полоса - петля, тёмная - ретро. Под полосой: дома вашей карты, по которым петляет планета, и натальные точки на отрезке петли.</p><div class="saverow"><button type="button" class="printbtn nlsave">Сохранить график картинкой</button><span class="savest note"></span></div><div class="scroll"><div class="rchart"><div class="rmon">${MONF.map((m,i)=>`<span style="left:${X(Date.UTC(Y,i,1))}%;width:${100/12}%">${m}</span>`).join('')}</div>`;
+   let NG=`<div class="rwrap" id="nloopbox"><h2 style="margin-top:22px">Петли по вашей натальной карте ${Y}</h2><div class="sub"><p style="margin:0">Светлая полоса - петля планеты.</p><p style="margin:0">Тёмная полоса - планета в ретроградном движении.</p><p style="margin:0">Под полосой указаны дома вашей карты, по которым петляет планета, и натальные планеты и точки (Asc, MC, Узлы, Лилит), которые попадают в петлю: их градус лежит между точками разворота, и транзитная планета пройдёт по ним трижды.</p></div><div class="saverow"><button type="button" class="printbtn nlsave">Сохранить график картинкой</button><span class="savest note"></span></div><div class="scroll"><div class="rchart"><div class="rmon">${MONF.map((m,i)=>`<span style="left:${X(Date.UTC(Y,i,1))}%;width:${100/12}%">${m}</span>`).join('')}</div>`;
    const grid=`<div class="rgrid">${MON.map((m,i)=>`<i style="left:${X(Date.UTC(Y,i,1))}%"></i>`).join('')}</div>`;
    [...new Set(LP.map(l=>l.pl))].forEach(n=>{ NG+=`<div class="rrow"><div class="rl">${g(n)}<span>${n}</span></div><div class="rtrack">${grid}`;
      LP.filter(l=>l.pl===n).forEach(l=>{ const a=l.inMs, o=l.outMs; NG+=`<span class="rl1" style="left:${X(a)}%;width:${Math.max(.4,X(o)-X(a))}%"></span><span class="rl2" style="left:${X(l.rMs)}%;width:${Math.max(.6,X(l.dMs)-X(l.rMs))}%"></span>`;
        const hsx=arcHouses(l.dLon,l.rLon); const tp=NPTS.filter(q=>N.P[q]!==undefined&&inArc(N.P[q],l.dLon,l.rLon)); const lx=Math.max(X(a),0);
-       NG+=`<span class="rlab" style="${lx>72?'right:0':'left:'+lx+'%'}"><b>${yd(a)} - ${yd(o)}</b><br>дома: ${hsx.map(h=>ROM[h]).join(' → ')}<br><span class="rio">${tp.length?tp.map(q=>`${g(q)} ${q}`).join(', '):'натальных точек нет'}</span></span>`; });
+       NG+=`<span class="rlab" style="${lx>72?'right:0':'left:'+lx+'%'}"><b>${yd(a)} - ${yd(o)}</b><br>дома: ${hsx.map(h=>ROM[h]).join(' → ')}<br><span class="rio">${tp.length?tp.map(q=>`${g(q)} ${q}`).join(', '):'натальных планет в петле нет'}</span></span>`; });
      NG+='</div></div>'; });
    LH+=NG+'</div></div></div>'; }
  { const PLR=['Меркурий','Венера','Марс','Юпитер','Сатурн','Уран','Нептун','Плутон']; const LA=loopsOf(ser,PLR); const X=m=>Math.max(0,Math.min(100,(m-y0)/(y1-y0)*100));
@@ -2583,8 +2583,8 @@ function run(){ window.__ran=true; $('resbox').classList.remove('pre'); if(!docu
    const grid=`<div class="rgrid">${MON.map((m,i)=>`<i style="left:${X(Date.UTC(Y,i,1))}%"></i>`).join('')}</div>`;
    moving.forEach(n=>{ IG+=`<div class="rrow igrow"><div class="rl">${g(n)}<span>${n}</span></div><div class="rtrack">${grid}`;
      SEG[n].forEach((x,i)=>{ const l=X(x.a===null?y0:x.a), r=X(x.b===null?y1:x.b), w=r-l; if(w<=0) return; const full=`${n} ${SPREP[x.s]}: с ${x.a===null?'…':fdt(x.a,vtz)} по ${x.b===null?'…':fdt(x.b,vtz)}${x.r?' (вернулся ретроградно)':''}`;
-       const body=w>=8?`<b>${gz(x.s)} ${SIGNS[x.s]}</b><br>с ${fd(x.a,1)}<br>по ${fd(x.b,1)}`:w>=3.4?`<b>${gz(x.s)} ${SIGNS[x.s]}</b><br>с ${fd(x.a)}<br>по ${fd(x.b)}`:`<b>${gz(x.s)}</b>`;
-       IG+=`<button type="button" class="igclick igseg${x.r?' igr':''}${i%2?' alt':''}" style="left:${l}%;width:${w}%" data-t="${full}"><div>${body}</div></button>`; });
+       const sd=ms=>ms===null?'…':fdm(ms,vtz); const body=w>=6.5?`<b>${gz(x.s)} ${SIGNS[x.s]}</b><br>с ${fd(x.a,1)}<br>по ${fd(x.b,1)}`:w>=4?`<b>${gz(x.s)} ${SIGNS[x.s]}</b><br>с ${fd(x.a)}<br>по ${fd(x.b)}`:w>=1.4?`<b>${gz(x.s)}</b><br>${x.a===null||x.a<y0?'до':(w>=3?'с ':'')+sd(x.a)}<br>${x.a===null||x.a<y0?sd(x.b):(x.b===null||x.b>=y1?'…':(w>=3?'по ':'')+sd(x.b))}`:`<b>${gz(x.s)}</b>`;
+       IG+=`<button type="button" class="igclick igseg${w<4?' cmp':''}${x.r?' igr':''}${i%2?' alt':''}" style="left:${l}%;width:${w}%" data-t="${full}"><div>${body}</div></button>`; });
      LA2.filter(q=>q.pl===n).forEach(q=>{ const r=q.rMs, d=q.dMs||ser.T[ser.T.length-1]; if(d<y0||r>=y1) return; const lx=X(r); IG+=`<span class="igR" style="left:${lx}%;width:${Math.max(.6,X(d)-lx)}%"></span><span class="igRl" style="${lx>70?'right:0':'left:'+lx+'%'}"><b>R ${fd(r)} - ${q.dMs?fd(q.dMs):'…'}</b> · ${dgs(q.rLon)}${q.dMs?' - '+dgs(q.dLon):''}</span>`; });
      IG+='</div></div>'; });
    IG+='</div></div><div class="igstill">'+still.map(n=>{ const segs=SEG[n].filter(x=>(x.b===null||x.b>y0)&&(x.a===null||x.a<y1));
